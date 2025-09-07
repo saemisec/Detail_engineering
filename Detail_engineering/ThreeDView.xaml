@@ -4,7 +4,7 @@
              xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              Background="Transparent">
     <Grid>
-        <!-- نوار ابزار خیلی ساده (دلخواه) -->
+        <!-- نوار ابزار بالایی (برای Reload/DevTools) -->
         <Border Background="#171B34" BorderBrush="#1FFFFFFF" BorderThickness="0,0,0,1" Padding="8" Height="40" VerticalAlignment="Top">
             <DockPanel>
                 <StackPanel Orientation="Horizontal">
@@ -14,7 +14,7 @@
             </DockPanel>
         </Border>
 
-        <!-- WebView2: کل فضا بجز نوار -->
+        <!-- WebView2 تمام‌صفحه به‌جز هدر -->
         <Grid Margin="0,40,0,0">
             <wv2:WebView2 x:Name="Web"/>
         </Grid>
