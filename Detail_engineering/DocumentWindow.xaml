@@ -1,0 +1,13 @@
+﻿<Window x:Class="Detail_engineering.DocumentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Document" Height="600" Width="900"
+        WindowStyle="None" ResizeMode="NoResize" AllowsTransparency="True" Background="Transparent">
+    <Border CornerRadius="14" Background="#171B34" Padding="12">
+        <Grid>
+            <TextBlock Text="Document Form (placeholder)" Foreground="#EAF0FF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Content="بازگشت" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="8"
+                    Click="Back_Click"/>
+        </Grid>
+    </Border>
+</Window>

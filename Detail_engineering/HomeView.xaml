@@ -1,0 +1,10 @@
+﻿<UserControl x:Class="Detail_engineering.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+    <Grid>
+        <TextBlock Text="Welcome" Foreground="#EAF0FF" Opacity="0.8" FontSize="28"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Grid>
+</UserControl>
+

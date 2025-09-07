@@ -1,12 +1,218 @@
 ﻿<Window x:Class="Detail_engineering.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Detail_engineering"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Main"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowState="Maximized"
+        Background="#0F1226">
 
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <!-- Colors / Brushes (مثل قبل) -->
+        <SolidColorBrush x:Key="BgWindow" Color="#0F1226"/>
+        <SolidColorBrush x:Key="BgSurface" Color="#171B34"/>
+        <SolidColorBrush x:Key="FgText" Color="#EAF0FF"/>
+        <SolidColorBrush x:Key="Accent" Color="#5DB5FF"/>
+        <SolidColorBrush x:Key="BtnIdle" Color="#1F2447"/>
+        <SolidColorBrush x:Key="BtnHover" Color="#2A3162"/>
+        <SolidColorBrush x:Key="BtnPressed" Color="#394080"/>
+        <DropShadowEffect x:Key="SoftShadow" BlurRadius="18" ShadowDepth="0" Opacity="0.6" Color="#99000000"/>
+
+        <!-- Base button style -->
+        <Style x:Key="FlatButton" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource FgText}"/>
+            <Setter Property="Background" Value="{StaticResource BtnIdle}"/>
+            <Setter Property="BorderBrush" Value="#22FFFFFF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12,10"/>
+            <Setter Property="Margin" Value="6,4"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="root" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="10">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="28"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border Width="28" Height="28" CornerRadius="6" Grid.Column="0" Background="#26305E">
+                                    <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Stretch="UniformToFill" Margin="3"/>
+                                </Border>
+                                <ContentPresenter Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="root" Property="Background" Value="{StaticResource BtnHover}"/>
+                                <Setter TargetName="root" Property="Effect" Value="{StaticResource SoftShadow}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="root" Property="Background" Value="{StaticResource BtnPressed}"/>
+                                <Setter TargetName="root" Property="RenderTransform">
+                                    <Setter.Value><ScaleTransform ScaleX="0.98" ScaleY="0.98"/></Setter.Value>
+                                </Setter>
+                                <Setter TargetName="root" Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" TargetName="root" Value="0.6"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 3D-like Button -->
+        <Style x:Key="ThreeDButton" TargetType="Button" BasedOn="{StaticResource FlatButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="12" Background="#1AFFFFFF" Margin="0,2,0,0"/>
+                            <Border x:Name="body" CornerRadius="12" BorderThickness="1" BorderBrush="#33FFFFFF">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Color="#2E3B78" Offset="0"/>
+                                        <GradientStop Color="#233064" Offset="0.5"/>
+                                        <GradientStop Color="#1E2A55" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="16" ShadowDepth="2" Direction="270" Opacity="0.45" Color="#AA000000"/>
+                                </Border.Effect>
+                                <Grid Margin="12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="28"/>
+                                        <ColumnDefinition Width="8"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Width="28" Height="28" CornerRadius="6" Grid.Column="0" Background="#2B3B84">
+                                        <Image Source="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" Stretch="UniformToFill" Margin="3"/>
+                                    </Border>
+                                    <ContentPresenter Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="body" Property="Effect">
+                                    <Setter.Value><DropShadowEffect BlurRadius="22" ShadowDepth="0" Opacity="0.7" Color="#995DB5FF"/></Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="body" Property="RenderTransform">
+                                    <Setter.Value><TranslateTransform Y="2"/></Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- DataTemplates برای سوییچ کانتنت -->
+        <DataTemplate DataType="{x:Type local:HomeView}">
+            <local:HomeView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:DocumentView}">
+            <local:DocumentView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type local:ThreeDView}">
+            <local:ThreeDView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <!-- Layout اصلی: ردیف بالا(۱۵٪) برای ۴ تصویر، بدنه ۸۵٪ → ستون چپ (پنل دکمه‌ها) + راست (Content) -->
+    <Grid Background="{StaticResource BgWindow}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.15*"/>
+            <RowDefinition Height="0.85*"/>
+        </Grid.RowDefinitions>
+
+        <!-- نوار 4 تصویر -->
+        <Border Grid.Row="0" Background="{StaticResource BgSurface}" CornerRadius="12" Margin="10" BorderBrush="#1FFFFFFF" BorderThickness="1">
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Margin="6" CornerRadius="10" Background="#222A54" BorderBrush="#26FFFFFF" BorderThickness="1">
+                    <TextBlock Text="Image 1" Foreground="{StaticResource FgText}" Opacity="0.6"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border Grid.Column="1" Margin="6" CornerRadius="10" Background="#222A54" BorderBrush="#26FFFFFF" BorderThickness="1">
+                    <TextBlock Text="Image 2" Foreground="{StaticResource FgText}" Opacity="0.6"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border Grid.Column="2" Margin="6" CornerRadius="10" Background="#222A54" BorderBrush="#26FFFFFF" BorderThickness="1">
+                    <TextBlock Text="Image 3" Foreground="{StaticResource FgText}" Opacity="0.6"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border Grid.Column="3" Margin="6" CornerRadius="10" Background="#222A54" BorderBrush="#26FFFFFF" BorderThickness="1">
+                    <TextBlock Text="Image 4" Foreground="{StaticResource FgText}" Opacity="0.6"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- بدنه -->
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <!-- پنل دکمه‌ها: Collapsible -->
+                <ColumnDefinition Width="{Binding SidebarWidth}"/>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- پنل دکمه‌ها (سمت چپ) -->
+            <Border Grid.Column="0" Background="{StaticResource BgSurface}" CornerRadius="12" BorderBrush="#1FFFFFFF" BorderThickness="1" Cursor="Hand" Padding="8">
+                <DockPanel LastChildFill="True">
+                    <!-- دکمه‌ی جمع/باز -->
+                    <Button DockPanel.Dock="Bottom" Style="{StaticResource FlatButton}" Content="{Binding SidebarToggleText}"
+                            Click="ToggleSidebar_Click" ToolTip="Collapse/Expand" />
+
+                    <!-- لیست دکمه‌ها -->
+                    <StackPanel Margin="2" VerticalAlignment="Center" >
+                        <!-- Documents -->
+                        <Button Style="{StaticResource FlatButton}"
+                                Tag="pack://application:,,,/Detail_engineering;component/Assets/doc.png"
+                                Click="Docs_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Documents"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- 3D Model (3D-like style) -->
+                        <Button Style="{StaticResource ThreeDButton}"
+                                Tag="pack://application:,,,/Detail_engineering;component/Assets/3d.png"
+                                Click="ThreeD_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="3D Model"/>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Exit -->
+                        <Button Style="{StaticResource FlatButton}"
+                                Tag="pack://application:,,,/Detail_engineering;component/Assets/exit.png"
+                                Click="Exit_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Exit"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <!-- محتوای اصلی که با کلیک روی دکمه‌ها تغییر می‌کند -->
+            <Border Grid.Column="1" Background="{StaticResource BgSurface}" CornerRadius="12" BorderBrush="#1FFFFFFF" BorderThickness="1" Margin="8,0,0,0">
+                <ContentControl Content="{Binding CurrentView}"/>
+            </Border>
+        </Grid>
     </Grid>
 </Window>
