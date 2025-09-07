@@ -1,9 +1,22 @@
-﻿<UserControl x:Class="Detail_engineering.ThreeDView"
+﻿<UserControl x:Class="Detail_engineering.Views.ThreeDView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              Background="Transparent">
-    <Grid Margin="10">
-        <TextBlock Text="3D Page (placeholder)" Foreground="#EAF0FF" FontSize="20"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid>
+        <!-- نوار ابزار خیلی ساده (دلخواه) -->
+        <Border Background="#171B34" BorderBrush="#1FFFFFFF" BorderThickness="0,0,0,1" Padding="8" Height="40" VerticalAlignment="Top">
+            <DockPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Reload" Click="Reload_Click" Margin="4" Padding="10,4"/>
+                    <Button Content="DevTools" Click="DevTools_Click" Margin="4" Padding="10,4"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- WebView2: کل فضا بجز نوار -->
+        <Grid Margin="0,40,0,0">
+            <wv2:WebView2 x:Name="Web"/>
+        </Grid>
     </Grid>
 </UserControl>
