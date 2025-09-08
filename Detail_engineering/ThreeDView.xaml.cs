@@ -28,7 +28,13 @@ namespace Detail_engineering
                 return;
             }
 
-            // فایل‌های محلی را روی یک هاست مجازی می‌گذاریم
+            // Map برای WebAssets (three.js و دیکودرها)
+            var webAssets = Path.Combine(baseDir, "WebAssets");
+            Directory.CreateDirectory(webAssets);
+            Web.CoreWebView2.SetVirtualHostNameToFolderMapping(
+                "assets", webAssets, CoreWebView2HostResourceAccessKind.Allow);
+
+            // Map برای Models
             Web.CoreWebView2.SetVirtualHostNameToFolderMapping(
                 "app", modelsDir, CoreWebView2HostResourceAccessKind.Allow);
 
@@ -47,264 +53,260 @@ namespace Detail_engineering
         {
             var safe = Uri.EscapeUriString(glbName);
 
-            // Toolbox: top-left چسبیده، toggle UI، افکت کلیک، و ناسازگاری Walk/AutoRotate
             var html = $@"
 <!doctype html>
 <html>
 <head>
   <meta charset='utf-8'/>
-  <meta name='viewport' content='width=device-width, initial-scale=1'/>
-  <script type='module' src='https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js'></script>
+  <meta name='viewport' content='width=device-width,initial-scale=1'/>
+  <!-- import map: ثابت می‌کنه 'three' به فایل لوکال resolve بشه -->
+  <script type='importmap'>
+  {{
+    ""imports"": {{
+      ""three"": ""https://assets/three/three.module.js""
+    }}
+  }}
+  </script>
   <style>
-    :root {{
-      --bg:#101218; --panel:#171B34; --txt:#EAF0FF; --btn:#1F2447; --btnh:#2A3162; --accent:#5DB5FF; --on:#274a7a;
-    }}
-    html,body{{height:100%;margin:0;background:var(--bg);color:var(--txt);font:13px system-ui,Segoe UI,Roboto,sans-serif}}
-    model-viewer{{width:100%;height:100%}}
+    :root{{--bg:#101218;--panel:#171B34;--txt:#EAF0FF;--btn:#1F2447;--btnh:#2A3162;--accent:#5DB5FF;--on:#274a7a;--line:#2A3162;--border:#1FFFFFFF}}
+    html,body{{margin:0;height:100%;background:var(--bg);color:var(--txt);font:13px system-ui,Segoe UI,Roboto,sans-serif;overflow:hidden}}
+    #c{{width:100%;height:100%;display:block}}
+    .toolbox{{position:fixed;top:48px;left:8px;display:grid;grid-template-columns:repeat(5,auto);gap:6px;
+      background:color-mix(in srgb,var(--panel) 92%,transparent);padding:10px;border-radius:12px;border:1px solid var(--border);backdrop-filter:blur(6px);
+      box-shadow:0 10px 30px #0006;z-index:10}}
+    .tb{{background:var(--btn);color:var(--txt);border:1px solid #22FFFFFF;border-radius:10px;padding:7px 10px;cursor:pointer;
+      transition:transform .06s ease,background .12s ease,opacity .12s ease,outline-color .12s ease;user-select:none}}
+    .tb:hover{{background:var(--btnh)}} .tb:active{{transform:scale(.97) translateY(1px)}}
+    .tb.toggle.on{{background:var(--on);outline:2px solid var(--accent)}} .tb:disabled{{opacity:.45;cursor:not-allowed;filter:saturate(.6)}}
+    #msg{{position:fixed;right:8px;bottom:8px;color:#fff;opacity:.75;font-size:12px}}
 
-    .toolbox{{
-      position:fixed; top:48px; left:8px;  /* بالای فرم، کنار چپ؛ 48px تا با هدر 40px تداخل نداشته باشه */
-      display:grid; grid-template-columns:repeat(4,auto); gap:6px;
-      background:color-mix(in srgb, var(--panel) 92%, transparent);
-      padding:10px; border-radius:12px; border:1px solid #1FFFFFFF; backdrop-filter:blur(6px);
-      box-shadow:0 10px 30px #0006; z-index:10;
-    }}
-    .toolbox h4{{grid-column:1/-1;margin:0 0 6px;font-weight:600;font-size:12px;opacity:.85}}
-
-    .tb{{ background:var(--btn); color:var(--txt); border:1px solid #22FFFFFF; border-radius:10px; padding:7px 10px;
-         cursor:pointer; transition:transform .06s ease, background .12s ease, opacity .12s ease, outline-color .12s ease; user-select:none; }}
-    .tb:hover{{ background:var(--btnh); }}
-    .tb:active{{ transform:scale(0.97) translateY(1px); }}
-
-    /* حالت toggle فعال */
-    .tb.toggle.on{{ background:var(--on); outline:2px solid var(--accent); }}
-
-    /* حالت غیرفعال (grayed out) */
-    .tb:disabled{{ opacity:.45; cursor:not-allowed; filter:saturate(.6); }}
-
-    #msg{{ position:fixed; right:8px; bottom:8px; color:#fff; opacity:.75; font-size:12px }}
+    #panel{{position:fixed;top:48px;left:260px;width:360px;background:var(--panel);border:1px solid var(--border);
+      border-radius:12px;box-shadow:0 10px 30px #0006;display:none;z-index:11}}
+    #panel header{{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;gap:8px;align-items:center}}
+    #panel header strong{{flex:1}} #panel header button{{background:var(--btn);color:var(--txt);border:1px solid #22FFFFFF;border-radius:8px;padding:6px 10px;cursor:pointer}}
+    #panel .body{{padding:10px 12px}}
+    table{{width:100%;border-collapse:collapse}} th,td{{border:1px solid var(--line);padding:6px 8px;text-align:left}}
+    th{{background:#1F2447}} .nameCell{{max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
   </style>
 </head>
 <body>
-  <model-viewer id='mv'
-    src='https://app/{safe}'
-    camera-controls
-    environment-image='neutral'
-    exposure='1' shadow-intensity='0.4'
-    bounds='tight' camera-orbit='0deg 65deg 140%' field-of-view='45deg'>
-    <div slot='poster' style='color:#fff;display:flex;align-items:center;justify-content:center;height:100%'>Loading…</div>
-  </model-viewer>
-
-  <!-- Toolbox (بالا-چپ) -->
   <div class='toolbox' id='tools' style='display:none'>
-    <h4>TOOLS</h4>
+    <button class='tb' id='home'>Home</button>
+    <button class='tb' id='fit'>Fit</button>
+    <button class='tb toggle' id='autorot'>Auto-Rotate</button>
+    <button class='tb toggle' id='walk'>Walk</button>
 
-    <!-- Home / Fit / AutoRotate / Walk -->
-    <button class='tb'          id='home'   title='Reset view'>Home</button>
-    <button class='tb'          id='fit'    title='Fit to view'>Fit</button>
-    <button class='tb toggle'   id='autorot' title='Toggle auto-rotate'>Auto-Rotate</button>
-    <button class='tb toggle'   id='walk'    title='Walk mode (WASD + Mouse)'>Walk</button>
+    <button class='tb' id='zin'>Zoom +</button>
+    <button class='tb' id='zout'>Zoom −</button>
+    <button class='tb' id='fovN'>FOV −</button>
+    <button class='tb' id='fovP'>FOV +</button>
 
-    <!-- Zoom / FOV -->
-    <button class='tb' id='zin'  title='Zoom In'>Zoom +</button>
-    <button class='tb' id='zout' title='Zoom Out'>Zoom −</button>
-    <button class='tb' id='fovN' title='Narrow FOV'>FOV −</button>
-    <button class='tb' id='fovP' title='Widen FOV'>FOV +</button>
+    <button class='tb' id='rotL'>⟲</button>
+    <button class='tb' id='rotR'>⟳</button>
+    <button class='tb' id='tiltU'>Tilt ↑</button>
+    <button class='tb' id='tiltD'>Tilt ↓</button>
 
-    <!-- Rotate / Tilt -->
-    <button class='tb' id='rotL' title='Rotate left'>⟲</button>
-    <button class='tb' id='rotR' title='Rotate right'>⟳</button>
-    <button class='tb' id='tiltU' title='Tilt up'>Tilt ↑</button>
-    <button class='tb' id='tiltD' title='Tilt down'>Tilt ↓</button>
-
-    <!-- Pan -->
-    <button class='tb' id='panL' title='Pan left'>Pan ←</button>
-    <button class='tb' id='panR' title='Pan right'>Pan →</button>
-    <button class='tb' id='panU' title='Pan up'>Pan ↑</button>
-    <button class='tb' id='panD' title='Pan down'>Pan ↓</button>
+    <button class='tb' id='panL'>Pan ←</button>
+    <button class='tb' id='panR'>Pan →</button>
+    <button class='tb' id='panU'>Pan ↑</button>
+    <button class='tb' id='panD'>Pan ↓</button>
   </div>
 
+  <div id='panel'>
+    <header><strong>Selected Part</strong><button id='close'>✕</button></header>
+    <div class='body'>
+      <table>
+        <thead><tr><th>Name</th><th>Related Document</th></tr></thead>
+        <tbody>
+          <tr><td class='nameCell' id='nm0'>—</td><td>&nbsp;</td></tr>
+          <tr><td class='nameCell' id='nm1'>—</td><td>&nbsp;</td></tr>
+          <tr><td class='nameCell' id='nm2'>—</td><td>&nbsp;</td></tr>
+          <tr><td class='nameCell' id='nm3'>—</td><td>&nbsp;</td></tr>
+          <tr><td class='nameCell' id='nm4'>—</td><td>&nbsp;</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <canvas id='c'></canvas>
   <div id='msg'>loading…</div>
 
-  <script>
-    const mv  = document.getElementById('mv');
-    const box = document.getElementById('tools');
-    const msg = document.getElementById('msg');
-    const log = t => msg.textContent = t;
+  <script type='module'>
+    import * as THREE from 'https://assets/three/three.module.js';
+    import {{ OrbitControls }} from 'https://assets/three/examples/jsm/controls/OrbitControls.js';
+    import {{ GLTFLoader }}  from 'https://assets/three/examples/jsm/loaders/GLTFLoader.js';
+    import {{ DRACOLoader }} from 'https://assets/three/examples/jsm/loaders/DRACOLoader.js';
+    //import {{ KTX2Loader }}  from 'https://assets/three/examples/jsm/loaders/KTX2Loader.js';
 
-    // Helpers
-    const deg = v => v.toFixed(1)+'deg';
-    const pct = v => v.toFixed(1)+'%';
-    const clamp = (x,a,b)=>Math.max(a,Math.min(b,x));
+    const msg = document.getElementById('msg'); const log = t => msg.textContent = t;
 
-    function parseOrbit(s) {{
-      const [a,e,r] = s.split(' ');
-      return {{ az: parseFloat(a), el: parseFloat(e), r: parseFloat(r) }};
-    }}
-    function setOrbit(az, el, r) {{
-      mv.cameraOrbit = `${{deg(az)}} ${{deg(el)}} ${{pct(r)}}`;
-      mv.jumpCameraToGoal();
-    }}
-    function nudgeOrbit(daz, del, drPct=0) {{
-      const o = parseOrbit(mv.cameraOrbit);
-      setOrbit(o.az + daz, clamp(o.el + del, -89, 89), clamp(o.r + drPct, 5, 500));
-    }}
-    function nudgeFOV(df) {{
-      const f = parseFloat(mv.fieldOfView);
-      mv.fieldOfView = deg(clamp(f + df, 10, 90));
-      mv.jumpCameraToGoal();
-    }}
-    function nudgeTarget(dx, dy, dz) {{
-      const [x,y,z] = mv.cameraTarget.toString().split(' ').map(parseFloat);
-      mv.cameraTarget = `${{(x+dx).toFixed(3)}} ${{(y+dy).toFixed(3)}} ${{(z+dz).toFixed(3)}}`;
-      mv.jumpCameraToGoal();
-    }}
-    function fitView() {{
-      mv.cameraOrbit='0deg 65deg 140%'; mv.fieldOfView='45deg'; mv.cameraTarget='0 0 0'; mv.autoRotate=false; mv.jumpCameraToGoal();
-      setToggle('autorot', false); // sync UI
-    }}
-    function homeView() {{
-      mv.cameraOrbit='0deg 0deg 200%'; mv.fieldOfView='45deg'; mv.cameraTarget='0 0 0'; mv.autoRotate=false; mv.jumpCameraToGoal();
-      setToggle('autorot', false);
-    }}
+    const canvas   = document.getElementById('c');
+    const renderer = new THREE.WebGLRenderer({{ canvas, antialias:true, alpha:false }});
+    renderer.setPixelRatio(window.devicePixelRatio||1);
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
-    // حالت Walk
-    let walk = false, yaw = 0, pitch = -10, radius = 40, speed = 1.0;
-    let lastX=0, lastY=0, dragging=false;
+    const scene = new THREE.Scene(); scene.background = new THREE.Color(0x101218);
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1e6);
+    camera.position.set(0,0,10);
 
-    function setToggle(id, on) {{
-      const el = document.getElementById(id);
-      el.classList.toggle('on', !!on);
-      if (id==='autorot') mv.autoRotate = !!on;
-      if (id==='walk')    enableWalk(!!on, false); // false: از این‌جا تریگر UI نکن
-    }}
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
 
-    function setDisabled(id, dis) {{
-      const el = document.getElementById(id);
-      el.disabled = !!dis;
-      if (dis) el.classList.remove('on');
-    }}
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x222233, 0.7));
+    const dir = new THREE.DirectionalLight(0xffffff, 0.8); dir.position.set(5,10,7); scene.add(dir);
 
-    function enableWalk(on, fromBtn=true) {{
-      walk = on;
-      const btn = document.getElementById('walk');
-      btn.classList.toggle('on', on);
-      mv.style.cursor = on ? 'crosshair' : 'default';
+    const loader = new GLTFLoader();
+    const draco = new DRACOLoader(); draco.setDecoderPath('https://assets/decoders/draco/'); loader.setDRACOLoader(draco);
+    //const ktx2  = new KTX2Loader();  ktx2.setTranscoderPath('https://assets/decoders/ktx2/').detectSupport(renderer); loader.setKTX2Loader(ktx2);
 
-      if (on) {{
-        // آماده‌سازی اوربیت
-        const o = parseOrbit(mv.cameraOrbit);
-        yaw = o.az; pitch = clamp(o.el, -75, 75); radius = clamp(o.r, 10, 200);
-        // ناسازگاری: Walk با AutoRotate
-        setToggle('autorot', false);
-        setDisabled('autorot', true);
-      }} else {{
-        setDisabled('autorot', false);
-      }}
-      if (fromBtn) {{ /* کلیک روی خود Walk بود */ }}
-    }}
+    const url = 'https://app/{safe}';
+    loader.load(url, (gltf) => {{
+      const root = gltf.scene || gltf.scenes[0]; scene.add(root);
 
-    function updateWalkOrbit() {{ setOrbit(yaw, pitch, radius); }}
+      // Fit
+      const box = new THREE.Box3().setFromObject(root);
+      const sizeV = box.getSize(new THREE.Vector3());
+      const size = sizeV.length();
+      const center = box.getCenter(new THREE.Vector3());
 
-    // Keyboard برای Walk
-    window.addEventListener('keydown', e => {{
-      if (!walk) return;
-      const key = e.key.toLowerCase();
-      if (['w','a','s','d',' ','c','q','e'].includes(key)) e.preventDefault();
+      const fitOffset = 1.6;
+      const fov = camera.fov * (Math.PI/180);
+      const dist = Math.abs(size / Math.tan(fov/2)) * fitOffset;
+      camera.position.copy(center.clone().add(new THREE.Vector3(0,0,1).multiplyScalar(dist)));
+      camera.near = Math.max(0.1, size/1000);
+      camera.far  = Math.max(1000, size*1000);
+      camera.updateProjectionMatrix();
+      controls.target.copy(center);
+      controls.update();
 
-      const rad = d=>d*Math.PI/180;
-      const fx = Math.cos(rad(yaw)) * Math.cos(rad(pitch));
-      const fy = Math.sin(rad(pitch));
-      const fz = Math.sin(rad(yaw)) * Math.cos(rad(pitch));
-      const rx = Math.cos(rad(yaw+90));
-      const rz = Math.sin(rad(yaw+90));
-
-      let [x,y,z] = mv.cameraTarget.toString().split(' ').map(parseFloat);
-      switch(key) {{
-        case 'w': x+=fx*speed; y+=fy*speed; z+=fz*speed; break;
-        case 's': x-=fx*speed; y-=fy*speed; z-=fz*speed; break;
-        case 'a': x-=rx*speed; z-=rz*speed; break;
-        case 'd': x+=rx*speed; z+=rz*speed; break;
-        case ' ': y+=speed; break;
-        case 'c': y-=speed; break;
-        case 'q': radius = clamp(radius+5, 5, 500); updateWalkOrbit(); break;
-        case 'e': radius = clamp(radius-5, 5, 500); updateWalkOrbit(); break;
-      }}
-      mv.cameraTarget = `${{x.toFixed(3)}} ${{y.toFixed(3)}} ${{z.toFixed(3)}}`;
-      mv.jumpCameraToGoal();
-    }});
-
-    // Mouse look برای Walk
-    mv.addEventListener('mousedown', e => {{ if (!walk) return; dragging=true; lastX=e.clientX; lastY=e.clientY; }});
-    mv.addEventListener('mouseup',   e => {{ dragging=false; }});
-    mv.addEventListener('mouseleave',e => {{ dragging=false; }});
-    mv.addEventListener('mousemove', e => {{
-      if (!walk || !dragging) return;
-      const dx = e.clientX-lastX, dy = e.clientY-lastY; lastX=e.clientX; lastY=e.clientY;
-      yaw=(yaw+dx*0.3); pitch=clamp(pitch-dy*0.25, -85, 85); updateWalkOrbit();
-    }});
-
-    // اتصال دکمه‌ها
-    function bind(id, fn) {{ document.getElementById(id).onclick = fn; }}
-    function toggleBind(id, getter, setter) {{
-      const el = document.getElementById(id);
-      const sync = ()=> el.classList.toggle('on', !!getter());
-      el.onclick = ()=>{{ setter(!getter()); sync(); }};
-      sync();
-    }}
-
-    // ناسازگاری‌ها: AutoRotate ↔ Walk (یکی روشن شد، دیگری خاموش و disabled)
-    function enableAutoRotate(on) {{
-      mv.autoRotate = !!on;
-      const arBtn = document.getElementById('autorot');
-      arBtn.classList.toggle('on', !!on);
-      if (on) {{
-        // AutoRotate روشن → Walk خاموش و غیرفعال
-        enableWalk(false);
-        setDisabled('walk', true);
-      }} else {{
-        // AutoRotate خاموش → Walk دوباره قابل استفاده
-        setDisabled('walk', false);
-      }}
-    }}
-
-    // پس از لود مدل
-    mv.addEventListener('load', () => {{
       log('loaded ✓');
-      box.style.display = 'grid';
+      document.getElementById('tools').style.display='grid';
+    }}, undefined, (err) => {{ console.error(err); log('load error'); }});
 
-      // دکمه‌های ساده
-      bind('home', ()=> homeView());
-      bind('fit',  ()=> fitView());
+    // انتخاب Part با Raycaster
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    function pick(e) {{
+      const rect = renderer.domElement.getBoundingClientRect();
+      mouse.x = ((e.clientX - rect.left)/rect.width)*2 - 1;
+      mouse.y = -((e.clientY - rect.top)/rect.height)*2 + 1;
 
-      bind('zin',  ()=> nudgeOrbit(0,0,-10));
-      bind('zout', ()=> nudgeOrbit(0,0,+10));
-      bind('fovN', ()=> nudgeFOV(-5));
-      bind('fovP', ()=> nudgeFOV(+5));
+      raycaster.setFromCamera(mouse, camera);
+      const hits = raycaster.intersectObjects(scene.children, true);
+      if (!hits.length) return;
+      let obj = hits[0].object;
+      let name = obj.name || ''; let cur = obj;
+      while((!name || !name.trim()) && cur.parent) {{ cur = cur.parent; name = cur.name || '' }}
+      name = name?.trim() || obj.uuid;
+      showPanel(name);
+    }}
+    renderer.domElement.addEventListener('click', pick);
 
-      bind('rotL', ()=> nudgeOrbit(-10,0,0));
-      bind('rotR', ()=> nudgeOrbit(+10,0,0));
-      bind('tiltU',()=> nudgeOrbit(0,-6,0));
-      bind('tiltD',()=> nudgeOrbit(0,+6,0));
+    // پنل جدول
+    const panel = document.getElementById('panel');
+    document.getElementById('close').onclick = ()=> panel.style.display='none';
+    function showPanel(partName) {{
+      panel.style.display = 'block';
+      for (let i=0;i<5;i++) {{
+        const cell = document.getElementById('nm'+i);
+        if (cell) cell.textContent = partName;
+      }}
+    }}
 
-      bind('panL', ()=> nudgeTarget(-2,0,0));
-      bind('panR', ()=> nudgeTarget(+2,0,0));
-      bind('panU', ()=> nudgeTarget(0,+2,0));
-      bind('panD', ()=> nudgeTarget(0,-2,0));
+    // Toolbox (بدون Parts) + تضاد Walk/AutoRotate
+    const btn = id => document.getElementById(id);
+    const toggleOn = (id,on)=> btn(id).classList.toggle('on', !!on);
+    const setDisabled = (id,dis)=> btn(id).disabled = !!dis;
 
-      // Toggleها
-      document.getElementById('walk').onclick = ()=> enableWalk(!document.getElementById('walk').classList.contains('on'));
-      document.getElementById('autorot').onclick = ()=> enableAutoRotate(!mv.autoRotate);
-
-      // حالت اولیه
+    function fitView() {{
+      const box = new THREE.Box3().setFromObject(scene);
+      const size = box.getSize(new THREE.Vector3()).length();
+      const center = box.getCenter(new THREE.Vector3());
+      const fitOffset = 1.6;
+      const fov = camera.fov * (Math.PI/180);
+      const dist = Math.abs(size / Math.tan(fov/2)) * fitOffset;
+      camera.position.copy(center.clone().add(new THREE.Vector3(0,0,1).multiplyScalar(dist)));
+      camera.near = Math.max(0.1, size/1000);
+      camera.far  = Math.max(1000, size*1000);
+      camera.updateProjectionMatrix();
+      controls.target.copy(center); controls.update();
       enableAutoRotate(false);
-      enableWalk(false);
+    }}
+    function homeView() {{ controls.reset(); enableAutoRotate(false); }}
+
+    function enableAutoRotate(on) {{
+      controls.autoRotate = !!on; toggleOn('autorot', on);
+      if (on) {{ enableWalk(false); setDisabled('walk', true); }} else {{ setDisabled('walk', false); }}
+    }}
+
+    let walk=false, walkSpeed=1.0;
+    function enableWalk(on) {{
+      walk = on; toggleOn('walk', on);
+      if (on) {{ enableAutoRotate(false); setDisabled('autorot', true); }} else {{ setDisabled('autorot', false); }}
+      renderer.domElement.style.cursor = on ? 'crosshair' : 'default';
+    }}
+    window.addEventListener('keydown', (e) => {{
+      if (!walk) return;
+      const k = e.key.toLowerCase();
+      if (['w','a','s','d',' ','c'].includes(k)) e.preventDefault();
+      const forward = new THREE.Vector3(); camera.getWorldDirection(forward).normalize();
+      const right   = new THREE.Vector3().crossVectors(forward, camera.up).normalize();
+      const up      = new THREE.Vector3(0,1,0);
+      const step = walkSpeed; const delta = new THREE.Vector3();
+      switch(k){{case 'w': delta.add(forward.multiplyScalar(step)); break;
+                 case 's': delta.add(forward.multiplyScalar(-step)); break;
+                 case 'a': delta.add(right.multiplyScalar(-step)); break;
+                 case 'd': delta.add(right.multiplyScalar(+step)); break;
+                 case ' ': delta.add(up.multiplyScalar(+step)); break;
+                 case 'c': delta.add(up.multiplyScalar(-step)); break;}}
+      camera.position.add(delta); controls.target.add(delta); controls.update();
     }});
 
-    mv.addEventListener('error', e => {{
-      console.error('model-viewer error', e.detail);
-      log('error: ' + (e.detail?.message||'unknown'));
+    function nudgeOrbitYaw(deg) {{
+      const vec = camera.position.clone().sub(controls.target);
+      const r = vec.length(); const rot = new THREE.Matrix4().makeRotationY(deg*Math.PI/180);
+      vec.applyMatrix4(rot); camera.position.copy(controls.target.clone().add(vec.setLength(r))); controls.update();
+    }}
+    function nudgeOrbitPitch(deg) {{
+      const rad = deg*Math.PI/180; const vec = camera.position.clone().sub(controls.target);
+      const right = new THREE.Vector3().crossVectors(vec, camera.up).normalize();
+      vec.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, -rad));
+      camera.position.copy(controls.target.clone().add(vec)); controls.update();
+    }}
+    function zoom(delta) {{
+      const dir = camera.getWorldDirection(new THREE.Vector3());
+      camera.position.addScaledVector(dir, -delta); controls.update();
+    }}
+    function pan(dx,dy) {{
+      const m = new THREE.Matrix4().extractRotation(camera.matrix);
+      const xAxis = new THREE.Vector3(1,0,0).applyMatrix4(m);
+      const yAxis = new THREE.Vector3(0,1,0).applyMatrix4(m);
+      const pan = new THREE.Vector3().addScaledVector(xAxis, dx).addScaledVector(yAxis, dy);
+      camera.position.add(pan); controls.target.add(pan); controls.update();
+    }}
+    function fov(delta) {{ camera.fov = Math.max(10, Math.min(90, camera.fov + delta)); camera.updateProjectionMatrix(); }}
+
+    const tools = document.getElementById('tools');
+    const bind = (id,fn)=> document.getElementById(id).onclick = fn;
+    bind('home', ()=> homeView()); bind('fit', ()=> fitView());
+    bind('autorot', ()=> enableAutoRotate(!controls.autoRotate)); bind('walk', ()=> enableWalk(!walk));
+    bind('zin', ()=> zoom(-10)); bind('zout', ()=> zoom(+10));
+    bind('fovN', ()=> fov(-5)); bind('fovP', ()=> fov(+5));
+    bind('rotL', ()=> nudgeOrbitYaw(-10)); bind('rotR', ()=> nudgeOrbitYaw(+10));
+    bind('tiltU', ()=> nudgeOrbitPitch(+6)); bind('tiltD', ()=> nudgeOrbitPitch(-6));
+    bind('panL', ()=> pan(-2,0)); bind('panR', ()=> pan(+2,0)); bind('panU', ()=> pan(0,+2)); bind('panD', ()=> pan(0,-2));
+    tools.style.display='grid';
+
+    window.addEventListener('resize', ()=> {{
+      camera.aspect = window.innerWidth/window.innerHeight; camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
     }});
+
+    (function loop(){{
+      requestAnimationFrame(loop);
+      controls.update();
+      renderer.render(scene, camera);
+    }})();
   </script>
 </body>
 </html>";
