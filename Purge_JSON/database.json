@@ -1,0 +1,2966 @@
+[
+  {
+    "Document_name": "Architectural Drawing for Strong Hold Building",
+    "Document_number": "1389-AR-DE-AR-DW-001",
+    "Dicipline": "AR",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "A0-REJECT",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Architectural Drawing for PSTP Shelter",
+    "Document_number": "1389-DE-DE-AR-DW-015",
+    "Dicipline": "AR",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Architecture Endorsement Report",
+    "Document_number": "1389-AR-EN-AR-RP-001",
+    "Dicipline": "AR",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "Architecture Endorsement Report",
+    "Document_number": "1389-DE-EN-AR-RP-001",
+    "Dicipline": "AR",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "Specification for Building",
+    "Document_number": "1389-AR-DE-AR-SP-001",
+    "Dicipline": "AR",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Specification for Building",
+    "Document_number": "1389-DE-DE-AR-SP-001",
+    "Dicipline": "AR",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Sewer & Drainage Design Criteria",
+    "Document_number": "1389-AR-DE-CV-DC-001",
+    "Dicipline": "CV",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Civil Design Criteria",
+    "Document_number": "1389-DE-DE-CV-DC-002",
+    "Dicipline": "CV",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Internal Road Plan and Sections",
+    "Document_number": "1389-AR-DE-CV-DW-001",
+    "Dicipline": "CV",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+    ]
+  },
+  {
+    "Document_name": "Piping Trench Plan and Details",
+    "Document_number": "1389-DE-DE-CV-DW-013",
+    "Dicipline": "CV",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2"
+    ]
+  },
+  {
+    "Document_name": "Underground Composite Layout",
+    "Document_number": "1389-AR-DE-CV-LY-001",
+    "Dicipline": "CV",
+    "Document_type": "LY",
+    "Revisions": [
+      "A0",
+      "A1"
+    ]
+  },
+  {
+    "Document_name": "Overall Layout for Sewage Network",
+    "Document_number": "1389-DE-DE-CV-LY-002",
+    "Dicipline": "CV",
+    "Document_type": "LY",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Civil Endorsement Report",
+    "Document_number": "1389-AR-EN-CV-RP-001",
+    "Dicipline": "CV",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "Civil Endorsement Report",
+    "Document_number": "1389-DE-EN-CV-RP-001",
+    "Dicipline": "CV",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "Specification for Earthworks",
+    "Document_number": "1389-AR-DE-CV-SP-001",
+    "Dicipline": "CV",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Specification for Road & Paving",
+    "Document_number": "1389-DE-DE-CV-SP-003",
+    "Dicipline": "CV",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Lighting System Calculation for Area",
+    "Document_number": "1389-AR-DE-EL-CA-001",
+    "Dicipline": "EL",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Cable Sizing Calculation for Transmission Line",
+    "Document_number": "1389-DE-DE-EL-CA-009",
+    "Dicipline": "EL",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0",
+      "A1"
+    ]
+  },
+  {
+    "Document_name": "Electrical Design Criteria",
+    "Document_number": "1389-AR-DE-EL-DC-001",
+    "Dicipline": "EL",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Electrical Design Criteria",
+    "Document_number": "1389-DE-DE-EL-DC-001",
+    "Dicipline": "EL",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Single Line Diagram for MV Switchgear",
+    "Document_number": "1389-AR-DE-EL-DI-001",
+    "Dicipline": "EL",
+    "Document_type": "DI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Single Line Diagram for Compact Substation",
+    "Document_number": "1389-DE-DE-EL-DI-011",
+    "Dicipline": "EL",
+    "Document_type": "DI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Capacitor Bank",
+    "Document_number": "1389-AR-DE-EL-DS-001",
+    "Dicipline": "EL",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Data sheet for Emergency Diesel Engine Generator",
+    "Document_number": "1389-DE-DE-EL-DS-014",
+    "Dicipline": "EL",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Electrical Symbol & Legend",
+    "Document_number": "1389-AR-DE-EL-DW-001",
+    "Dicipline": "EL",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Transmission Line Plan and Profile Drawing",
+    "Document_number": "1389-DE-DE-EL-DW-006",
+    "Dicipline": "EL",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Electrical Load List",
+    "Document_number": "1389-AR-DE-EL-LI-001",
+    "Dicipline": "EL",
+    "Document_type": "LI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "I",
+    "Document_number": "1389-DE-DE-EL-L-002--O list for PMS System",
+    "Dicipline": "EL",
+    "Document_type": "LI",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Lighting and Socket Outlet Plan for Workshop Building",
+    "Document_number": "1389-AR-DE-EL-LY-001",
+    "Dicipline": "EL",
+    "Document_type": "LY",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Lighting and Socket Outlet Plan for Total Flooding Room",
+    "Document_number": "1389-DE-DE-EL-LY-028",
+    "Dicipline": "EL",
+    "Document_type": "LY",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Lighting System",
+    "Document_number": "1389-AR-DE-EL-MR-001",
+    "Dicipline": "EL",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Emergency Diesel Engine Generator",
+    "Document_number": "1389-DE-DE-EL-MR-018",
+    "Dicipline": "EL",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Electrical Cable Tray & Ladder MTO",
+    "Document_number": "1389-AR-DE-EL-MT-001",
+    "Dicipline": "EL",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Transmission Line Material Take Off",
+    "Document_number": "1389-DE-DE-EL-MT-006",
+    "Dicipline": "EL",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Electrical Endorsement Report",
+    "Document_number": "1389-AR-EN-EL-RP-001",
+    "Dicipline": "EL",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Electrical Endorsement Report",
+    "Document_number": "1389-DE-EN-EL-RP-001",
+    "Dicipline": "EL",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Power & Control Cable Schedule",
+    "Document_number": "1389-AR-DE-EL-SH-001",
+    "Dicipline": "EL",
+    "Document_type": "SH",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "Power & Control Cable Schedule",
+    "Document_number": "1389-DE-DE-EL-SH-001",
+    "Dicipline": "EL",
+    "Document_type": "SH",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Specification for Electrical Installation",
+    "Document_number": "1389-AR-DE-EL-SP-001",
+    "Dicipline": "EL",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Specification for PMS System",
+    "Document_number": "1389-DE-DE-EL-SP-018",
+    "Dicipline": "EL",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Lighting System",
+    "Document_number": "1389-AR-PE-EL-TB-001",
+    "Dicipline": "EL",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Emergency Diesel Engine Generator",
+    "Document_number": "1389-DE-PE-EL-TB-018",
+    "Dicipline": "EL",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "A0(REJECT)",
+      "A1",
+      "A2",
+      "A3",
+      "A3(REJECT)",
+      "A4"
+    ]
+  },
+  {
+    "Document_name": "ITP for Lighting System",
+    "Document_number": "1389-AR-PE-EL-TP-001",
+    "Dicipline": "EL",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "ITP for 20kv Transmission line accessories",
+    "Document_number": "1389-DE-PE-EL-TP-019",
+    "Dicipline": "EL",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "HSE Procedure",
+    "Document_number": "1389-AR-DE-HS-PR-003",
+    "Dicipline": "HS",
+    "Document_type": "PR",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Execution Risk Assessment",
+    "Document_number": "1389-DE-GN-HS-PR-002",
+    "Dicipline": "HS",
+    "Document_type": "PR",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "HVAC Design Criteria",
+    "Document_number": "1389-AR-DE-HV-DC-001",
+    "Dicipline": "HV",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "HVAC & Plumbing Design Criteria",
+    "Document_number": "1389-DE-DE-HV-DC-001",
+    "Dicipline": "HV",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Package Unit",
+    "Document_number": "1389-AR-DE-HV-DS-001",
+    "Dicipline": "HV",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Package Unit",
+    "Document_number": "1389-DE-DE-HV-DS-001",
+    "Dicipline": "HV",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Sewage Layouts for Warehouse Building",
+    "Document_number": "1389-AR-DE-HV-DW-001",
+    "Dicipline": "HV",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "HVAC Layout for Control Room  Switchgear",
+    "Document_number": "1389-DE-DE-HV-DW-026",
+    "Dicipline": "HV",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Air Handling Package Unit",
+    "Document_number": "1389-AR-DE-HV-MR-001",
+    "Dicipline": "HV",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Material requisition for Air Handling Package Unit",
+    "Document_number": "1389-DE-DE-HV-MR-001",
+    "Dicipline": "HV",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Material Take Off for Ducts and Channel and Dampers",
+    "Document_number": "1389-AR-DE-HV-MT-002",
+    "Dicipline": "HV",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "MTO for Electrical Water Heater",
+    "Document_number": "1389-DE-DE-HV-MT-005",
+    "Dicipline": "HV",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "HVAC Endorsement Report",
+    "Document_number": "1389-AR-EN-HV-RP-001",
+    "Dicipline": "HV",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "HVAC Endorsement Report",
+    "Document_number": "1389-DE-EN-HV-RP-001",
+    "Dicipline": "HV",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Specification for HVAC, Plumbing and Sewage Equipment",
+    "Document_number": "1389-AR-DE-HV-SP-001",
+    "Dicipline": "HV",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Specification for Instrument Cable",
+    "Document_number": "1389-DE-DE-IN-SP-006",
+    "Dicipline": "HV",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Air Handling Package Unit",
+    "Document_number": "1389-AR-PE-HV-TB-001",
+    "Dicipline": "HV",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "A1"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Air Handling Package Unit",
+    "Document_number": "1389-DE-PE-HV-TB-001",
+    "Dicipline": "HV",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "A1"
+    ]
+  },
+  {
+    "Document_name": "ITP for Air Handling Package Unit",
+    "Document_number": "1389-AR-PE-HV-TP-001",
+    "Dicipline": "HV",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "ITP for Air Handling Package Unit",
+    "Document_number": "1389-DE-PE-HV-TP-001",
+    "Dicipline": "HV",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Instrument and Control Design Criteria",
+    "Document_number": "1389-AR-DE-IN-DC-001",
+    "Dicipline": "IN",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Instrument and Control Design Criteria",
+    "Document_number": "1389-DE-DE-IN-DC-001",
+    "Dicipline": "IN",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Loop Diagrams for Fire Alarm Control Panel",
+    "Document_number": "1389-AR-DE-IN-DI-001",
+    "Dicipline": "IN",
+    "Document_type": "DI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Instrument Control Loop Diagram For SCS System",
+    "Document_number": "1389-DE-DE-IN-DI-010",
+    "Dicipline": "IN",
+    "Document_type": "DI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Safety Relief Valve",
+    "Document_number": "1389-AR-DE-IN-DS-001",
+    "Dicipline": "IN",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for F&G Sensor and Fire Alarm Control Panel for  (NIB)",
+    "Document_number": "1389-DE-DE-IN-DS-014",
+    "Dicipline": "IN",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Instruments Hook",
+    "Document_number": "1389-AR-DE-IN-DW-001--Up Drawing",
+    "Dicipline": "IN",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Typical Instrument & F&G Installation Drawing",
+    "Document_number": "1389-DE-DE-IN-DW-002",
+    "Dicipline": "IN",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "IO List for Fire Alarm Control Panel",
+    "Document_number": "1389-AR-DE-IN-LI-001",
+    "Dicipline": "IN",
+    "Document_type": "LI",
+    "Revisions": [
+      "A0",
+      "A0-REJECT 1",
+      "A0-REJECT 2",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "IO List For ESD",
+    "Document_number": "1389-DE-DE-IN-LI-005--F&G System",
+    "Dicipline": "IN",
+    "Document_type": "LI",
+    "Revisions": [
+      "A0",
+      "A0-REJECT1",
+      "A0-REJECT2",
+      "A1",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "F&G Sensor Layout (Overall)",
+    "Document_number": "1389-AR-DE-IN-LY-001",
+    "Dicipline": "IN",
+    "Document_type": "LY",
+    "Revisions": [
+      "A0",
+      "A0-REJECT",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "F&G Sensor Layout for Process Area",
+    "Document_number": "1389-DE-DE-IN-LY-014",
+    "Dicipline": "IN",
+    "Document_type": "LY",
+    "Revisions": [
+      "A0",
+      "A0-REJECT",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Safety Relief Valve",
+    "Document_number": "1389-AR-DE-IN-MR-001",
+    "Dicipline": "IN",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Cable Tray and Ladder",
+    "Document_number": "1389-DE-DE-IN-MR-019",
+    "Dicipline": "IN",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "MTO for Instrument Hook Up",
+    "Document_number": "1389-AR-DE-IN-MT-001",
+    "Dicipline": "IN",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "MTO for F&G Device for (NIB)",
+    "Document_number": "1389-DE-DE-IN-MT-006",
+    "Dicipline": "IN",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Instrument Endorsement Report",
+    "Document_number": "1389-AR-EN-IN-RP-001",
+    "Dicipline": "IN",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Instrument Endorsement Report",
+    "Document_number": "1389-DE-EN-IN-RP-001",
+    "Dicipline": "IN",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Instrument Cable Schedule for TUCO",
+    "Document_number": "1389-AR-DE-IN-SH-001",
+    "Dicipline": "IN",
+    "Document_type": "SH",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2"
+    ]
+  },
+  {
+    "Document_name": "Instrument Cable Schedule For Fire & Gas Detection System",
+    "Document_number": "1389-DE-DE-IN-SH-004",
+    "Dicipline": "IN",
+    "Document_type": "SH",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Specification for Instrument Panel And Cabinet",
+    "Document_number": "1389-AR-DE-IN-SP-001",
+    "Dicipline": "IN",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Specification for SCS System (Supervisory Control System)",
+    "Document_number": "1389-DE-DE-IN-SP-016",
+    "Dicipline": "IN",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B0-REJECT",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Safety Relief Valve",
+    "Document_number": "1389-AR-PE-IN-TB-001",
+    "Dicipline": "IN",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for F&G Sensor",
+    "Document_number": "1389-DE-PE-IN-TB-020",
+    "Dicipline": "IN",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "A1"
+    ]
+  },
+  {
+    "Document_name": "ITP for Safety Relief Valve",
+    "Document_number": "1389-AR-PE-IN-TP-001",
+    "Dicipline": "IN",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "ITP for Cable Tray and Ladder",
+    "Document_number": "1389-DE-PE-IN-TP-019",
+    "Dicipline": "IN",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Crane",
+    "Document_number": "1389-AR-DE-MA-DS-001",
+    "Dicipline": "MA",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Air Compressor Package",
+    "Document_number": "1389-DE-DE-MA-DS-005",
+    "Dicipline": "MA",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Crane",
+    "Document_number": "1389-AR-DE-MA-MR-001",
+    "Dicipline": "MA",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Material requisition for Air Compressor Package",
+    "Document_number": "1389-DE-DE-MA-MR-004",
+    "Dicipline": "MA",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Specification for Pump",
+    "Document_number": "1389-AR-DE-MA-SP-001",
+    "Dicipline": "MA",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Specification for Air Compressor Package",
+    "Document_number": "1389-DE-DE-MA-SP-004",
+    "Dicipline": "MA",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Crane",
+    "Document_number": "1389-AR-PE-MA-TB-001",
+    "Dicipline": "MA",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation  for Air Dryer Package",
+    "Document_number": "1389-DE-PE-MA-TB-003",
+    "Dicipline": "MA",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "ITP for Crane",
+    "Document_number": "1389-AR-PE-MA-TP-001",
+    "Dicipline": "MA",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "ITP for Air Dryer Package",
+    "Document_number": "1389-DE-PE-MA-TP-003",
+    "Dicipline": "MA",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Mechanical Design Criteria",
+    "Document_number": "1389-AR-DE-ME-DC-001",
+    "Dicipline": "ME",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Mechanical Design Criteria",
+    "Document_number": "1389-DE-DE-ME-DC-001",
+    "Dicipline": "ME",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Scrubber",
+    "Document_number": "1389-AR-DE-ME-DS-001",
+    "Dicipline": "ME",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Dry Air Receivers",
+    "Document_number": "1389-DE-DE-ME-DS-007",
+    "Dicipline": "ME",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Mechanical Drawing for Elevated Water Tank",
+    "Document_number": "1389-AR-DE-ME-DW-001",
+    "Dicipline": "ME",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Mechanical Drawing for Elevated Water Tank",
+    "Document_number": "1389-AR-DE-ME-DW-001",
+    "Dicipline": "ME",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Scrubber",
+    "Document_number": "1389-AR-DE-ME-MR-001",
+    "Dicipline": "ME",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Vent Stack",
+    "Document_number": "1389-DE-DE-ME-MR-005",
+    "Dicipline": "ME",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Mechanical Endorsement Report",
+    "Document_number": "1389-AR-EN-ME-RP-001",
+    "Dicipline": "ME",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Mechanical Endorsement Report",
+    "Document_number": "1389-DE-EN-ME-RP-001",
+    "Dicipline": "ME",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Specification for Air Cooler",
+    "Document_number": "1389-AR-DE-ME-SP-001",
+    "Dicipline": "ME",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Specification for Pressure Vessel",
+    "Document_number": "1389-DE-DE-ME-SP-002",
+    "Dicipline": "ME",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Scrubber",
+    "Document_number": "1389-AR-PE-ME-TB-001",
+    "Dicipline": "ME",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Vent Stack",
+    "Document_number": "1389-DE-PE-ME-TB-005",
+    "Dicipline": "ME",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "ITP for Scrubber",
+    "Document_number": "1389-AR-PE-ME-TP-001",
+    "Dicipline": "ME",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Field Inspection Test Plan for Air Gas Cooler",
+    "Document_number": "1389-DE-PE-ME-TP-006",
+    "Dicipline": "ME",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Coordination Procedure",
+    "Document_number": "1389-AR-GN-PC-PR-001",
+    "Dicipline": "PC",
+    "Document_type": "PR",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Change order procedure",
+    "Document_number": "1389-DE-GN-PC-PR-008",
+    "Dicipline": "PC",
+    "Document_type": "PR",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Work Breakdown Structure",
+    "Document_number": "1389-AR-GN-PC-RP-001",
+    "Dicipline": "PC",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Master Document List",
+    "Document_number": "1389-DE-GN-PC-RP-004",
+    "Dicipline": "PC",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "Wall Thickness Calculation",
+    "Document_number": "1389-AR-DE-PI-CA-001",
+    "Dicipline": "PI",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Wall Thickness Calculation",
+    "Document_number": "1389-DE-DE-PI-CA-001",
+    "Dicipline": "PI",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Piping Design Criteria",
+    "Document_number": "1389-AR-DE-PI-DC-001",
+    "Dicipline": "PI",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Piping Design Criteria",
+    "Document_number": "1389-DE-DE-PI-DC-001",
+    "Dicipline": "PI",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Manual Valve",
+    "Document_number": "1389-AR-DE-PI-DS-001",
+    "Dicipline": "PI",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Manual Valve",
+    "Document_number": "1389-DE-DE-PI-DS-003",
+    "Dicipline": "PI",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Key Plan",
+    "Document_number": "1389-AR-DE-PI-DW-001",
+    "Dicipline": "PI",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Overall plot plan",
+    "Document_number": "1389-DE-DE-PI-DW-008",
+    "Dicipline": "PI",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Support List",
+    "Document_number": "1389-AR-DE-PI-LI-001",
+    "Dicipline": "PI",
+    "Document_type": "LI",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Tie",
+    "Document_number": "1389-DE-DE-PI-LI-004--In List",
+    "Dicipline": "PI",
+    "Document_type": "LI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Manual Valve",
+    "Document_number": "1389-AR-DE-PI-MR-001",
+    "Dicipline": "PI",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Material requisition for Flange",
+    "Document_number": "1389-DE-DE-PI-MR-008",
+    "Dicipline": "PI",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "MTO for Bolt & Nut",
+    "Document_number": "1389-AR-DE-PI-MT-001",
+    "Dicipline": "PI",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "MTO for Manual Valve",
+    "Document_number": "1389-DE-DE-PI-MT-010",
+    "Dicipline": "PI",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Piping Stress Analysis Report",
+    "Document_number": "1389-AR-DE-PI-RP-001",
+    "Dicipline": "PI",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Piping Endorsement Report",
+    "Document_number": "1389-DE-EN-PI-RP-001",
+    "Dicipline": "PI",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "pecification for Color Coding",
+    "Document_number": "1389-AR-DE-PI-SP-001",
+    "Dicipline": "PI",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Specification for Painting",
+    "Document_number": "1389-DE-DE-PI-SP-017",
+    "Dicipline": "PI",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Manual Valve",
+    "Document_number": "1389-AR-PE-PI-TB-001",
+    "Dicipline": "PI",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Flange",
+    "Document_number": "1389-DE-PE-PI-TB-008",
+    "Dicipline": "PI",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "ITP for Manual Valve",
+    "Document_number": "1389-AR-PE-PI-TP-001",
+    "Dicipline": "PI",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "ITP for Flange",
+    "Document_number": "1389-DE-PE-PI-TP-008",
+    "Dicipline": "PI",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "PO Check for Lighting System",
+    "Document_number": "1389-AR-PE-EL-PO-001",
+    "Dicipline": "PO",
+    "Document_type": "EL",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "PO CHECK for Distribution & Lighting Panels",
+    "Document_number": "1389-DE-PE-EL-PO-018",
+    "Dicipline": "PO",
+    "Document_type": "EL",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "PO Check for Air Handling Package Unit",
+    "Document_number": "1389-AR-PE-HV-PO-001",
+    "Dicipline": "PO",
+    "Document_type": "HV",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "PO Check for Air Handling Package Unit",
+    "Document_number": "1389-DE-PE-HV-PO-001",
+    "Dicipline": "PO",
+    "Document_type": "HV",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "PO Check for Safety Relief Valve",
+    "Document_number": "1389-AR-PE-IN-PO-001",
+    "Dicipline": "PO",
+    "Document_type": "IN",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "PO Check for F&G Detctor for DEHSHIR Gas Compressor Station Project",
+    "Document_number": "1389-DE-PE-IN-PO-020",
+    "Dicipline": "PO",
+    "Document_type": "IN",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "PO Check for Crane",
+    "Document_number": "1389-AR-PE-MA-PO-001",
+    "Dicipline": "PO",
+    "Document_type": "MA",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "PO Check for Air Dryer Package",
+    "Document_number": "1389-DE-PE-MA-PO-003",
+    "Dicipline": "PO",
+    "Document_type": "MA",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "PO Check for Scrubber",
+    "Document_number": "1389-AR-PE-ME-PO-001",
+    "Dicipline": "PO",
+    "Document_type": "ME",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "PO Check for Vent Stack",
+    "Document_number": "1389-DE-PE-ME-PO-005",
+    "Dicipline": "PO",
+    "Document_type": "ME",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "PO check for Manual Valve",
+    "Document_number": "1389-AR-PE-PI-PO-001",
+    "Dicipline": "PO",
+    "Document_type": "PI",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "PO check for Flange",
+    "Document_number": "1389-DE-PE-PI-PO-008",
+    "Dicipline": "PO",
+    "Document_type": "PI",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "PO Check for Total Flooding System",
+    "Document_number": "1389-AR-PE-SA-PO-001",
+    "Dicipline": "PO",
+    "Document_type": "SA",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "PO check for Safety Personnel Protection Equipment",
+    "Document_number": "1389-DE-PE-SA-PO-008",
+    "Dicipline": "PO",
+    "Document_type": "SA",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "PO Check for Telephone System",
+    "Document_number": "1389-AR-PE-TL-PO-001",
+    "Dicipline": "PO",
+    "Document_type": "TL",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "PO Check for Telecommunication Cable",
+    "Document_number": "1389-DE-PE-TL-PO-005",
+    "Dicipline": "PO",
+    "Document_type": "TL",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Depressurizing Calculation Report",
+    "Document_number": "1389-AR-DE-PR-CA-001",
+    "Dicipline": "PR",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+    ]
+  },
+  {
+    "Document_name": "Drain Network Calculation Report",
+    "Document_number": "1389-DE-DE-PR-CA-007",
+    "Dicipline": "PR",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Basis of Design",
+    "Document_number": "1389-AR-DE-PR-DB-001",
+    "Dicipline": "PR",
+    "Document_type": "DB",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Basis of Design",
+    "Document_number": "1389-DE-DE-PR-DB-001",
+    "Dicipline": "PR",
+    "Document_type": "DB",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Process Design Criteria",
+    "Document_number": "1389-AR-DE-PR-DC-001",
+    "Dicipline": "PR",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Process Design Criteria",
+    "Document_number": "1389-DE-DE-PR-DC-001",
+    "Dicipline": "PR",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Process Description",
+    "Document_number": "1389-AR-DE-PR-DE-001",
+    "Dicipline": "PR",
+    "Document_type": "DE",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Process Description",
+    "Document_number": "1389-DE-DE-PR-DE-001",
+    "Dicipline": "PR",
+    "Document_type": "DE",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Process Symbol & Legend Diagram",
+    "Document_number": "1389-AR-DE-PR-DI-001",
+    "Dicipline": "PR",
+    "Document_type": "DI",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B0-REJECT",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Process Symbol & Legend Diagram",
+    "Document_number": "1389-DE-DE-PR-DI-007",
+    "Dicipline": "PR",
+    "Document_type": "DI",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B0-REJECT",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Cold Vent Load Summary Table",
+    "Document_number": "1389-AR-DE-PR-LI-001",
+    "Dicipline": "PR",
+    "Document_type": "LI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2"
+    ]
+  },
+  {
+    "Document_name": "Equipment List",
+    "Document_number": "1389-DE-DE-PR-LI-003",
+    "Dicipline": "PR",
+    "Document_type": "LI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2"
+    ]
+  },
+  {
+    "Document_name": "Operating Manual",
+    "Document_number": "1389-AR-DE-PR-OM-001",
+    "Dicipline": "PR",
+    "Document_type": "OM",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "Operating Manual",
+    "Document_number": "1389-DE-DE-PR-OM-001",
+    "Dicipline": "PR",
+    "Document_type": "OM",
+    "Revisions": [
+      "A0",
+      "A1"
+    ]
+  },
+  {
+    "Document_name": "Operating & Control Philosophy",
+    "Document_number": "1389-AR-DE-PR-PH-001",
+    "Dicipline": "PR",
+    "Document_type": "PH",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Operating & Control Philosophy",
+    "Document_number": "1389-DE-DE-PR-PH-002",
+    "Dicipline": "PR",
+    "Document_type": "PH",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "P&ID Main Gas Inlet",
+    "Document_number": "1389-AR-DE-PR-PI-001--Outlet Connection & Gas Metering System",
+    "Dicipline": "PR",
+    "Document_type": "PI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "P & ID Potable & Service Water System",
+    "Document_number": "1389-DE-DE-PR-PI-015",
+    "Dicipline": "PR",
+    "Document_type": "PI",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "Black Powder Discharge Procedure",
+    "Document_number": "1389-AR-DE-PR-PR-001",
+    "Dicipline": "PR",
+    "Document_type": "PR",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Black Powder Discharge Procedure",
+    "Document_number": "1389-DE-DE-PR-PR-001",
+    "Dicipline": "PR",
+    "Document_type": "PR",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Site Condition",
+    "Document_number": "1389-AR-DE-PR-RP-001",
+    "Dicipline": "PR",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Process Endorsement Report",
+    "Document_number": "1389-DE-EN-PR-RP-001",
+    "Dicipline": "PR",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Quality Control Plan( QCP)",
+    "Document_number": "1389-AR-GN-QC-PR-001",
+    "Dicipline": "QC",
+    "Document_type": "PR",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Final Documentation Procedure",
+    "Document_number": "1389-DE-GN-QC-PR-008",
+    "Dicipline": "QC",
+    "Document_type": "PR",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Field inspection and test plan for civil work",
+    "Document_number": "1389-AR-GN-QC-TP-001",
+    "Dicipline": "QC",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "ITP for Air Compressor",
+    "Document_number": "1389-DE-GN-QC-TP-009",
+    "Dicipline": "QC",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": " Total Flooding System Agent Demand Calculation",
+    "Document_number": "1389-AR-DE-SA-CA-001",
+    "Dicipline": "SA",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B5"
+    ]
+  },
+  {
+    "Document_name": " Total Flooding System Agent Demand Calculation",
+    "Document_number": "1389-DE-DE-SA-CA-001",
+    "Dicipline": "SA",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B5",
+      "B6"
+    ]
+  },
+  {
+    "Document_name": "Safety Design Criteria",
+    "Document_number": "1389-AR-DE-SA-DC-001",
+    "Dicipline": "SA",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B0-REJECT",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Safety Design Criteria",
+    "Document_number": "1389-DE-DE-SA-DC-001",
+    "Dicipline": "SA",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B0-REJECT",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "F&G Cause & Effect Diagram",
+    "Document_number": "1389-AR-DE-SA-DI-001",
+    "Dicipline": "SA",
+    "Document_type": "DI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "A5",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Fire Alarm Control Panel Cause & Effect Diagram",
+    "Document_number": "1389-DE-DE-SA-DI-002",
+    "Dicipline": "SA",
+    "Document_type": "DI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Portable Type Co2 Fire Extinguisher",
+    "Document_number": "1389-AR-DE-SA-DS-001",
+    "Dicipline": "SA",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Material Safety Data Sheet",
+    "Document_number": "1389-DE-DE-SA-DS-010",
+    "Dicipline": "SA",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Detail Installation Drawing for Safety & Fire Fighting Equipment",
+    "Document_number": "1389-AR-DE-SA-DW-001",
+    "Dicipline": "SA",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+    ]
+  },
+  {
+    "Document_name": "Detail Installation Drawing for Safety & Fire Fighting Equipment",
+    "Document_number": "1389-DE-DE-SA-DW-001",
+    "Dicipline": "SA",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+    ]
+  },
+  {
+    "Document_name": "Hazard Source List",
+    "Document_number": "1389-AR-DE-SA-LI-001",
+    "Dicipline": "SA",
+    "Document_type": "LI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Hazard Source List",
+    "Document_number": "1389-DE-DE-SA-LI-001",
+    "Dicipline": "SA",
+    "Document_type": "LI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Safety & Fire Fighting Equipment Layout for Process Area",
+    "Document_number": "1389-AR-DE-SA-LY-001",
+    "Dicipline": "SA",
+    "Document_type": "LY",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Hazardous Area Classification Layout",
+    "Document_number": "1389-DE-DE-SA-LY-005",
+    "Dicipline": "SA",
+    "Document_type": "LY",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Total Flooding System",
+    "Document_number": "1389-AR-DE-SA-MR-001",
+    "Dicipline": "SA",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Safety Personnel Protection Equipment ",
+    "Document_number": "1389-DE-DE-SA-MR-008-- Copy",
+    "Dicipline": "SA",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "MTO for Safety, Fire Fighting Equipment and Sign",
+    "Document_number": "1389-AR-DE-SA-MT-001",
+    "Dicipline": "SA",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B5",
+      "~$89-AR-DE-SA-MT-001-A0, MTO for Safety, Fire Fighting Equipment and Sign.docx",
+      "~$Appendix 1 (Material Take OFF Table)-AR.xlsx"
+    ]
+  },
+  {
+    "Document_name": "MTO for Total Flooding System",
+    "Document_number": "1389-DE-DE-SA-MT-002",
+    "Dicipline": "SA",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "~$Appendix 1 (Material Take OFF Table)-DE.xlsx"
+    ]
+  },
+  {
+    "Document_name": "Design Philosophy through HSE",
+    "Document_number": "1389-AR-DE-SA-PH-001",
+    "Dicipline": "SA",
+    "Document_type": "PH",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Design Philosophy through HSE",
+    "Document_number": "1389-DE-DE-SA-PH-001",
+    "Dicipline": "SA",
+    "Document_type": "PH",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "P&ID for Total Flooding System",
+    "Document_number": "1389-AR-DE-SA-PI-001",
+    "Dicipline": "SA",
+    "Document_type": "PI",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B5",
+      "B6"
+    ]
+  },
+  {
+    "Document_name": "P&ID for Total Flooding System",
+    "Document_number": "1389-DE-DE-SA-PI-001",
+    "Dicipline": "SA",
+    "Document_type": "PI",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4",
+      "B5",
+      "B6"
+    ]
+  },
+  {
+    "Document_name": "Consequence Analysis Study Report",
+    "Document_number": "1389-AR-DE-SA-RP-001",
+    "Dicipline": "SA",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Safety Endorsement Report",
+    "Document_number": "1389-DE-EN-SA-RP-001",
+    "Dicipline": "SA",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Specification for Safety Sign",
+    "Document_number": "1389-AR-DE-SA-SP-001",
+    "Dicipline": "SA",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Specification for Hazardous Area Classification",
+    "Document_number": "1389-DE-DE-SA-SP-003",
+    "Dicipline": "SA",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Total Flooding System",
+    "Document_number": "1389-AR-PE-SA-TB-001",
+    "Dicipline": "SA",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Safety Personnel Protection Equipment",
+    "Document_number": "1389-DE-PE-SA-TB-008",
+    "Dicipline": "SA",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+    ]
+  },
+  {
+    "Document_name": "ITP for Total Flooding System",
+    "Document_number": "1389-AR-PE-SA-TP-001",
+    "Dicipline": "SA",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "ITP for Safety Personnel Protection Equipment",
+    "Document_number": "1389-DE-PE-SA-TP-008",
+    "Dicipline": "SA",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Calculation Book for Administration Building Structure and Foundation",
+    "Document_number": "1389-AR-DE-ST-CA-001",
+    "Dicipline": "ST",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Calculation Book for Fuel Tank Concrete Pit",
+    "Document_number": "1389-DE-DE-ST-CA-039",
+    "Dicipline": "ST",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "Structural Design Criteria",
+    "Document_number": "1389-AR-DE-ST-DC-001",
+    "Dicipline": "ST",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Design Criteria for Load and Force",
+    "Document_number": "1389-DE-DE-ST-DC-002",
+    "Dicipline": "ST",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Foundation Drawing for Control Room ",
+    "Document_number": "1389-AR-DE-ST-DW-001-- Switchgear - Substation",
+    "Dicipline": "ST",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "Foundation and Structure Drawing for Fuel Tank Concrete Pit",
+    "Document_number": "1389-DE-DE-ST-DW-060",
+    "Dicipline": "ST",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0"
+    ]
+  },
+  {
+    "Document_name": "Geotechnical Report",
+    "Document_number": "1389-AR-DE-ST-RP-001",
+    "Dicipline": "ST",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Structure Endorsement Report",
+    "Document_number": "1389-DE-EN-ST-RP-001",
+    "Dicipline": "ST",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "A3",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Specification for Base Setting & Grouting of Equipments & Structures",
+    "Document_number": "1389-AR-DE-ST-SP-001",
+    "Dicipline": "ST",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Specification for Fabrication & Erection of Steel Structure",
+    "Document_number": "1389-DE-DE-ST-SP-004",
+    "Dicipline": "ST",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Coverage Study for Paging System",
+    "Document_number": "1389-AR-DE-TL-CA-002",
+    "Dicipline": "TL",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Coverage Study for Paging System",
+    "Document_number": "1389-DE-DE-TL-CA-002",
+    "Dicipline": "TL",
+    "Document_type": "CA",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Telecommunication Design Criteria",
+    "Document_number": "1389-AR-DE-TL-DC-001",
+    "Dicipline": "TL",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Telecommunication Design Criteria",
+    "Document_number": "1389-DE-DE-TL-DC-001",
+    "Dicipline": "TL",
+    "Document_type": "DC",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Telephone & LAN System Block Diagram",
+    "Document_number": "1389-AR-DE-TL-DI-001",
+    "Dicipline": "TL",
+    "Document_type": "DI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Block Diagram For Access Control And Security CCTV System",
+    "Document_number": "1389-DE-DE-TL-DI-004",
+    "Dicipline": "TL",
+    "Document_type": "DI",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet for Telephone and LAN System",
+    "Document_number": "1389-AR-DE-TL-DS-001",
+    "Dicipline": "TL",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Data Sheet For Access Control And Security CCTV system",
+    "Document_number": "1389-DE-DE-TL-DS-005",
+    "Dicipline": "TL",
+    "Document_type": "DS",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Typical Telecommunication Installation Detail",
+    "Document_number": "1389-AR-DE-TL-DW-001",
+    "Dicipline": "TL",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Telecom System Symbol & Legends",
+    "Document_number": "1389-DE-DE-TL-DW-002",
+    "Dicipline": "TL",
+    "Document_type": "DW",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Telephone , Paging & LAN System Equipment Layout for Administration Building",
+    "Document_number": "1389-AR-DE-TL-LY-001",
+    "Dicipline": "TL",
+    "Document_type": "LY",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Access Control And Security CCTV System Layout For Buildings",
+    "Document_number": "1389-DE-DE-TL-LY-015",
+    "Dicipline": "TL",
+    "Document_type": "LY",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for Telephone System",
+    "Document_number": "1389-AR-DE-TL-MR-001",
+    "Dicipline": "TL",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Material Requisition for AISS",
+    "Document_number": "1389-DE-DE-TL-MR-006",
+    "Dicipline": "TL",
+    "Document_type": "MR",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Telephone & LAN System MTO",
+    "Document_number": "1389-AR-DE-TL-MT-001",
+    "Dicipline": "TL",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3",
+      "B4"
+    ]
+  },
+  {
+    "Document_name": "MTO For Access Control And Security CCTV System",
+    "Document_number": "1389-DE-DE-TL-MT-005",
+    "Dicipline": "TL",
+    "Document_type": "MT",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Telecommunication Endorsement Report",
+    "Document_number": "1389-AR-EN-TL-RP-001",
+    "Dicipline": "TL",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A0-REJECT",
+      "A1",
+      "B0",
+      "B1",
+      "B2"
+    ]
+  },
+  {
+    "Document_name": "Telecommunication Endorsement Report",
+    "Document_number": "1389-DE-EN-TL-RP-001",
+    "Dicipline": "TL",
+    "Document_type": "RP",
+    "Revisions": [
+      "A0",
+      "A0-REJECT",
+      "A1",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "Telecommunication Cable Schedule",
+    "Document_number": "1389-AR-DE-TL-SH-001",
+    "Dicipline": "TL",
+    "Document_type": "SH",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1",
+      "B2",
+      "B3"
+    ]
+  },
+  {
+    "Document_name": "Cable Schedule For CCTV Systems",
+    "Document_number": "1389-DE-DE-TL-SH-002",
+    "Dicipline": "TL",
+    "Document_type": "SH",
+    "Revisions": [
+      "A0",
+      "A1",
+      "A2",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Specification for Telephone & LAN System",
+    "Document_number": "1389-AR-DE-TL-SP-001",
+    "Dicipline": "TL",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "B0",
+      "B1"
+    ]
+  },
+  {
+    "Document_name": "Specification For Access Control And Security CCTV System",
+    "Document_number": "1389-DE-DE-TL-SP-005",
+    "Dicipline": "TL",
+    "Document_type": "SP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for Telephone System",
+    "Document_number": "1389-AR-PE-TL-TB-001",
+    "Dicipline": "TL",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "Technical Bid Evaluation for AISS",
+    "Document_number": "1389-DE-PE-TL-TB-006",
+    "Dicipline": "TL",
+    "Document_type": "TB",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "ITP for Telephone System",
+    "Document_number": "1389-AR-PE-TL-TP-001",
+    "Dicipline": "TL",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "A1",
+      "B0"
+    ]
+  },
+  {
+    "Document_name": "ITP for Telecommunication Cable",
+    "Document_number": "1389-DE-PE-TL-TP-005",
+    "Dicipline": "TL",
+    "Document_type": "TP",
+    "Revisions": [
+      "A0",
+      "B0"
+    ]
+  }
+]
