@@ -9,8 +9,8 @@ if __name__ == "__main__":
     for x in all_node:
         second_step = x['Children']
         for y in second_step:
-            third_step = y['Children']
-            for counter in (0,len(third_step)-1):
+            third_step = y['Children']#list of document
+            for counter in range(len(third_step)):
                 document = third_step[counter]['Name']
                 document_part = str(document).split('-')
                 document_name = (document_part[6:])[0]
@@ -26,6 +26,7 @@ if __name__ == "__main__":
                     "Document_type" : y['Name'],
                     "Revisions" : revisions,
                 })
+    breakpoint()
     json_str = json.dumps(all_documents, indent=2)
     with open("database.json", "w", encoding="utf-8") as out_stream:
         out_stream.write(json_str)
