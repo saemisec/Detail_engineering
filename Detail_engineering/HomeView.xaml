@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="Transparent">
     <Grid>
-        <TextBlock Text="Welcome" Foreground="#EAF0FF" Opacity="0.8" FontSize="28"
+        <TextBlock Text="Designed BY Jondishapour Engineering Department" Foreground="#EAF0FF" Opacity="0.8" FontSize="40"
                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
+    
 </UserControl>
 

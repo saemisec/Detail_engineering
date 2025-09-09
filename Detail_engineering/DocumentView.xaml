@@ -67,6 +67,7 @@
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Padding" Value="10,8"/>
             <Setter Property="Height" Value="36"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
 
         <!-- DataGrid row style -->
@@ -179,6 +180,12 @@
                             </Button>
                         </Grid>
                     </DataGridTextColumn.Header>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="TextAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
 
 
@@ -196,6 +203,12 @@
                             </Button>
                         </Grid>
                     </DataGridTextColumn.Header>
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="TextAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
                 
                 
@@ -208,11 +221,12 @@
                                             <Setter Property="HorizontalAlignment" Value="Center"/>
                                             <Setter Property="TextAlignment" Value="Center"/>
                                         </Style>
-                                    </DataGridTextColumn.ElementStyle>  
+                                    </DataGridTextColumn.ElementStyle>
+                                    
                 </DataGridTextColumn>
 
                 <!-- lastrevision (Hyperlink) -->
-                <DataGridTemplateColumn Header="lastrevision" Width="220">
+                <DataGridTemplateColumn Header="lastrevision" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock TextTrimming="CharacterEllipsis">
@@ -222,6 +236,7 @@
                                 </Hyperlink>
                             </TextBlock>
                         </DataTemplate>
+                        
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 

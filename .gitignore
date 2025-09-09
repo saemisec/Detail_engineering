@@ -155,6 +155,7 @@ dmypy.json
 bin
 **/obj/
 **/bin/
+*.json
 
 
 # Cython debug symbols

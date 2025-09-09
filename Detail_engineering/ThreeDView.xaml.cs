@@ -188,29 +188,57 @@ namespace Detail_engineering
     const mouse = new THREE.Vector2();
     function pick(e) {{
       const rect = renderer.domElement.getBoundingClientRect();
-      mouse.x = ((e.clientX - rect.left)/rect.width)*2 - 1;
-      mouse.y = -((e.clientY - rect.top)/rect.height)*2 + 1;
+      const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+      const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+      mouse.set(x, y);
 
       raycaster.setFromCamera(mouse, camera);
       const hits = raycaster.intersectObjects(scene.children, true);
       if (!hits.length) return;
+
       let obj = hits[0].object;
-      let name = obj.name || ''; let cur = obj;
-      while((!name || !name.trim()) && cur.parent) {{ cur = cur.parent; name = cur.name || '' }}
-      name = name?.trim() || obj.uuid;
-      showPanel(name);
+
+      let partRoot = obj;
+      let name = partRoot.name || '';
+      while ((!name || !name.trim()) && partRoot.parent) {{
+        partRoot = partRoot.parent;
+        name = partRoot.name || '';
+      }}
+      if (!name || !name.trim()) partRoot = obj;
+
+      const uniqueNames = getUniqueNamesForNode(partRoot);
+
+      renderTableFor(uniqueNames);
     }}
     renderer.domElement.addEventListener('click', pick);
+
+    const recentParts = [];
+    function addRecentPart(name){{
+      const n = normalizeName(name);
+      if(!n) return;
+      const idx = recentParts.findIndex(x => x.toLowerCase() === n.toLowerCase());
+      if(idx >= 0) recentParts.splice(idx, 1); // اگر بود، حذف کن تا به آخر منتقل شود
+      recentParts.push(n);
+      // فقط 5 آیتم آخر را نگه دار
+      while(recentParts.length > 5) recentParts.shift();
+    }}
+
+    // آپدیت جدول از روی recentParts
+    function renderRecentTable(){{
+      for (let i=0; i<5; i++){{
+        const cell = document.getElementById('nm'+i);
+        const val = recentParts[recentParts.length-1-i]; // از آخر به اول
+        if(cell) cell.textContent = val ? val : '—';
+      }}
+    }}
 
     // پنل جدول
     const panel = document.getElementById('panel');
     document.getElementById('close').onclick = ()=> panel.style.display='none';
     function showPanel(partName) {{
-      panel.style.display = 'block';
-      for (let i=0;i<5;i++) {{
-        const cell = document.getElementById('nm'+i);
-        if (cell) cell.textContent = partName;
-      }}
+      addRecentPart(partName);
+      renderRecentTable();
+      document.getElementById('panel').style.display = 'block';
     }}
 
     // Toolbox (بدون Parts) + تضاد Walk/AutoRotate
@@ -233,6 +261,15 @@ namespace Detail_engineering
       enableAutoRotate(false);
     }}
     function homeView() {{ controls.reset(); enableAutoRotate(false); }}
+
+    function normalizeName(s){{
+      if(!s) return '';
+      const parts = s.split(/[\\/]/).filter(Boolean);
+      //if (parts.length>1) return parts[1];
+      return parts.length ? parts[parts.length-1] : s;
+      return s;
+    }}
+
 
     function enableAutoRotate(on) {{
       controls.autoRotate = !!on; toggleOn('autorot', on);
@@ -285,6 +322,33 @@ namespace Detail_engineering
       camera.position.add(pan); controls.target.add(pan); controls.update();
     }}
     function fov(delta) {{ camera.fov = Math.max(10, Math.min(90, camera.fov + delta)); camera.updateProjectionMatrix(); }}
+
+    function getUniqueNamesForNode(root){{
+      const raw = [];
+      root.traverse(n => {{
+        if (n.name && n.name.trim()) raw.push(n.name.trim());
+      }});
+      const seen = new Set();
+      const uniq = [];
+      for (const nm of raw.map(normalizeName).filter(Boolean)) {{
+        const key = nm.toLowerCase();
+        if (!seen.has(key)) {{ seen.add(key); uniq.push(nm); }}
+      }}
+      if (uniq.length === 0) {{
+        const self = normalizeName(root.name || '');
+        if (self) uniq.push(self);
+      }}
+      return uniq;
+    }}
+
+    function renderTableFor(names){{
+      for (let i=0; i<5; i++){{
+        const cell = document.getElementById('nm'+i);
+        const val = names[i] || '—';
+        if (cell) cell.textContent = val;
+      }}
+      document.getElementById('panel').style.display = 'block';
+    }}
 
     const tools = document.getElementById('tools');
     const bind = (id,fn)=> document.getElementById(id).onclick = fn;
