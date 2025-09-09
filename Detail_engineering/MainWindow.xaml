@@ -140,8 +140,8 @@
         <!-- نوار 4 تصویر -->
         <Border Grid.Row="0" Background="{StaticResource BgSurface}" CornerRadius="12" Margin="10" BorderBrush="#1FFFFFFF" BorderThickness="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                <Image Width="240" Height="80" Margin="20" Source="pack://siteoforigin:,,,/Images/Jondi.png"/>
                 <Image Width="240" Height="80" Margin="20" Source="pack://siteoforigin:,,,/Images/Scetiran.png"/>
+                <Image Width="240" Height="80" Margin="20" Source="pack://siteoforigin:,,,/Images/Jondi.png"/>
                 <Image Width="240" Height="80" Margin="20" Source="pack://siteoforigin:,,,/Images/GasDevelopment.png"/>
             </StackPanel>
             <!--

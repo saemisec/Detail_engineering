@@ -87,6 +87,23 @@ namespace Detail_engineering
     #panel .body{{padding:10px 12px}}
     table{{width:100%;border-collapse:collapse}} th,td{{border:1px solid var(--line);padding:6px 8px;text-align:left}}
     th{{background:#1F2447}} .nameCell{{max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+    #pathToast {{
+      position: fixed;
+      z-index: 12;
+      background: #171B34;
+      color: #EAF0FF;
+      border: 1px solid #26305E;
+      border-radius: 8px;
+      padding: 6px 10px;
+      box-shadow: 0 6px 20px #0006;
+      font: 13px/1.5 system-ui, Segoe UI, Roboto, sans-serif;
+      max-width: 320px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: none;
+      pointer-events: none; /* تا مزاحم کلیک نشه */
+    }}
   </style>
 </head>
 <body>
@@ -110,6 +127,8 @@ namespace Detail_engineering
     <button class='tb' id='panR'>Pan →</button>
     <button class='tb' id='panU'>Pan ↑</button>
     <button class='tb' id='panD'>Pan ↓</button>
+    <button class='tb toggle' id='pathpeek'>Path Peek</button>
+
   </div>
 
   <div id='panel'>
@@ -129,6 +148,8 @@ namespace Detail_engineering
   </div>
 
   <canvas id='c'></canvas>
+  <div id='pathToast' style='display:none'></div>
+
   <div id='msg'>loading…</div>
 
   <script type='module'>
@@ -139,6 +160,63 @@ namespace Detail_engineering
     //import {{ KTX2Loader }}  from 'https://assets/three/examples/jsm/loaders/KTX2Loader.js';
 
     const msg = document.getElementById('msg'); const log = t => msg.textContent = t;
+
+
+    // حالت سوییچ
+    let pathPeek = false;
+    const toast = document.getElementById('pathToast');
+    let toastTimer = null;
+
+    function setPathPeek(on){{
+      pathPeek = !!on;
+      document.getElementById('pathpeek').classList.toggle('on', pathPeek);
+      // وقتی روشنه، مطمئن شو چیز دیگه‌ای مزاحم نیست
+      if (pathPeek) enableAutoRotate(false), enableWalk(false);
+    }}
+
+    // ساخت مسیر اجدادی از ریشه تا نود
+    function ancestryArray(node){{
+      const chain = [];
+      let cur = node;
+      while(cur){{
+        const nm = (cur.name && cur.name.trim()) ? cur.name.trim() : '';
+        chain.push(nm || '(no name)');
+        cur = cur.parent;
+      }}
+      return chain.reverse(); // [root,...,leaf]
+    }}
+
+    // گرفتن بخش‌های 3..5 (۱-مبنایی)
+    function takeSegments3to5(arr){{
+      console.log(arr);
+      const segs = arr.slice(4, 6); // ایندکس‌های 3 و 4 (۰-مبنایی) = عناصر 4 و 5
+      if (segs.length === 2 && /equipment|structure/i.test(segs[1])) {{
+        segs.pop(); // حذف عنصر 5
+      }}
+      for (let i = 0; i < segs.length; i++) {{
+        segs[i] = segs[i].replace(/\b(AR|FINISH)\b/gi, '').trim();
+        
+
+      }}
+      return segs;
+    }}
+
+    // نمایش toast به‌مدت ۵ ثانیه
+    function showPathToast(text, x, y) {{
+      if (toastTimer) {{
+        clearTimeout(toastTimer);
+        toastTimer = null;
+      }}
+      toast.textContent = text && text.length ? text : '—';
+      // موقعیت: کمی بالاتر از محل کلیک
+      toast.style.left = (x + 10) + 'px';
+      toast.style.top  = (y - 30) + 'px';
+      toast.style.display = 'block';
+      toastTimer = setTimeout(() => {{ toast.style.display = 'none'; }}, 5000);
+    }}
+
+
+
 
     const canvas   = document.getElementById('c');
     const renderer = new THREE.WebGLRenderer({{ canvas, antialias:true, alpha:false }});
@@ -187,28 +265,23 @@ namespace Detail_engineering
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
     function pick(e) {{
+      if (!pathPeek) return;
       const rect = renderer.domElement.getBoundingClientRect();
       const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
       const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
       mouse.set(x, y);
-
       raycaster.setFromCamera(mouse, camera);
       const hits = raycaster.intersectObjects(scene.children, true);
       if (!hits.length) return;
-
-      let obj = hits[0].object;
-
-      let partRoot = obj;
-      let name = partRoot.name || '';
-      while ((!name || !name.trim()) && partRoot.parent) {{
-        partRoot = partRoot.parent;
-        name = partRoot.name || '';
-      }}
-      if (!name || !name.trim()) partRoot = obj;
-
-      const uniqueNames = getUniqueNamesForNode(partRoot);
-
-      renderTableFor(uniqueNames);
+      const obj = hits[0].object;
+      const arr = ancestryArray(obj);           // [root,...,leaf]
+      const segs = takeSegments3to5(arr);       // [3..5] (۱-مبنایی)
+      let txt = segs.join(' / ').trim();
+      txt = txt.replace(/^-+\s*/, '');
+      txt = txt.replace(/\s*-+$/, '');
+      txt = txt.trim();
+      if (!txt || txt === '-' || txt === '—') return;
+      showPathToast(txt, event.clientX, event.clientY);
     }}
     renderer.domElement.addEventListener('click', pick);
 
@@ -359,6 +432,7 @@ namespace Detail_engineering
     bind('rotL', ()=> nudgeOrbitYaw(-10)); bind('rotR', ()=> nudgeOrbitYaw(+10));
     bind('tiltU', ()=> nudgeOrbitPitch(+6)); bind('tiltD', ()=> nudgeOrbitPitch(-6));
     bind('panL', ()=> pan(-2,0)); bind('panR', ()=> pan(+2,0)); bind('panU', ()=> pan(0,+2)); bind('panD', ()=> pan(0,-2));
+    bind('pathpeek', ()=> setPathPeek(!pathPeek));
     tools.style.display='grid';
 
     window.addEventListener('resize', ()=> {{
