@@ -233,15 +233,10 @@ namespace Detail_engineering
 
     // نمایش toast به‌مدت ۵ ثانیه
     function showPathToast(text, x, y) {{
-      if (toastTimer) {{
-        clearTimeout(toastTimer);
-        toastTimer = null;
-      }}
+      if (toastTimer) {{ clearTimeout(toastTimer); toastTimer = null; }}
       toast.textContent = text && text.length ? text : '—';
-      // موقعیت: کمی بالاتر از محل کلیک
-      toast.style.left = (x + 10) + 'px';
-      toast.style.top  = (y - 30) + 'px';
       toast.style.display = 'block';
+      positionTooltip(toast, x, y);
       toastTimer = setTimeout(() => {{ toast.style.display = 'none'; }}, 5000);
     }}
 
@@ -297,11 +292,43 @@ namespace Detail_engineering
       return hits;
     }}
 
+    function positionTooltip(el, x, y) {{
+      const margin = 10; // فاصله از کرسر و لبه‌ها
+      el.style.visibility = 'hidden';
+      el.style.display = 'block';
+      el.style.left = '0px';
+      el.style.top  = '0px';
+
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const rect = el.getBoundingClientRect();
+      const w = rect.width;
+      const h = rect.height;
+
+      // فضای اطراف کرسر
+      const spaceRight  = vw - x - margin;
+      const spaceLeft   = x - margin;
+      const spaceBelow  = vh - y - margin;
+      const spaceAbove  = y - margin;
+
+      // افقی: اگر راست جا شد، راست؛ وگرنه چپ
+      let left = (spaceRight >= w) ? (x + margin) : (x - w - margin);
+      // عمودی: اگر پایین جا شد، پایین؛ وگرنه بالا
+      let top  = (spaceBelow >= h) ? (y + margin) : (y - h - margin);
+
+      // در نهایت clamp به داخل صفحه
+      left = Math.max(margin, Math.min(left, vw - w - margin));
+      top  = Math.max(margin, Math.min(top,  vh - h - margin));
+      el.style.left = left + 'px';
+      el.style.top  = top + 'px';
+      el.style.visibility = 'visible';
+    }}
+
+
     function showPathTable(partText, matches, x, y){{
       if (toastTimer){{ clearTimeout(toastTimer); toastTimer = null; }}
 
-      // سطر اول: نام پارت
-      let html = `<table style='border-collapse:collapse;min-width:260px'>
+      let html = `<table style='border-collapse:collapse;min-width:260px;max-width:420px'>
         <tr><th style='text-align:left;border-bottom:1px solid #26305E;padding:4px 6px'>Part</th></tr>
         <tr><td style='padding:4px 6px;color:#EAF0FF'>${{partText}}</td></tr>`;
 
@@ -317,31 +344,24 @@ namespace Detail_engineering
           </td></tr>`;
         }}
       }}
-
       html += `</table>`;
 
       toast.innerHTML = html;
-      toast.style.left = (x + 10) + 'px';
-      toast.style.top  = (y - 30) + 'px';
       toast.style.display = 'block';
+      positionTooltip(toast, x, y);
 
-      // هندل کلیک روی لینک‌ها (فعلاً مقصد نداریم)
       for (const a of toast.querySelectorAll('a.relDoc')){{
         a.addEventListener('click', (ev)=>{{
           ev.preventDefault();
           const idx = Number(a.getAttribute('data-idx'));
           const d = DOCS[idx];
-          // TODO: مقصد نهایی را بعداً جایگزین کن
+          // TODO: مقصد لینک را بعداً ست کن
           alert(`[Document clicked]\n${{d.Document_name || d.Document_number}}`);
         }});
       }}
 
       toastTimer = setTimeout(()=>{{ toast.style.display = 'none'; }}, 5000);
     }}
-
-
-
-
     const canvas   = document.getElementById('c');
     const renderer = new THREE.WebGLRenderer({{ canvas, antialias:true, alpha:false }});
     renderer.setPixelRatio(window.devicePixelRatio||1);
