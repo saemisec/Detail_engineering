@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="Detail_engineering.DocumentView"
+             x:Name="Root"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -19,6 +20,42 @@
         <SolidColorBrush x:Key="HeaderBorder"  Color="#26305E"/>
         <SolidColorBrush x:Key="SelBg"         Color="#283B7A"/>
         <SolidColorBrush x:Key="SelBorder"     Color="#3C5CC6"/>
+
+
+        <Style TargetType="ContextMenu">
+            <Setter Property="Background" Value="#171B34"/>
+            <Setter Property="BorderBrush" Value="#26305E"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#EAF0FF"/>
+        </Style>
+
+        <!-- استایل MenuItem-->
+        <Style TargetType="MenuItem">
+            <Setter Property="Background" Value="#26305E"/>
+            <Setter Property="Foreground" Value="#EAF0FF"/>
+            <Setter Property="Padding" Value="6,3"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Style.Triggers>
+                <!-- Hover -->
+                <Trigger Property="IsHighlighted" Value="True">
+                    <Setter Property="Background" Value="#283B7A"/>
+                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                </Trigger>
+                <!-- Checked -->
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="Background" Value="#1F2447"/>
+                    <Setter Property="Foreground" Value="#5DB5FF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style> 
+
+        <!-- Separator رنگ تیره -->
+        <Style TargetType="Separator">
+            <Setter Property="Background" Value="#26305E"/>
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="Margin" Value="2,4"/>
+        </Style>
 
         <!-- DataGrid header style -->
         <Style TargetType="DataGridColumnHeader">
@@ -125,30 +162,43 @@
                 </DataGridTemplateColumn>
 
                 <!-- Document_number -->
-                <DataGridTextColumn Header="Document_number" Width="180"
+                <DataGridTextColumn Header="Document_number" Width="220"
                                     Binding="{Binding Document_number, Mode=OneWay}"/>
 
                 <!-- Dicipline -->
-                <DataGridTextColumn Header="Dicipline" Width="150"
-                                    Binding="{Binding Dicipline, Mode=OneWay}">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>  
+                <DataGridTextColumn x:Name="ColDicipline"
+                    Binding="{Binding Dicipline, Mode=OneWay}"
+                    Width="200">
+                    <DataGridTextColumn.Header>
+                        <Grid>
+                            <TextBlock Text="Dicipline" Margin="8,0,28,0" VerticalAlignment="Center"/>
+                            <Button Width="18" Height="18" Padding="0"
+                                HorizontalAlignment="Right" VerticalAlignment="Center" Margin="6,0,0,2"
+                                ToolTip="Filter" Click="DiscBtn_Click">
+                                <Path Data="M0,0 L10,0 5,6 Z" Fill="#9AD1FF"/>
+                            </Button>
+                        </Grid>
+                    </DataGridTextColumn.Header>
                 </DataGridTextColumn>
 
+
                 <!-- Document_type -->
-                <DataGridTextColumn Header="Document_type" Width="170"
-                                    Binding="{Binding Document_type, Mode=OneWay}">
-                                    <DataGridTextColumn.ElementStyle>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                                            <Setter Property="TextAlignment" Value="Center"/>
-                                        </Style>
-                                    </DataGridTextColumn.ElementStyle>  
+                <DataGridTextColumn x:Name="ColDocType"
+                    Binding="{Binding Document_type, Mode=OneWay}"
+                    Width="200">
+                    <DataGridTextColumn.Header>
+                        <Grid>
+                            <TextBlock Text="Document_type" Margin="8,0,28,0" VerticalAlignment="Center"/>
+                            <Button Width="18" Height="18" Padding="0"
+                                HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="6,0,0,2"
+                                ToolTip="Filter" Click="TypeBtn_Click">
+                                <Path Data="M0,0 L10,0 5,6 Z" Fill="#9AD1FF"/>
+                            </Button>
+                        </Grid>
+                    </DataGridTextColumn.Header>
                 </DataGridTextColumn>
+                
+                
 
                 <!-- Revisions (count excl. rejected) -->
                 <DataGridTextColumn Header="Revisions" Width="120"
