@@ -38,6 +38,10 @@ namespace Detail_engineering
             Web.CoreWebView2.SetVirtualHostNameToFolderMapping(
                 "app", modelsDir, CoreWebView2HostResourceAccessKind.Allow);
 
+            // map به پوشه‌ی کنار exe که database.json اونجاست
+            Web.CoreWebView2.SetVirtualHostNameToFolderMapping(
+                "data", AppDomain.CurrentDomain.BaseDirectory, CoreWebView2HostResourceAccessKind.Allow);
+
             // اولین GLB
             var glbName = Directory.EnumerateFiles(modelsDir, "*.glb").Select(Path.GetFileName).FirstOrDefault();
             if (glbName == null)
@@ -167,11 +171,39 @@ namespace Detail_engineering
     const toast = document.getElementById('pathToast');
     let toastTimer = null;
 
+    
+    
+    function normalizeForMatch(s){{
+      return String(s||'')
+        .toLowerCase()
+        .replace(/[_\-\/\\\.]+/g, ' ')
+        .replace(/[^a-z0-9\u0600-\u06FF ]+/gi, ' ')
+        .split(/\s+/).filter(t => t.length > 1);
+    }}
+
+
+
     function setPathPeek(on){{
       pathPeek = !!on;
       document.getElementById('pathpeek').classList.toggle('on', pathPeek);
       // وقتی روشنه، مطمئن شو چیز دیگه‌ای مزاحم نیست
       if (pathPeek) enableAutoRotate(false), enableWalk(false);
+    }}
+
+
+    function tokenOverlapScore(aTokens, bTokens){{
+      if (!aTokens.length || !bTokens.length) return 0;
+      const setA = new Set(aTokens), setB = new Set(bTokens);
+      let inter = 0; for (const t of setA) if (setB.has(t)) inter++;
+      // Overlap Coefficient: |A∩B| / min(|A|, |B|)
+      return inter / Math.min(setA.size, setB.size);
+    }}
+
+    function containsBoost(a, b){{
+      // اگر رشته خام شامل هم بود، کمی بونس بده
+      const al = String(a||'').toLowerCase();
+      const bl = String(b||'').toLowerCase();
+      return (al.includes(bl) || bl.includes(al)) ? 0.2 : 0;
     }}
 
     // ساخت مسیر اجدادی از ریشه تا نود
@@ -195,8 +227,6 @@ namespace Detail_engineering
       }}
       for (let i = 0; i < segs.length; i++) {{
         segs[i] = segs[i].replace(/\b(AR|FINISH)\b/gi, '').trim();
-        
-
       }}
       return segs;
     }}
@@ -213,6 +243,100 @@ namespace Detail_engineering
       toast.style.top  = (y - 30) + 'px';
       toast.style.display = 'block';
       toastTimer = setTimeout(() => {{ toast.style.display = 'none'; }}, 5000);
+    }}
+
+
+    let DOCS = null; // [{{ Document_name, Document_number, ... }}]
+    async function ensureDocsLoaded(){{
+      if (DOCS) return;
+      try{{
+        const res = await fetch('https://data/database.json', {{ cache: 'no-store' }});
+        if (!res.ok) throw new Error(`HTTP ${{res.status}}`);
+        DOCS = await res.json();
+      }}catch(err){{
+        console.warn('Load database.json failed:', err);
+        DOCS = []; // بدون خطا پیش بریم
+      }}
+    }}
+
+
+    let lastXY = {{ x: null, y: null }};
+    window.addEventListener('mousemove', e => {{ lastXY = {{ x: e.clientX, y: e.clientY }}; }}, {{ passive: true }});
+    window.addEventListener('touchmove', e => {{
+      if (e.touches && e.touches[0]) lastXY = {{ x: e.touches[0].clientX, y: e.touches[0].clientY }};
+    }}, {{ passive: true }});
+
+    
+
+    function getEventXY(ev){{
+      if (ev && typeof ev.clientX === 'number' && typeof ev.clientY === 'number')
+        return {{ x: ev.clientX, y: ev.clientY }};
+      if (ev && ev.touches && ev.touches[0])
+        return {{ x: ev.touches[0].clientX, y: ev.touches[0].clientY }};
+      // فالبک به آخرین مختصات ثبت‌شده
+      return lastXY;
+    }}
+
+    function findRelatedDocs(queryTxt, maxResults=5){{
+      if (!DOCS || DOCS.length===0) return [];
+      const qTokens = normalizeForMatch(queryTxt);
+
+      // هر سند را امتیاز بده
+      const scored = DOCS.map((d, idx) => {{
+        const dn = d.Document_name || '';
+        const num = d.Document_number || '';
+        const s1 = tokenOverlapScore(qTokens, normalizeForMatch(dn)) + containsBoost(dn, queryTxt);
+        const s2 = tokenOverlapScore(qTokens, normalizeForMatch(num)) + containsBoost(num, queryTxt);
+        const score = Math.max(s1, s2);
+        return {{ idx, doc: d, score }};
+      }});
+      const TH = 0.5; // اگر می‌خوای سخت‌گیرتر باشی 0.6 کن
+      const hits = scored.filter(x => x.score >= TH)
+                        .sort((a,b)=> b.score - a.score)
+                        .slice(0, maxResults);
+      return hits;
+    }}
+
+    function showPathTable(partText, matches, x, y){{
+      if (toastTimer){{ clearTimeout(toastTimer); toastTimer = null; }}
+
+      // سطر اول: نام پارت
+      let html = `<table style='border-collapse:collapse;min-width:260px'>
+        <tr><th style='text-align:left;border-bottom:1px solid #26305E;padding:4px 6px'>Part</th></tr>
+        <tr><td style='padding:4px 6px;color:#EAF0FF'>${{partText}}</td></tr>`;
+
+      if (matches.length){{
+        html += `<tr><th style='text-align:left;border-bottom:1px solid #26305E;padding:6px 6px 4px'>Related documents</th></tr>`;
+        for (let i=0;i<matches.length;i++){{
+          const d = matches[i].doc;
+          const label = d.Document_name || d.Document_number || '—';
+          html += `<tr><td style='padding:3px 6px'>
+            <a href='#' class='relDoc' data-idx='${{matches[i].idx}}' style='color:#5DB5FF;text-decoration:none'>
+              ${{label}}
+            </a>
+          </td></tr>`;
+        }}
+      }}
+
+      html += `</table>`;
+
+      toast.innerHTML = html;
+      toast.style.left = (x + 10) + 'px';
+      toast.style.top  = (y - 30) + 'px';
+      toast.style.display = 'block';
+
+      // هندل کلیک روی لینک‌ها (فعلاً مقصد نداریم)
+      for (const a of toast.querySelectorAll('a.relDoc')){{
+        a.addEventListener('click', (ev)=>{{
+          ev.preventDefault();
+          const idx = Number(a.getAttribute('data-idx'));
+          const d = DOCS[idx];
+          // TODO: مقصد نهایی را بعداً جایگزین کن
+          alert(`[Document clicked]\n${{d.Document_name || d.Document_number}}`);
+        }});
+      }}
+
+      toastTimer = setTimeout(()=>{{ toast.style.display = 'none'; }}, 5000);
     }}
 
 
@@ -264,24 +388,39 @@ namespace Detail_engineering
     // انتخاب Part با Raycaster
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
-    function pick(e) {{
+    async function pick(e) {{
       if (!pathPeek) return;
+
+      // ⬅️ قبل از هر کاری مختصات را بگیر
+      const {{ x, y }} = getEventXY(event);
+      if (x == null || y == null) return;  // اگر چیزی نداشتیم، هیچی نشون نده
+
       const rect = renderer.domElement.getBoundingClientRect();
-      const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-      const y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-      mouse.set(x, y);
+      const nx = ((x - rect.left) / rect.width) * 2 - 1;
+      const ny = -((y - rect.top) / rect.height) * 2 + 1;
+      mouse.set(nx, ny);
+
       raycaster.setFromCamera(mouse, camera);
       const hits = raycaster.intersectObjects(scene.children, true);
       if (!hits.length) return;
+
       const obj = hits[0].object;
-      const arr = ancestryArray(obj);           // [root,...,leaf]
-      const segs = takeSegments3to5(arr);       // [3..5] (۱-مبنایی)
+      const arr = ancestryArray(obj);
+      const segs = takeSegments3to5(arr);
+
+      // مونتاژ txt و پاک‌سازی‌های قبلی
       let txt = segs.join(' / ').trim();
-      txt = txt.replace(/^-+\s*/, '');
-      txt = txt.replace(/\s*-+$/, '');
-      txt = txt.trim();
+      txt = txt.replace(/^-+\s*/, '').replace(/\s*-+$/, '').trim();
       if (!txt || txt === '-' || txt === '—') return;
-      showPathToast(txt, event.clientX, event.clientY);
+
+      // ⬅️ بعد از await از x,y ذخیره‌شده استفاده کن، نه event.clientX
+      await ensureDocsLoaded();
+      const related = findRelatedDocs(txt, 5);
+      if (related.length > 0){{
+        showPathTable(txt, related, x, y);
+      }} else {{
+        showPathToast(txt, x, y);
+      }}
     }}
     renderer.domElement.addEventListener('click', pick);
 
