@@ -106,6 +106,7 @@ namespace Detail_engineering
 
             // ⬅️ مسیر نهایی پوشه‌ی آخرین ریویژن
             var lastRevPath = PathHelper.BuildRelatedPath(node.Doc);
+            MessageBox.Show($"database.json not found at:\n{lastRevPath}", "Data", MessageBoxButton.OK, MessageBoxImage.Warning);
 
             if (!Directory.Exists(lastRevPath))
                 return;

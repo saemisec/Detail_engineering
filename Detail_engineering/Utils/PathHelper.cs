@@ -16,7 +16,7 @@ public static class PathHelper
         string dname = SafeSeg(doc?.Document_name);
         string last = SafeSeg(GetLastRevision(doc));
 
-        string combo = string.IsNullOrWhiteSpace(dnum) ? dname : (string.IsNullOrWhiteSpace(dname) ? dnum : $"{dnum} {dname}");
+        string combo = string.IsNullOrWhiteSpace(dnum) ? dname : (string.IsNullOrWhiteSpace(dname) ? dnum : $"{dnum}-{dname}");
         combo = SafeSeg(combo);
 
         // Path.Combine با UNC هم اوکی است اگر BaseDir با \\ شروع کند
