@@ -93,7 +93,7 @@ namespace Detail_engineering
     th{{background:#1F2447}} .nameCell{{max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
     #pathToast {{
       position: fixed;
-      z-index: 12;
+      z-index: 9999;
       background: #171B34;
       color: #EAF0FF;
       border: 1px solid #26305E;
@@ -101,13 +101,14 @@ namespace Detail_engineering
       padding: 6px 10px;
       box-shadow: 0 6px 20px #0006;
       font: 13px/1.5 system-ui, Segoe UI, Roboto, sans-serif;
-      max-width: 320px;
+      max-width: 420px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       display: none;
-      pointer-events: none; /* تا مزاحم کلیک نشه */
+      pointer-events: auto; /* تا مزاحم کلیک نشه */
     }}
+    #pathToast a{{ cursor:pointer; }}
   </style>
 </head>
 <body>
@@ -170,6 +171,72 @@ namespace Detail_engineering
     let pathPeek = false;
     const toast = document.getElementById('pathToast');
     let toastTimer = null;
+    let BASE_DIR = '';
+
+
+    function setBaseDir(input){{
+      let s = String(input || '').trim();
+      if (/^(\/\/\/\/|\\\\)/.test(s)) {{
+        s = s.replace(/^\/\/\/\/|^\\\\/, ''); 
+        s = s.replace(/[\/]+/g, '\\');
+        BASE_DIR = '\\\\' + s.replace(/^\\+/, ''); 
+        return;
+      }}
+
+      if (/^\/\//.test(s)) {{
+        s = s.replace(/^\/\//, '');
+        s = s.replace(/[\/]+/g, '\\');
+        BASE_DIR = '\\\\' + s.replace(/^\\+/, '');
+        return;
+      }}
+      s = s.replace(/[\/]+/g, '\\');
+      BASE_DIR = s;
+    }}
+    setBaseDir('\\\\192.168.94.4\\Ardestan Dehshir\\1-DCC\\4.Detail Engineering');
+
+    function safeSegment(s) {{
+      return String(s ?? '')
+        .trim()
+        .replace(/[<>:'/\\|?*\u0000-\u001F]/g, ' ')
+        .replace(/\s+/g, ' ')     
+        .replace(/\.$/, ''); 
+    }}
+
+    
+
+    function winJoin() {{
+      const parts = [];
+      for (const a of arguments) {{
+        if (!a) continue;
+        let p = String(a).replace(/[\/]+/g, '\\'); 
+        p = p.replace(/^[\\]+|[\\]+$/g, '');
+        if (!p) continue;
+        parts.push(p);
+      }}
+      return parts.length ? parts[0] + (parts.length>1 ? '\\' + parts.slice(1).join('\\') : '') : '';
+    }}
+
+    function getLastRevision(doc) {{
+      const revs = Array.isArray(doc?.Revisions) ? doc.Revisions : [];
+      if (!revs.length) return '';
+      return String(revs[revs.length - 1] ?? '').trim();
+    }}
+
+
+    function buildRelatedPath(doc) {{
+      const disc  = safeSegment(doc?.Dicipline);
+      const dtype = safeSegment(doc?.Document_type);
+      const dnum  = safeSegment(doc?.Document_number);
+      const dname = safeSegment(doc?.Document_name);
+      const last  = safeSegment(getLastRevision(doc));
+      let combo = '';
+      if (dnum && dname) combo = `${{dnum}}-${{dname}}`;
+      else combo = dnum || dname || '';
+      combo = safeSegment(combo);
+      const full = winJoin(BASE_DIR, disc, dtype, combo, last);
+      return full;
+    }}
+
 
     
     
@@ -220,7 +287,6 @@ namespace Detail_engineering
 
     // گرفتن بخش‌های 3..5 (۱-مبنایی)
     function takeSegments3to5(arr){{
-      console.log(arr);
       const segs = arr.slice(4, 6); // ایندکس‌های 3 و 4 (۰-مبنایی) = عناصر 4 و 5
       if (segs.length === 2 && /equipment|structure/i.test(segs[1])) {{
         segs.pop(); // حذف عنصر 5
@@ -257,6 +323,8 @@ namespace Detail_engineering
 
     let lastXY = {{ x: null, y: null }};
     window.addEventListener('mousemove', e => {{ lastXY = {{ x: e.clientX, y: e.clientY }}; }}, {{ passive: true }});
+    toast.addEventListener('mousedown', e => {{ e.stopPropagation(); }}, {{ passive:true }});
+
     window.addEventListener('touchmove', e => {{
       if (e.touches && e.touches[0]) lastXY = {{ x: e.touches[0].clientX, y: e.touches[0].clientY }};
     }}, {{ passive: true }});
@@ -355,9 +423,10 @@ namespace Detail_engineering
           ev.preventDefault();
           const idx = Number(a.getAttribute('data-idx'));
           const d = DOCS[idx];
-          // TODO: مقصد لینک را بعداً ست کن
-          alert(`[Document clicked]\n${{d.Document_name || d.Document_number}}`);
-        }});
+          const path = buildRelatedPath(d);
+          console.log('[RELATED PATH]', path);
+          //window.chrome?.webview?.postMessage({{ type: 'openPath', path }});
+        }}, {{ passive:false }});
       }}
 
       toastTimer = setTimeout(()=>{{ toast.style.display = 'none'; }}, 5000);
