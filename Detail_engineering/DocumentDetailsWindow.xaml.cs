@@ -92,42 +92,35 @@ namespace Detail_engineering
         private void Close_Click(object sender, RoutedEventArgs e) => Close();
 
         // When a tree node is selected
-        
+
         private void Tree_SelectedItemChanged_old(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            
+
         }
-        
-        
+
+
         private void Tree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             Files.Clear();
-            var node = e.NewValue as TreeNode;
-            if (node?.Doc == null)
-                return;
+            if (e.NewValue is not TreeNode node || node.Doc == null) return;
 
-            // کاربر روی یکی از Related Doc ها کلیک کرده
-            var doc = node.Doc;
-            var lastRevPath = PathHelper.BuildRelatedPath(doc);
+            // ⬅️ مسیر نهایی پوشه‌ی آخرین ریویژن
+            var lastRevPath = PathHelper.BuildRelatedPath(node.Doc);
 
             if (!Directory.Exists(lastRevPath))
-            {
-                // می‌تونی پیام ملایم نشون بدی یا هیچ کاری نکنی
-                // MessageBox.Show($"Folder not found:\n{lastRevPath}", "Info");
                 return;
-            }
 
-            // محتویات پوشه‌ی LastRevision را لیست کن
             foreach (var f in Directory.EnumerateFiles(lastRevPath))
             {
                 Files.Add(new FileItem
                 {
                     FileName = Path.GetFileName(f),
-                    FileType = Path.GetExtension(f)?.TrimStart('.').ToUpperInvariant() ?? ""
+                    FileType = (Path.GetExtension(f) ?? "").TrimStart('.').ToUpperInvariant()
                 });
             }
         }
     }
+            
 
     
 }

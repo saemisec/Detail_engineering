@@ -19,7 +19,7 @@ namespace Detail_engineering
             base.OnStartup(e);
 
             // اینجا Utils.BaseDir.Init() رو صدا بزن
-            //Utils.BaseDir.Initialize();
+            PathHelper.BaseDir = @"\\192.168.94.4\Ardestan Dehshir\1-DCC\4.Detail Engineering";
 
             // بعد MainWindow رو باز کن
             var mainWindow = new MainWindow();

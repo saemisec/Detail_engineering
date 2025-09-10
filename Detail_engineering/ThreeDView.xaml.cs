@@ -28,7 +28,7 @@ namespace Detail_engineering
     }
 
 
-    public partial class ThreeDView : UserControl
+  public partial class ThreeDView : UserControl
   {
     public ThreeDView()
     {
@@ -39,43 +39,66 @@ namespace Detail_engineering
     private async void ThreeDView_Loaded(object sender, RoutedEventArgs e)
     {
       await Web.EnsureCoreWebView2Async();
-      Web.CoreWebView2.WebMessageReceived += (s, e) =>
+      Web.CoreWebView2.Settings.IsWebMessageEnabled = true;
+      Web.CoreWebView2.WebMessageReceived += async (s, e) =>
       {
           try
           {
-              var json = e.TryGetWebMessageAsString();
-              if (string.IsNullOrWhiteSpace(json)) return;
+              // ✅ همیشه امن
+              string rawJson = e.WebMessageAsJson;
+              System.Diagnostics.Debug.WriteLine("[WPF] RAW JSON: " + rawJson);
 
-              var msg = System.Text.Json.JsonSerializer.Deserialize<WebMsg>(json, new System.Text.Json.JsonSerializerOptions
+              using var doc = System.Text.Json.JsonDocument.Parse(rawJson);
+              var root = doc.RootElement;
+
+              // اگر پیام واقعاً رشته بود، همین‌جا خروج کن
+              if (root.ValueKind == System.Text.Json.JsonValueKind.String)
               {
-                  PropertyNameCaseInsensitive = true
-              });
-              if (msg == null) return;
+                  var str = root.GetString();
+                  System.Diagnostics.Debug.WriteLine("[WPF] Got string message: " + str);
+                  return;
+              }
 
-              if (string.Equals(msg.Type, "openDocDetailsBatch", StringComparison.OrdinalIgnoreCase))
+              // انتظار آبجکت { type, payload }
+              var type = root.GetProperty("type").GetString();
+              if (!string.Equals(type, "openDocDetailsBatch", StringComparison.OrdinalIgnoreCase))
+                  return;
+
+              var payload = root.GetProperty("payload");
+              var partTitle = payload.GetProperty("PartTitle").GetString() ?? "(Part)";
+
+              var docsEl = payload.GetProperty("Documents");
+              var docs = new System.Collections.Generic.List<DocumentRecord>();
+              foreach (var d in docsEl.EnumerateArray())
               {
-                  var partTitle = msg.Payload?.PartTitle ?? "(Part)";
-                  var docs = (msg.Payload?.Documents ?? new System.Collections.Generic.List<PayloadDoc>())
-                             .Select(p => new DocumentRecord
-                             {
-                                 Document_name = p.Document_name,
-                                 Document_number = p.Document_number,
-                                 Dicipline = p.Dicipline,
-                                 Document_type = p.Document_type,
-                                 Revisions = p.Revisions ?? new System.Collections.Generic.List<string>()
-                             })
-                             .ToList();
+                  var rec = new DocumentRecord
+                  {
+                      Document_name = d.GetProperty("Document_name").GetString(),
+                      Document_number = d.GetProperty("Document_number").GetString(),
+                      Dicipline = d.GetProperty("Dicipline").GetString(),
+                      Document_type = d.GetProperty("Document_type").GetString(),
+                      Revisions = d.TryGetProperty("Revisions", out var revs)
+                                        ? revs.EnumerateArray().Select(x => x.GetString() ?? "").ToList()
+                                        : new System.Collections.Generic.List<string>()
+                  };
+                  docs.Add(rec);
+              }
 
-                  var owner = System.Windows.Window.GetWindow(this);
+              await Dispatcher.InvokeAsync(() =>
+              {
+                  var owner = Window.GetWindow(this);
                   var win = new Detail_engineering.DocumentDetailsWindow(partTitle, docs)
                   {
                       Owner = owner,
-                      WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
+                      WindowStartupLocation = WindowStartupLocation.CenterOwner
                   };
                   win.ShowDialog();
-              }
+              });
           }
-          catch { /* optional log */ }
+          catch (Exception ex)
+          {
+              System.Diagnostics.Debug.WriteLine("[WPF] WebMessage error: " + ex);
+          }
       };
       var baseDir = AppDomain.CurrentDomain.BaseDirectory;
       var modelsDir = Path.Combine(baseDir, "Models");
@@ -477,19 +500,30 @@ namespace Detail_engineering
       toast.style.display = 'block';
       positionTooltip(toast, x, y);
 
-      for (const a of toast.querySelectorAll('a.relDoc')){{
-        a.addEventListener('click', (ev)=>{{
-          ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation();
-          const docs = matches.map(m => m.doc);
-          window.chrome?.webview?.postMessage({{
-            type: 'openRelatedTree',
-            payload: {{
-              partText: partText,
-              docs: docs
-            }}
-          }});
-        }}, {{ passive:false }});
-      }}
+      for (const a of toast.querySelectorAll('a.relDoc')) {{
+      a.addEventListener('click', (ev) => {{
+        ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation();
+        const docs = matches.map(m => ({{
+          Document_name:   m.doc?.Document_name || '',
+          Document_number: m.doc?.Document_number || '',
+          Dicipline:       m.doc?.Dicipline || '',
+          Document_type:   m.doc?.Document_type || '',
+          Revisions:       Array.isArray(m.doc?.Revisions) ? m.doc.Revisions : []
+        }}));
+
+        const msg = {{
+          type: 'openDocDetailsBatch',
+          payload: {{ PartTitle: partText, Documents: docs }}
+        }};
+
+        console.log('[JS] posting message →', msg);
+        if (!window.chrome || !window.chrome.webview) {{
+          console.warn('[JS] window.chrome.webview NOT available!');
+          return;
+        }}
+        window.chrome.webview.postMessage(msg);
+      }}, {{ passive: false }});
+    }}
 
       toastTimer = setTimeout(()=>{{ toast.style.display = 'none'; }}, 5000);
     }}
