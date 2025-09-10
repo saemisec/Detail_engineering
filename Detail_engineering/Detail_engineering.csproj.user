@@ -10,6 +10,9 @@
     <Compile Update="DocumentDetailsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="DocumentDetailsWindowformodel.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="DocumentView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -25,6 +28,9 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="DocumentDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="DocumentDetailsWindowformodel.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="DocumentView.xaml">

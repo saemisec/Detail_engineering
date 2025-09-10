@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
+
 namespace Detail_engineering
 {
     /// <summary>
@@ -13,5 +14,16 @@ namespace Detail_engineering
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            // اینجا Utils.BaseDir.Init() رو صدا بزن
+            //Utils.BaseDir.Initialize();
+
+            // بعد MainWindow رو باز کن
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+        }
     }
 }

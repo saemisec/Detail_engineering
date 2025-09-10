@@ -8,56 +8,115 @@ using Microsoft.Web.WebView2.Core;
 
 namespace Detail_engineering
 {
-    public partial class ThreeDView : UserControl
+    public class WebMsg
     {
-        public ThreeDView()
-        {
-            InitializeComponent();
-            Loaded += ThreeDView_Loaded;
-        }
+        public string Type { get; set; }
+        public WebPayload Payload { get; set; }
+    }
+    public class WebPayload
+    {
+        public string PartTitle { get; set; }
+        public System.Collections.Generic.List<PayloadDoc> Documents { get; set; }
+    }
+    public class PayloadDoc
+    {
+        public string Document_name { get; set; }
+        public string Document_number { get; set; }
+        public string Dicipline { get; set; }
+        public string Document_type { get; set; }
+        public System.Collections.Generic.List<string> Revisions { get; set; }
+    }
 
-        private async void ThreeDView_Loaded(object sender, RoutedEventArgs e)
-        {
-            await Web.EnsureCoreWebView2Async();
 
-            var baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            var modelsDir = Path.Combine(baseDir, "Models");
-            if (!Directory.Exists(modelsDir))
-            {
-                Web.CoreWebView2.NavigateToString("<html><body style='background:#101218;color:#fff;font:14px sans-serif'>Models folder not found.</body></html>");
-                return;
-            }
+    public partial class ThreeDView : UserControl
+  {
+    public ThreeDView()
+    {
+      InitializeComponent();
+      Loaded += ThreeDView_Loaded;
+    }
 
-            // Map برای WebAssets (three.js و دیکودرها)
-            var webAssets = Path.Combine(baseDir, "WebAssets");
-            Directory.CreateDirectory(webAssets);
-            Web.CoreWebView2.SetVirtualHostNameToFolderMapping(
-                "assets", webAssets, CoreWebView2HostResourceAccessKind.Allow);
+    private async void ThreeDView_Loaded(object sender, RoutedEventArgs e)
+    {
+      await Web.EnsureCoreWebView2Async();
+      Web.CoreWebView2.WebMessageReceived += (s, e) =>
+      {
+          try
+          {
+              var json = e.TryGetWebMessageAsString();
+              if (string.IsNullOrWhiteSpace(json)) return;
 
-            // Map برای Models
-            Web.CoreWebView2.SetVirtualHostNameToFolderMapping(
-                "app", modelsDir, CoreWebView2HostResourceAccessKind.Allow);
+              var msg = System.Text.Json.JsonSerializer.Deserialize<WebMsg>(json, new System.Text.Json.JsonSerializerOptions
+              {
+                  PropertyNameCaseInsensitive = true
+              });
+              if (msg == null) return;
 
-            // map به پوشه‌ی کنار exe که database.json اونجاست
-            Web.CoreWebView2.SetVirtualHostNameToFolderMapping(
-                "data", AppDomain.CurrentDomain.BaseDirectory, CoreWebView2HostResourceAccessKind.Allow);
+              if (string.Equals(msg.Type, "openDocDetailsBatch", StringComparison.OrdinalIgnoreCase))
+              {
+                  var partTitle = msg.Payload?.PartTitle ?? "(Part)";
+                  var docs = (msg.Payload?.Documents ?? new System.Collections.Generic.List<PayloadDoc>())
+                             .Select(p => new DocumentRecord
+                             {
+                                 Document_name = p.Document_name,
+                                 Document_number = p.Document_number,
+                                 Dicipline = p.Dicipline,
+                                 Document_type = p.Document_type,
+                                 Revisions = p.Revisions ?? new System.Collections.Generic.List<string>()
+                             })
+                             .ToList();
 
-            // اولین GLB
-            var glbName = Directory.EnumerateFiles(modelsDir, "*.glb").Select(Path.GetFileName).FirstOrDefault();
-            if (glbName == null)
-            {
-                Web.CoreWebView2.NavigateToString("<html><body style='background:#101218;color:#fff;font:14px sans-serif'>No .glb found in Models folder.</body></html>");
-                return;
-            }
+                  var owner = System.Windows.Window.GetWindow(this);
+                  var win = new Detail_engineering.DocumentDetailsWindow(partTitle, docs)
+                  {
+                      Owner = owner,
+                      WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
+                  };
+                  win.ShowDialog();
+              }
+          }
+          catch { /* optional log */ }
+      };
+      var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+      var modelsDir = Path.Combine(baseDir, "Models");
+      if (!Directory.Exists(modelsDir))
+      {
+        Web.CoreWebView2.NavigateToString("<html><body style='background:#101218;color:#fff;font:14px sans-serif'>Models folder not found.</body></html>");
+        return;
+      }
 
-            Web.CoreWebView2.NavigateToString(BuildHtml(glbName));
-        }
 
-        private string BuildHtml(string glbName)
-        {
-            var safe = Uri.EscapeUriString(glbName);
 
-            var html = $@"
+      // Map برای WebAssets (three.js و دیکودرها)
+      var webAssets = Path.Combine(baseDir, "WebAssets");
+      Directory.CreateDirectory(webAssets);
+      Web.CoreWebView2.SetVirtualHostNameToFolderMapping(
+          "assets", webAssets, CoreWebView2HostResourceAccessKind.Allow);
+
+      // Map برای Models
+      Web.CoreWebView2.SetVirtualHostNameToFolderMapping(
+          "app", modelsDir, CoreWebView2HostResourceAccessKind.Allow);
+
+      // map به پوشه‌ی کنار exe که database.json اونجاست
+      Web.CoreWebView2.SetVirtualHostNameToFolderMapping(
+          "data", AppDomain.CurrentDomain.BaseDirectory, CoreWebView2HostResourceAccessKind.Allow);
+
+      // اولین GLB
+      var glbName = Directory.EnumerateFiles(modelsDir, "*.glb").Select(Path.GetFileName).FirstOrDefault();
+      if (glbName == null)
+      {
+        Web.CoreWebView2.NavigateToString("<html><body style='background:#101218;color:#fff;font:14px sans-serif'>No .glb found in Models folder.</body></html>");
+        return;
+      }
+
+      Web.CoreWebView2.NavigateToString(BuildHtml(glbName));
+    }
+
+    private string BuildHtml(string glbName)
+    {
+      var safe = Uri.EscapeUriString(glbName);
+
+      var html = $@"
 <!doctype html>
 <html>
 <head>
@@ -420,12 +479,15 @@ namespace Detail_engineering
 
       for (const a of toast.querySelectorAll('a.relDoc')){{
         a.addEventListener('click', (ev)=>{{
-          ev.preventDefault();
-          const idx = Number(a.getAttribute('data-idx'));
-          const d = DOCS[idx];
-          const path = buildRelatedPath(d);
-          console.log('[RELATED PATH]', path);
-          //window.chrome?.webview?.postMessage({{ type: 'openPath', path }});
+          ev.preventDefault(); ev.stopPropagation(); ev.stopImmediatePropagation();
+          const docs = matches.map(m => m.doc);
+          window.chrome?.webview?.postMessage({{
+            type: 'openRelatedTree',
+            payload: {{
+              partText: partText,
+              docs: docs
+            }}
+          }});
         }}, {{ passive:false }});
       }}
 
@@ -676,17 +738,17 @@ namespace Detail_engineering
   </script>
 </body>
 </html>";
-            return html;
-        }
-
-        private void Reload_Click(object sender, RoutedEventArgs e)
-        {
-            ThreeDView_Loaded(this, new RoutedEventArgs());
-        }
-
-        private void DevTools_Click(object sender, RoutedEventArgs e)
-        {
-            Web.CoreWebView2?.OpenDevToolsWindow();
-        }
+      return html;
     }
+
+    private void Reload_Click(object sender, RoutedEventArgs e)
+    {
+      ThreeDView_Loaded(this, new RoutedEventArgs());
+    }
+
+    private void DevTools_Click(object sender, RoutedEventArgs e)
+    {
+      Web.CoreWebView2?.OpenDevToolsWindow();
+    }
+  }
 }
