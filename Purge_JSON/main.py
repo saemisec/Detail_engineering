@@ -19,15 +19,15 @@ if __name__ == "__main__":
                     document_number = document_number[:len(document_number)-1]
                 children = third_step[counter]['Children']
                 revisions = [item['Name'] for item in children]
-                all_documents.append({
-                    "Document_name" : document_name,
-                    "Document_number" : document_number ,
-                    "Dicipline" : x['Name'],
-                    "Document_type" : y['Name'],
-                    "Revisions" : revisions,
-                })
-    breakpoint()
+                if '1389-ar' in str(document_number).lower():
+                    all_documents.append({
+                        "Document_name" : document_name,
+                        "Document_number" : document_number ,
+                        "Dicipline" : x['Name'],
+                        "Document_type" : y['Name'],
+                        "Revisions" : revisions,
+                    })
     json_str = json.dumps(all_documents, indent=2)
-    with open("database.json", "w", encoding="utf-8") as out_stream:
+    with open("ardestan.json", "w", encoding="utf-8") as out_stream:
         out_stream.write(json_str)
     

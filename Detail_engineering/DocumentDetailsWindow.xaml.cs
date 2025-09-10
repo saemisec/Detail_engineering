@@ -2,9 +2,77 @@
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System;
+using System.Globalization;
+using System.Windows.Data;
+using System.Windows.Media;
 
 namespace Detail_engineering
 {
+
+    public class FileTypeLabelConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var t = (value as string ?? "").Trim().ToUpperInvariant();
+            return t switch
+            {
+                "DOC" or "DOCX" => "Document",
+                "XLS" or "XLSX" or "CSV" => "Worksheet",
+                "PDF" => "PDF",
+                "DWG" => "Drawing",
+                "DGN" => "Drawing",
+                "ZIP" or "RAR" or "7Z" => "ZIP",
+                "PNG" or "JPG" or "JPEG" or "WEBP" => "Image",
+                //default => string.IsNullOrEmpty(t) ? "File" : t
+            };
+        }
+        public object ConvertBack(object value, Type t, object p, CultureInfo c) => Binding.DoNothing;
+    }
+
+    public class FileTypeBgConverter : IValueConverter
+    {
+        SolidColorBrush Brush(string hex) => (SolidColorBrush)(new BrushConverter().ConvertFromString(hex));
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var t = (value as string ?? "").Trim().ToUpperInvariant();
+            return t switch
+            {
+                "DOC" or "DOCX" => Brush("#3156D8"),
+                "XLS" or "XLSX" or "CSV" => Brush("#2E8B57"),
+                "PDF" => Brush("#C0392B"),
+                "DWG" or "DGN" => Brush("#8E44AD"),
+                "ZIP" or "RAR" or "7Z" => Brush("#F39C12"),
+                "PNG" or "JPG" or "JPEG" or "WEBP" => Brush("#3B4A86"),
+                _ => Brush("#4B557A")
+            };
+        }
+        public object ConvertBack(object value, Type t, object p, CultureInfo c) => Binding.DoNothing;
+    }
+
+    public class FileTypeAccentConverter : IValueConverter
+    {
+        SolidColorBrush Brush(string hex) => (SolidColorBrush)(new BrushConverter().ConvertFromString(hex));
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var t = (value as string ?? "").Trim().ToUpperInvariant();
+            return t switch
+            {
+                "DOC" or "DOCX" => Brush("#9BB5FF"),
+                "XLS" or "XLSX" or "CSV" => Brush("#A8E6C3"),
+                "PDF" => Brush("#F5B7B1"),
+                "DWG" or "DGN" => Brush("#D2B4DE"),
+                "ZIP" or "RAR" or "7Z" => Brush("#FDE3A7"),
+                "PNG" or "JPG" or "JPEG" or "WEBP" => Brush("#9AB0FF"),
+                _ => Brush("#C9D0EA")
+            };
+        }
+        public object ConvertBack(object value, Type t, object p, CultureInfo c) => Binding.DoNothing;
+    }
+
+
+
+
     public class TreeNode
     {
         public string Title { get; set; }
@@ -30,7 +98,6 @@ namespace Detail_engineering
 
         public DocumentDetailsWindow(DocumentRecord doc)
         {
-            InitializeComponent();
             InitializeComponent();
             _doc = doc;
 
@@ -68,6 +135,7 @@ namespace Detail_engineering
             var root = new TreeNode { Title = partTitle, IsRevision = false };
             foreach (var d in relatedDocs ?? Enumerable.Empty<DocumentRecord>())
             {
+                //MessageBox.Show($"database.json not found at:\n{d}", "Data", MessageBoxButton.OK, MessageBoxImage.Warning);
                 var title = BuildDocNodeTitle(d); // مثلا "PL-001-A - Pump Layout - Area A"
                 root.Children.Add(new TreeNode { Title = title, IsRevision = false, Doc = d });
             }
@@ -106,7 +174,7 @@ namespace Detail_engineering
 
             // ⬅️ مسیر نهایی پوشه‌ی آخرین ریویژن
             var lastRevPath = PathHelper.BuildRelatedPath(node.Doc);
-            MessageBox.Show($"database.json not found at:\n{lastRevPath}", "Data", MessageBoxButton.OK, MessageBoxImage.Warning);
+            
 
             if (!Directory.Exists(lastRevPath))
                 return;
