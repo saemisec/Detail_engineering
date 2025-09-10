@@ -270,7 +270,13 @@ namespace Detail_engineering
         {
             if (GetRowContext(sender) is DocumentRecord d)
             {
-                MessageBox.Show($"[Document_name clicked]\n{d.Document_name}\n(مقصد لینک را بعداً تنظیم می‌کنیم)", "Link");
+                var owner = Window.GetWindow(this);
+                var win = new DocumentDetailsWindow(d)  // ⬅️ پنجره جدید با دیتا
+                {
+                    Owner = owner,
+                    WindowStartupLocation = WindowStartupLocation.CenterOwner
+                };
+                win.ShowDialog();
             }
         }
 
