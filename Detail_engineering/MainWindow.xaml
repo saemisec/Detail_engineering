@@ -175,18 +175,30 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+            <!-- برای سایدبار چپ: وقتی بسته است → ChevronRight ؛ وقتی باز است → ChevronLeft -->
+            
+          </StackPanel>
+
             <!-- پنل دکمه‌ها (سمت چپ) -->
             <Border Grid.Column="0" Background="{StaticResource BgSurface}" CornerRadius="12" BorderBrush="#1FFFFFFF" BorderThickness="1" Cursor="Hand" Padding="8">
                 <DockPanel LastChildFill="True">
                     <!-- دکمه‌ی جمع/باز -->
-                    <Button DockPanel.Dock="Bottom" Style="{StaticResource FlatButton}" Content="{Binding SidebarToggleText}"
+                    <Button DockPanel.Dock="Bottom" Style="{StaticResource ThreeDButton}" Content="{Binding SidebarToggleText}"
                             Click="ToggleSidebar_Click" ToolTip="Collapse/Expand" />
 
                     <!-- لیست دکمه‌ها -->
-                    <StackPanel Margin="2" VerticalAlignment="Center" >
+                    <StackPanel Margin="2" VerticalAlignment="Top" >
                         <!-- Documents -->
-                        <Button Style="{StaticResource FlatButton}"
-                                Tag="pack://application:,,,/Detail_engineering;component/Assets/doc.png"
+                        <Button Style="{StaticResource ThreeDButton}"
+                                Tag="pack://siteoforigin:,,,/Images/home.png"
+                                Click="Home_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Documents"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource ThreeDButton}"
+                                Tag="pack://siteoforigin:,,,/Images/doc.png"
                                 Click="Docs_Click">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Documents"/>
@@ -195,7 +207,7 @@
 
                         <!-- 3D Model (3D-like style) -->
                         <Button Style="{StaticResource ThreeDButton}"
-                                Tag="pack://application:,,,/Detail_engineering;component/Assets/3d.png"
+                                Tag="pack://siteoforigin:,,,/Images/3d.jpg"
                                 Click="ThreeD_Click">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="3D Model"/>
@@ -203,8 +215,8 @@
                         </Button>
 
                         <!-- Exit -->
-                        <Button Style="{StaticResource FlatButton}"
-                                Tag="pack://application:,,,/Detail_engineering;component/Assets/exit.png"
+                        <Button Style="{StaticResource ThreeDButton}"
+                                Tag="pack://siteoforigin:,,,/Images/exit.jpg"
                                 Click="Exit_Click">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Exit"/>

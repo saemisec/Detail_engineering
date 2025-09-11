@@ -42,63 +42,63 @@ namespace Detail_engineering
       Web.CoreWebView2.Settings.IsWebMessageEnabled = true;
       Web.CoreWebView2.WebMessageReceived += async (s, e) =>
       {
-          try
+        try
+        {
+          // ✅ همیشه امن
+          string rawJson = e.WebMessageAsJson;
+          System.Diagnostics.Debug.WriteLine("[WPF] RAW JSON: " + rawJson);
+
+          using var doc = System.Text.Json.JsonDocument.Parse(rawJson);
+          var root = doc.RootElement;
+
+          // اگر پیام واقعاً رشته بود، همین‌جا خروج کن
+          if (root.ValueKind == System.Text.Json.JsonValueKind.String)
           {
-              // ✅ همیشه امن
-              string rawJson = e.WebMessageAsJson;
-              System.Diagnostics.Debug.WriteLine("[WPF] RAW JSON: " + rawJson);
-
-              using var doc = System.Text.Json.JsonDocument.Parse(rawJson);
-              var root = doc.RootElement;
-
-              // اگر پیام واقعاً رشته بود، همین‌جا خروج کن
-              if (root.ValueKind == System.Text.Json.JsonValueKind.String)
-              {
-                  var str = root.GetString();
-                  System.Diagnostics.Debug.WriteLine("[WPF] Got string message: " + str);
-                  return;
-              }
-
-              // انتظار آبجکت { type, payload }
-              var type = root.GetProperty("type").GetString();
-              if (!string.Equals(type, "openDocDetailsBatch", StringComparison.OrdinalIgnoreCase))
-                  return;
-
-              var payload = root.GetProperty("payload");
-              var partTitle = payload.GetProperty("PartTitle").GetString() ?? "(Part)";
-
-              var docsEl = payload.GetProperty("Documents");
-              var docs = new System.Collections.Generic.List<DocumentRecord>();
-              foreach (var d in docsEl.EnumerateArray())
-              {
-                  var rec = new DocumentRecord
-                  {
-                      Document_name = d.GetProperty("Document_name").GetString(),
-                      Document_number = d.GetProperty("Document_number").GetString(),
-                      Dicipline = d.GetProperty("Dicipline").GetString(),
-                      Document_type = d.GetProperty("Document_type").GetString(),
-                      Revisions = d.TryGetProperty("Revisions", out var revs)
-                                        ? revs.EnumerateArray().Select(x => x.GetString() ?? "").ToList()
-                                        : new System.Collections.Generic.List<string>()
-                  };
-                  docs.Add(rec);
-              }
-
-              await Dispatcher.InvokeAsync(() =>
-              {
-                  var owner = Window.GetWindow(this);
-                  var win = new Detail_engineering.DocumentDetailsWindow(partTitle, docs)
-                  {
-                      Owner = owner,
-                      WindowStartupLocation = WindowStartupLocation.CenterOwner
-                  };
-                  win.ShowDialog();
-              });
+            var str = root.GetString();
+            System.Diagnostics.Debug.WriteLine("[WPF] Got string message: " + str);
+            return;
           }
-          catch (Exception ex)
+
+          // انتظار آبجکت { type, payload }
+          var type = root.GetProperty("type").GetString();
+          if (!string.Equals(type, "openDocDetailsBatch", StringComparison.OrdinalIgnoreCase))
+            return;
+
+          var payload = root.GetProperty("payload");
+          var partTitle = payload.GetProperty("PartTitle").GetString() ?? "(Part)";
+
+          var docsEl = payload.GetProperty("Documents");
+          var docs = new System.Collections.Generic.List<DocumentRecord>();
+          foreach (var d in docsEl.EnumerateArray())
           {
-              System.Diagnostics.Debug.WriteLine("[WPF] WebMessage error: " + ex);
+            var rec = new DocumentRecord
+            {
+              Document_name = d.GetProperty("Document_name").GetString(),
+              Document_number = d.GetProperty("Document_number").GetString(),
+              Dicipline = d.GetProperty("Dicipline").GetString(),
+              Document_type = d.GetProperty("Document_type").GetString(),
+              Revisions = d.TryGetProperty("Revisions", out var revs)
+                                  ? revs.EnumerateArray().Select(x => x.GetString() ?? "").ToList()
+                                  : new System.Collections.Generic.List<string>()
+            };
+            docs.Add(rec);
           }
+
+          await Dispatcher.InvokeAsync(() =>
+          {
+            var owner = Window.GetWindow(this);
+            var win = new Detail_engineering.DocumentDetailsWindow(partTitle, docs)
+            {
+              Owner = owner,
+              WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            win.ShowDialog();
+          });
+        }
+        catch (Exception ex)
+        {
+          System.Diagnostics.Debug.WriteLine("[WPF] WebMessage error: " + ex);
+        }
       };
       var baseDir = AppDomain.CurrentDomain.BaseDirectory;
       var modelsDir = Path.Combine(baseDir, "Models");
@@ -157,7 +157,7 @@ namespace Detail_engineering
     :root{{--bg:#101218;--panel:#171B34;--txt:#EAF0FF;--btn:#1F2447;--btnh:#2A3162;--accent:#5DB5FF;--on:#274a7a;--line:#2A3162;--border:#1FFFFFFF}}
     html,body{{margin:0;height:100%;background:var(--bg);color:var(--txt);font:13px system-ui,Segoe UI,Roboto,sans-serif;overflow:hidden}}
     #c{{width:100%;height:100%;display:block}}
-    .toolbox{{position:fixed;top:48px;left:8px;display:grid;grid-template-columns:repeat(5,auto);gap:6px;
+    #toolboxes{{position:fixed;top:48px;left:8px;display:grid;grid-template-columns:repeat(5,auto);gap:6px;
       background:color-mix(in srgb,var(--panel) 92%,transparent);padding:10px;border-radius:12px;border:1px solid var(--border);backdrop-filter:blur(6px);
       box-shadow:0 10px 30px #0006;z-index:10}}
     .tb{{background:var(--btn);color:var(--txt);border:1px solid #22FFFFFF;border-radius:10px;padding:7px 10px;cursor:pointer;
@@ -165,6 +165,32 @@ namespace Detail_engineering
     .tb:hover{{background:var(--btnh)}} .tb:active{{transform:scale(.97) translateY(1px)}}
     .tb.toggle.on{{background:var(--on);outline:2px solid var(--accent)}} .tb:disabled{{opacity:.45;cursor:not-allowed;filter:saturate(.6)}}
     #msg{{position:fixed;right:8px;bottom:8px;color:#fff;opacity:.75;font-size:12px}}
+
+    #toggleToolboxBtn {{
+      position: absolute; top: 4px; right: 10px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background .2s, border .2s; z-index: 1001;
+    }}
+    #toggleToolboxBtn:hover {{ background: rgba(40,59,122,.6); border-color: #fff; }}
+    #eyeIcon {{ font-family: 'Segoe MDL2 Assets'; font-size: 18px; color: #fff; }}
+
+    #tools {{
+    position: absolute; top: 44px; right: 10px;
+    display: flex; gap: 8px; padding: 8px;flex-direction: column;
+    background: rgba(31, 36, 71, 0.95);
+      border - radius: 8px; border: 1px solid rgba(255, 255, 255, 0.15);
+      z - index: 1000;
+    }}
+
+    /* کلاس مخفی‌سازی با !important تا هرچی باشه override کنه */
+    #toolbox.is-hidden{{
+      opacity: 0;
+      transform: translateY(-6px);
+      pointer-events: none;
+    }}
 
     #panel{{position:fixed;top:48px;left:260px;width:360px;background:var(--panel);border:1px solid var(--border);
       border-radius:12px;box-shadow:0 10px 30px #0006;display:none;z-index:11}}
@@ -194,7 +220,10 @@ namespace Detail_engineering
   </style>
 </head>
 <body>
-  <div class='toolbox' id='tools' style='display:none'>
+  <button id='toggleToolboxBtn' title='Show / Hide toolbox'>
+    <span id='eyeIcon'>&#xE717;</span>
+  </button>
+  <div id='tools' >
     <button class='tb' id='home'>Home</button>
     <button class='tb' id='fit'>Fit</button>
     <button class='tb toggle' id='autorot'>Auto-Rotate</button>
@@ -254,6 +283,24 @@ namespace Detail_engineering
     const toast = document.getElementById('pathToast');
     let toastTimer = null;
     let BASE_DIR = '';
+
+    const togglebtn = document.getElementById('toggleToolboxBtn');
+    const tools = document.getElementById('tools');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    togglebtn.addEventListener('click', (e) => {{
+      e.preventDefault();
+      e.stopPropagation();
+
+      const nowHidden = tools.classList.toggle('is-hidden');
+      if (nowHidden) {{
+        tools.style.display = 'none';
+        eyeIcon.textContent = '\uE8F4'; // hide
+      }} else {{
+        tools.style.display = 'flex'; // مطابق استایل خودت
+        eyeIcon.textContent = '\uE717'; // show
+      }}
+    }});
 
 
     function setBaseDir(input){{
@@ -747,7 +794,7 @@ namespace Detail_engineering
       document.getElementById('panel').style.display = 'block';
     }}
 
-    const tools = document.getElementById('tools');
+    //const tools = document.getElementById('tools');
     const bind = (id,fn)=> document.getElementById(id).onclick = fn;
     bind('home', ()=> homeView()); bind('fit', ()=> fitView());
     bind('autorot', ()=> enableAutoRotate(!controls.autoRotate)); bind('walk', ()=> enableWalk(!walk));
