@@ -1,14 +1,16 @@
 ﻿<Window x:Class="Detail_engineering.DocumentDetailsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         xmlns:local="clr-namespace:Detail_engineering"
         Title="Document Details"
-        Width="860" Height="520"
+        Width="1024" Height="768"
         Background="#101218"
         WindowStyle="None" ResizeMode="NoResize" ShowInTaskbar="False">
 
     <Window.Resources>
         <!-- تم -->
+        
         <SolidColorBrush x:Key="Panel"        Color="#171B34"/>
         <SolidColorBrush x:Key="Text"         Color="#EAF0FF"/>
         <SolidColorBrush x:Key="Accent"       Color="#5DB5FF"/>
@@ -18,6 +20,8 @@
         <local:FileTypeLabelConverter x:Key="FileTypeLabelConverter"/>
         <local:FileTypeBgConverter x:Key="FileTypeBgConverter"/>
         <local:FileTypeAccentConverter x:Key="FileTypeAccentConverter"/>
+        <local:TreeNodeIconConverter x:Key="TreeNodeIconConverter"/>
+        <local:DocTypeBadgeBgConverter x:Key="DocTypeBadgeBgConverter"/>
 
         <!-- TreeView استایل تیره -->
         <Style TargetType="TreeView">
@@ -132,35 +136,47 @@
                         </TreeView.Resources>
                         
                         <TreeView.ItemTemplate>
-                        <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                            <TextBlock Text="{Binding Title}"
-                                    Foreground="{StaticResource Text}"
-                                    TextTrimming="CharacterEllipsis"/>
-                        </HierarchicalDataTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <StackPanel Orientation="Horizontal" Margin="2,0">
+                                    <!-- آیکن: برای ریشه 📦، برای فرزند بر اساس Document_type -->
+                                    <Border Width="18" Height="18" CornerRadius="9" Margin="0,0,8,0"
+                                            Background="{Binding Doc.Document_type, Converter={StaticResource DocTypeBadgeBgConverter}}">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11"
+                                                Text="{Binding ., Converter={StaticResource TreeNodeIconConverter}}"/>
+                                    </Border>
+
+                                    <TextBlock Text="{Binding Title}"
+                                            Foreground="{StaticResource Text}"
+                                            TextTrimming="CharacterEllipsis"/>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
                         </TreeView.ItemTemplate>
 
                         <!-- استایل آيتم‌ها (بخش 4 پایین) -->
                         <TreeView.ItemContainerStyle>
-                        <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
-                            <Setter Property="Padding" Value="6,3"/>
-                            <Setter Property="IsExpanded" Value="True"/>
-                            <Style.Triggers>
-                            <!-- وقتی انتخاب شده و فوکوس فعال -->
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="#283B7A"/>
-                                <Setter Property="Foreground" Value="#FFFFFF"/>
-                            </Trigger>
-                            <!-- وقتی انتخاب شده ولی فوکوس روی TreeView نیست (خواناتر) -->
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                <Condition Property="IsSelected" Value="True"/>
-                                <Condition Property="IsKeyboardFocusWithin" Value="False"/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="Background" Value="#1F2A57"/>
-                                <Setter Property="Foreground" Value="#EAF0FF"/>
-                            </MultiTrigger>
-                            </Style.Triggers>
-                        </Style>
+                            <Style TargetType="TreeViewItem" BasedOn="{StaticResource {x:Type TreeViewItem}}">
+                                <Setter Property="Padding" Value="6,3"/>
+                                <Setter Property="IsExpanded" Value="True"/>
+                                <EventSetter Event="Expanded"  Handler="TreeItem_Expanded"/>
+                                <EventSetter Event="Collapsed" Handler="TreeItem_Collapsed"/>
+                                <Style.Triggers>
+                                <!-- وقتی انتخاب شده و فوکوس فعال -->
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#283B7A"/>
+                                    <Setter Property="Foreground" Value="#FFFFFF"/>
+                                </Trigger>
+                                <!-- وقتی انتخاب شده ولی فوکوس روی TreeView نیست (خواناتر) -->
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="True"/>
+                                    <Condition Property="IsKeyboardFocusWithin" Value="False"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" Value="#1F2A57"/>
+                                    <Setter Property="Foreground" Value="#EAF0FF"/>
+                                </MultiTrigger>
+                                </Style.Triggers>
+                                
+                            </Style>
                         </TreeView.ItemContainerStyle>
                     </TreeView>
                     </DockPanel>
@@ -171,7 +187,14 @@
                                 Background="#1B2244" ShowsPreview="True" />
 
                 <!-- ستون راست: DataGrid فایل‌ها -->
-                <StackPanel Grid.Column="2">
+                
+
+
+                <Grid  Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="500" />  <!-- ارتفاع پنجرهٔ پیش‌نمایش PDF -->
+                    </Grid.RowDefinitions>
                     <TextBlock Text="Files" Foreground="{StaticResource Text}" Margin="4,0,0,6"/>
                     <DataGrid x:Name="GridFiles"
                             AutoGenerateColumns="False"
@@ -184,35 +207,41 @@
                             VerticalGridLinesBrush="#333B66"
                             Background="#101218"
                             Foreground="{StaticResource Text}"
+                            SelectionChanged="GridFiles_SelectionChanged"
                             BorderBrush="{StaticResource BorderColor}" BorderThickness="1">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="FileName" Width="*" Binding="{Binding FileName, Mode=OneWay}"/>
-
-                        <!-- ستون FileType با Badge خوشگل (بخش 5) -->
-                        <DataGridTemplateColumn Header="FileType" Width="220">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Border CornerRadius="10"
-                                        Padding="8,3"
-                                        Background="{Binding FileType, Converter={StaticResource FileTypeBgConverter}}">
-                                <StackPanel Orientation="Horizontal">
-                                    <!-- (اختیاری) آیکن فونتی ساده با مربع کوچک -->
-                                    <Rectangle Width="10" Height="10"
-                                            RadiusX="2" RadiusY="2"
-                                            Fill="{Binding FileType, Converter={StaticResource FileTypeAccentConverter}}"/>
-                                    <TextBlock Text="{Binding FileType, Converter={StaticResource FileTypeLabelConverter}}"
-                                            Foreground="White" FontWeight="SemiBold"/>
-                                </StackPanel>
-                                </Border>
-                            </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                    </DataGrid.Columns>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="FileName" Width="*" Binding="{Binding FileName, Mode=OneWay}"/>
+                            <DataGridTemplateColumn Header="FileType" Width="220">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Border CornerRadius="10"
+                                                    Padding="8,3"
+                                                    Background="{Binding FileType, Converter={StaticResource FileTypeBgConverter}}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Rectangle Width="10" Height="10"
+                                                            RadiusX="2" RadiusY="2"
+                                                            Fill="{Binding FileType, Converter={StaticResource FileTypeAccentConverter}}"/>
+                                                    <TextBlock Text="{Binding FileType, Converter={StaticResource FileTypeLabelConverter}}"
+                                                            Foreground="White" FontWeight="SemiBold"/>
+                                                </StackPanel>
+                                            </Border>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
                     </DataGrid>
-                </StackPanel>
+                    <Border Grid.Row="1" Margin="0,10,0,0" CornerRadius="8"
+                            Background="#0F1631" BorderBrush="{StaticResource BorderColor}" BorderThickness="1">
+                        <Grid>
+                            <wv2:WebView2 x:Name="PdfViewer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            <TextBlock x:Name="PdfHint" Text="Select a PDF to preview…" Foreground="#9AB0FF"
+                                    VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    FontStyle="Italic" Visibility="Visible"/>
+                        </Grid>
+                    </Border>
+                </Grid>
             </Grid>
         </Grid>
     </Border>

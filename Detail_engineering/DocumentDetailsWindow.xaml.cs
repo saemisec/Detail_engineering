@@ -6,6 +6,9 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
+using System.Threading.Tasks;
 
 namespace Detail_engineering
 {
@@ -71,6 +74,52 @@ namespace Detail_engineering
     }
 
 
+    public class TreeNodeIconConverter : IValueConverter
+    {
+        // ورودی TreeNode است: برای ریشه 📦 و برای فرزند بر اساس Doc.Document_type
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var node = value as TreeNode;
+            if (node == null || node.Doc == null)
+                return "📦"; // ریشه (Part)
+
+            var t = (node.Doc.Document_name ?? "").Trim().ToUpperInvariant();
+            if (t.Contains("P & ID") || t.Contains("P&ID") || t.Contains("P-ID")) return "🛠";
+            else if (t.Contains("DATASHEET")) return "📄";
+            else if (t.Contains("CALCULATION")) return "🧮";
+            else if (t.Contains("SPEC")) return "📘";
+            else if (t.Contains("LAYOUT")) return "🗺";
+            else if (t.Contains("DRAWING") || t.Contains("DWG")) return "📐";
+            return "📎";
+            
+        }
+        public object ConvertBack(object value, Type t, object p, CultureInfo c) => Binding.DoNothing;
+    }
+
+    public class DocTypeBadgeBgConverter : IValueConverter
+    {
+        SolidColorBrush B(string hex) => (SolidColorBrush)new BrushConverter().ConvertFromString(hex);
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var t = (value as string ?? "").Trim().ToUpperInvariant();
+            return t switch
+            {
+                "P & ID" or "P&ID" or "P-ID" => B("#244E7A"),
+                "DATASHEET" => B("#3156D8"),
+                "CALCULATION" => B("#2E8B57"),
+                "SPEC" or "SPECIFICATION" => B("#5D3FD3"),
+                "LAYOUT" => B("#8E44AD"),
+                "DRAWING" or "DWG" => B("#3B4A86"),
+                _ => B("#4B557A")
+            };
+        }
+        public object ConvertBack(object value, Type t, object p, CultureInfo c) => Binding.DoNothing;
+    }
+
+
+
+
+
 
 
     public class TreeNode
@@ -81,10 +130,18 @@ namespace Detail_engineering
         public ObservableCollection<TreeNode> Children { get; } = new();
     }
 
+    public class ItemRow
+    {
+        public string Name { get; init; } = string.Empty;
+        public string FullPath { get; init; } = string.Empty;
+        public string Type { get; init; } = string.Empty;
+    }
+
     public class FileItem
     {
         public string FileName { get; set; }
         public string FileType { get; set; }
+        public string FullPath { get; set; }
     }
 
     public partial class DocumentDetailsWindow : Window
@@ -95,6 +152,9 @@ namespace Detail_engineering
 
 
         private readonly DocumentRecord _doc;
+
+        private bool _pdfInit = false;
+
 
         public DocumentDetailsWindow(DocumentRecord doc)
         {
@@ -130,6 +190,8 @@ namespace Detail_engineering
             InitializeComponent();
             HeaderTitle = partTitle;
             DataContext = this;
+            this.Loaded += (s, e) => EnsurePdfWebViewReady();
+
 
             // root: عنوان Part
             var root = new TreeNode { Title = partTitle, IsRevision = false };
@@ -154,6 +216,161 @@ namespace Detail_engineering
         }
 
 
+        private FrameworkElement GetItemsHost(TreeViewItem tvi)
+        {
+            if (tvi == null) return null;
+
+            // مطمئن شو تمپلیت اعمال شده و فرزندان ساخته شدن
+            tvi.ApplyTemplate();
+            tvi.UpdateLayout();
+
+            // اول دنبال ItemsPresenter
+            var ip = FindVisualChild<ItemsPresenter>(tvi);
+            if (ip != null) return ip;
+
+            // اگه نبود، VirtualizingStackPanel
+            var vsp = FindVisualChild<VirtualizingStackPanel>(tvi);
+            if (vsp != null) return vsp;
+
+            // fallback: StackPanel ساده
+            return FindVisualChild<StackPanel>(tvi);
+        }
+
+        private static T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            if (parent == null) return null;
+            int count = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < count; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T typed) return typed;
+                var result = FindVisualChild<T>(child);
+                if (result != null) return result;
+            }
+            return null;
+        }
+
+
+
+        private void TreeItem_Expanded(object sender, RoutedEventArgs e)
+        {
+            var tvi = e.OriginalSource as TreeViewItem ?? sender as TreeViewItem;
+            if (tvi == null) return;
+
+            // مطمئن شو تمپلیت اعمال شده و بچه‌ها ساخته شده‌اند
+            tvi.ApplyTemplate();
+            tvi.UpdateLayout();
+
+            FrameworkElement itemsHost = GetItemsHost(tvi);
+            if (itemsHost == null) return;
+
+            itemsHost.Opacity = 0;
+            var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(140))
+            {
+                EasingFunction = new QuadraticEase()
+            };
+            itemsHost.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+            e.Handled = false;
+        }
+
+        private void TreeItem_Collapsed(object sender, RoutedEventArgs e)
+        {
+            var tvi = e.OriginalSource as TreeViewItem ?? sender as TreeViewItem;
+            if (tvi == null) return;
+
+            tvi.ApplyTemplate();
+            tvi.UpdateLayout();
+
+            FrameworkElement itemsHost = GetItemsHost(tvi);
+            if (itemsHost == null) return;
+
+            var fadeOut = new DoubleAnimation(1, 0, TimeSpan.FromMilliseconds(120))
+            {
+                EasingFunction = new QuadraticEase()
+            };
+            itemsHost.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+            e.Handled = false;
+        }
+
+
+
+
+
+        private static ItemsPresenter FindItemsPresenter(DependencyObject d)
+        {
+            // جستجو در ویژوال‌تری برای ItemsPresenter زیر TreeViewItem
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
+            {
+                var child = VisualTreeHelper.GetChild(d, i);
+                if (child is ItemsPresenter ip) return ip;
+                var res = FindItemsPresenter(child);
+                if (res != null) return res;
+            }
+            return null;
+        }
+
+        private async void EnsurePdfWebViewReady()
+        {
+            if (_pdfInit) return;
+            try
+            {
+                await PdfViewer.EnsureCoreWebView2Async();
+                _pdfInit = true;
+                // تم تاریک صفحهٔ پس‌زمینه
+                PdfViewer.DefaultBackgroundColor = System.Drawing.ColorTranslator.FromHtml("#0F1631");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("[PDF] Init error: " + ex);
+            }
+        }
+
+        private async void GridFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var item = GridFiles.SelectedItem as FileItem;
+            if (item == null)
+            {
+                PdfHint.Visibility = Visibility.Visible;
+                return;
+            }
+
+            // فقط PDF را پیش‌نمایش بده
+            if (!string.Equals(item.FileType, "PDF", StringComparison.OrdinalIgnoreCase))
+            {
+                PdfHint.Text = "Only PDF preview is supported here.";
+                PdfHint.Visibility = Visibility.Visible;
+                PdfViewer.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            // WebView2 آماده؟
+            await Dispatcher.InvokeAsync(EnsurePdfWebViewReady);
+
+            if (!_pdfInit || PdfViewer.CoreWebView2 == null)
+            {
+                PdfHint.Text = "PDF viewer is not available.";
+                PdfHint.Visibility = Visibility.Visible;
+                return;
+            }
+
+            try
+            {
+                // مسیر فایل → file:/// URI (UNC هم پشتیبانی می‌شود)
+                var uri = new Uri(item.FullPath);
+                var nav = uri.AbsoluteUri; // مثال: file:///C:/... یا file://server/share/...
+
+                PdfViewer.CoreWebView2.Settings.AreDefaultContextMenusEnabled = true;
+                PdfViewer.Source = new Uri(nav);
+                PdfHint.Visibility = Visibility.Collapsed;
+                PdfViewer.Visibility = Visibility.Visible;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("[PDF] Navigate error: " + ex);
+                PdfHint.Text = "Failed to open PDF.";
+                PdfHint.Visibility = Visibility.Visible;
+            }
+        }
 
 
 
@@ -174,7 +391,7 @@ namespace Detail_engineering
 
             // ⬅️ مسیر نهایی پوشه‌ی آخرین ریویژن
             var lastRevPath = PathHelper.BuildRelatedPath(node.Doc);
-            
+
 
             if (!Directory.Exists(lastRevPath))
                 return;
@@ -184,12 +401,13 @@ namespace Detail_engineering
                 Files.Add(new FileItem
                 {
                     FileName = Path.GetFileName(f),
-                    FileType = (Path.GetExtension(f) ?? "").TrimStart('.').ToUpperInvariant()
+                    FileType = (Path.GetExtension(f) ?? "").TrimStart('.').ToUpperInvariant(),
+                    FullPath = f
                 });
             }
         }
     }
-            
 
-    
+
+
 }
