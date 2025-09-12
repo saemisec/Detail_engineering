@@ -478,7 +478,8 @@ namespace Detail_engineering
         const dn = d.Document_name || '';
         const num = d.Document_number || '';
         const s1 = tokenOverlapScore(qTokens, normalizeForMatch(dn)) + containsBoost(dn, queryTxt);
-        const s2 = tokenOverlapScore(qTokens, normalizeForMatch(num)) + containsBoost(num, queryTxt);
+        //const s2 = tokenOverlapScore(qTokens, normalizeForMatch(num)) + containsBoost(num, queryTxt);
+        const s2 = 0;
         const score = Math.max(s1, s2);
         return {{ idx, doc: d, score }};
       }});

@@ -14,7 +14,7 @@ namespace Detail_engineering
         {
             // محتوای اولیه: صفحه‌ی خانه
             _currentView = new HomeView();
-            SidebarWidth = new GridLength(220);
+            SidebarWidth = new GridLength(180);
         }
 
         // Collapsible sidebar
@@ -26,7 +26,7 @@ namespace Detail_engineering
             {
                 if (_isSidebarCollapsed == value) return;
                 _isSidebarCollapsed = value;
-                SidebarWidth = value ? new GridLength(64) : new GridLength(220);
+                SidebarWidth = value ? new GridLength(85) : new GridLength(180);
                 Raise(); Raise(nameof(SidebarToggleText));
             }
         }

@@ -155,13 +155,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-            <!-- برای سایدبار چپ: وقتی بسته است → ChevronRight ؛ وقتی باز است → ChevronLeft -->
-            
-          </StackPanel>
-
-            <!-- پنل دکمه‌ها (سمت چپ) -->
-            <Border Grid.Column="0" Background="{StaticResource BgSurface}" CornerRadius="12" BorderBrush="#1FFFFFFF" BorderThickness="1" Cursor="Hand" Padding="8">
+            <Border Grid.Column="0" Background="{StaticResource BgSurface}" CornerRadius="12" BorderBrush="#1FFFFFFF" BorderThickness="1" Cursor="Hand" Padding="8" Visibility="Visible">
                 <DockPanel LastChildFill="True">
                     <!-- دکمه‌ی جمع/باز -->
                     <Button DockPanel.Dock="Bottom" Style="{StaticResource ThreeDButton}" Content="{Binding SidebarToggleText}"
@@ -207,7 +201,7 @@
             </Border>
 
             <!-- محتوای اصلی که با کلیک روی دکمه‌ها تغییر می‌کند -->
-            <Border Grid.Column="1" Background="{StaticResource BgSurface}" CornerRadius="12" BorderBrush="#1FFFFFFF" BorderThickness="1" Margin="8,0,0,0">
+            <Border Grid.Column="2" Background="{StaticResource BgSurface}" CornerRadius="12" BorderBrush="#1FFFFFFF" BorderThickness="1" Margin="8,0,0,0">
                 <ContentControl Content="{Binding CurrentView}"/>
             </Border>
         </Grid>
