@@ -2,10 +2,116 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="Transparent">
-    <Grid>
-        <TextBlock Text="Designed BY Jondishapour Engineering Department" Foreground="#EAF0FF" Opacity="0.8" FontSize="40"
-                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="120"/>   <!-- Header -->
+                <RowDefinition Height="60"/>    <!-- Content -->
+                <RowDefinition Height="45"/>    <!-- Content -->
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0">
+            <Grid>
+                <Viewport3D>
+                    <!-- دوربین -->
+                    <Viewport3D.Camera>
+                        <PerspectiveCamera Position="0,0,2.5" LookDirection="0,0,-1" FieldOfView="60"/>
+                    </Viewport3D.Camera>
+
+                    <!-- نور -->
+                    <ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <DirectionalLight Color="White" Direction="-0.2,-0.2,-1"/>
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
+
+                    <!-- صفحه‌ای که تکسچر لوگو روش می‌افته -->
+                    <ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <GeometryModel3D>
+                                <GeometryModel3D.Geometry>
+                                    <MeshGeometry3D Positions="-1,-1,0  1,-1,0  1,1,0  -1,1,0"
+                                            TextureCoordinates="0,1  1,1  1,0  0,0"
+                                            TriangleIndices="0 1 2 0 2 3"/>
+                                </GeometryModel3D.Geometry>
+                                <GeometryModel3D.Material>
+                                    <MaterialGroup>
+                                        <DiffuseMaterial>
+                                            <DiffuseMaterial.Brush>
+                                                <!-- رویه‌ی جلو -->
+                                                <ImageBrush ImageSource="pack://siteoforigin:,,,/Images/Jondi_logo.png"/>
+                                            </DiffuseMaterial.Brush>
+                                        </DiffuseMaterial>
+                                        <SpecularMaterial SpecularPower="20">
+                                            <SpecularMaterial.Brush>
+                                                <SolidColorBrush Color="#44FFFFFF"/>
+                                            </SpecularMaterial.Brush>
+                                        </SpecularMaterial>
+                                    </MaterialGroup>
+                                </GeometryModel3D.Material>
+
+                                <!-- ⬅️ رویه‌ی پشت: با Flip افقی تا متن برعکس نشود -->
+                                <GeometryModel3D.BackMaterial>
+                                    <DiffuseMaterial>
+                                        <DiffuseMaterial.Brush>
+                                            <ImageBrush ImageSource="pack://siteoforigin:,,,/Images/Jondi_logo.png">
+                                                <!-- آینه‌ایِ افقی: ScaleX = -1 حول مرکز -->
+                                                <ImageBrush.RelativeTransform>
+                                                    <TransformGroup>
+                                                        <ScaleTransform ScaleX="-1" ScaleY="1" CenterX="0.5" CenterY="0.5"/>
+                                                    </TransformGroup>
+                                                </ImageBrush.RelativeTransform>
+                                            </ImageBrush>
+                                        </DiffuseMaterial.Brush>
+                                    </DiffuseMaterial>
+                                </GeometryModel3D.BackMaterial>
+
+                                <GeometryModel3D.Transform>
+                                    <Transform3DGroup>
+                                        <RotateTransform3D>
+                                            <RotateTransform3D.Rotation>
+                                                <AxisAngleRotation3D x:Name="LogoRotation" Axis="0,1,0" Angle="0"/>
+                                            </RotateTransform3D.Rotation>
+                                        </RotateTransform3D>
+                                        <ScaleTransform3D ScaleX="0.2" ScaleY="0.2" ScaleZ="0.2"/>
+                                    </Transform3DGroup>
+                                </GeometryModel3D.Transform>
+                            </GeometryModel3D>
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
+                </Viewport3D>
+
+                <!-- انیمیشن چرخش -->
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever">
+                                <DoubleAnimation Storyboard.TargetName="LogoRotation"
+                                         Storyboard.TargetProperty="Angle"
+                                         From="0" To="360"
+                                         Duration="0:0:4"
+                                         RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Grid.Triggers>
+            </Grid>
+
+        </Border>
+
+
+        <Border Grid.Row="1" Margin="0,10,0,0" CornerRadius="8">
+            <TextBlock Text="Ardestan Project Detail Engineering Documents" Foreground="#EAF0FF" Opacity="0.8" FontSize="40"
+            HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+        <Border Grid.Row="2" Margin="0,10,0,0" CornerRadius="8">
+            <TextBlock Text="Designed BY Jondishapour Engineering Department" Foreground="#EAF0FF" Opacity="0.8" FontSize="40"
+            HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+        <Border Grid.Row="3" Margin="0,10,0,0" CornerRadius="8">
+            <TextBlock Text="2025 ©" Foreground="#EAF0FF" Opacity="0.8" FontSize="40"
+            HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Border>
+        
     </Grid>
-    
 </UserControl>
 

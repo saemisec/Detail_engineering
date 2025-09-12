@@ -144,27 +144,7 @@
                 <Image Width="240" Height="80" Margin="20" Source="pack://siteoforigin:,,,/Images/Jondi.png"/>
                 <Image Width="240" Height="80" Margin="20" Source="pack://siteoforigin:,,,/Images/GasDevelopment.png"/>
             </StackPanel>
-            <!--
-            <Grid Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/><ColumnDefinition/><ColumnDefinition/><ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Margin="6" CornerRadius="10" Background="#222A54" BorderBrush="#26FFFFFF" BorderThickness="1">
-                    
-                </Border>
-                <Border Grid.Column="1" Margin="6" CornerRadius="10" Background="#222A54" BorderBrush="#26FFFFFF" BorderThickness="1">
-                    <TextBlock Text="Image 2" Foreground="{StaticResource FgText}" Opacity="0.6"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-                <Border Grid.Column="2" Margin="6" CornerRadius="10" Background="#222A54" BorderBrush="#26FFFFFF" BorderThickness="1">
-                    <TextBlock Text="Image 3" Foreground="{StaticResource FgText}" Opacity="0.6"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-                <Border Grid.Column="3" Margin="6" CornerRadius="10" Background="#222A54" BorderBrush="#26FFFFFF" BorderThickness="1">
-                    <TextBlock Text="Image 4" Foreground="{StaticResource FgText}" Opacity="0.6"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-            </Grid>-->
+            
         </Border>
 
         <!-- بدنه -->
@@ -194,7 +174,7 @@
                                 Tag="pack://siteoforigin:,,,/Images/home.png"
                                 Click="Home_Click">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Documents"/>
+                                <TextBlock Text="Home"/>
                             </StackPanel>
                         </Button>
                         <Button Style="{StaticResource ThreeDButton}"
