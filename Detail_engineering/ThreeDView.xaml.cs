@@ -243,7 +243,7 @@ namespace Detail_engineering
     <button class='tb' id='panR'>Pan →</button>
     <button class='tb' id='panU'>Pan ↑</button>
     <button class='tb' id='panD'>Pan ↓</button>
-    <button class='tb toggle' id='pathpeek'>Path Peek</button>
+    <button class='tb toggle' id='pathpeek'>Part-Details</button>
 
   </div>
 
@@ -563,7 +563,7 @@ namespace Detail_engineering
           payload: {{ PartTitle: partText, Documents: docs }}
         }};
 
-        console.log('[JS] posting message →', msg);
+        //console.log('[JS] posting message →', msg);
         if (!window.chrome || !window.chrome.webview) {{
           console.warn('[JS] window.chrome.webview NOT available!');
           return;
@@ -592,7 +592,7 @@ namespace Detail_engineering
     const loader = new GLTFLoader();
     const draco = new DRACOLoader(); draco.setDecoderPath('https://assets/decoders/draco/'); loader.setDRACOLoader(draco);
     //const ktx2  = new KTX2Loader();  ktx2.setTranscoderPath('https://assets/decoders/ktx2/').detectSupport(renderer); loader.setKTX2Loader(ktx2);
-
+    
     const url = 'https://app/{safe}';
     loader.load(url, (gltf) => {{
       const root = gltf.scene || gltf.scenes[0]; scene.add(root);
@@ -603,7 +603,7 @@ namespace Detail_engineering
       const size = sizeV.length();
       const center = box.getCenter(new THREE.Vector3());
 
-      const fitOffset = 1.6;
+      const fitOffset = 0.2;
       const fov = camera.fov * (Math.PI/180);
       const dist = Math.abs(size / Math.tan(fov/2)) * fitOffset;
       camera.position.copy(center.clone().add(new THREE.Vector3(0,0,1).multiplyScalar(dist)));
@@ -612,7 +612,6 @@ namespace Detail_engineering
       camera.updateProjectionMatrix();
       controls.target.copy(center);
       controls.update();
-
       log('loaded ✓');
       document.getElementById('tools').style.display='grid';
     }}, undefined, (err) => {{ console.error(err); log('load error'); }});
@@ -754,10 +753,12 @@ namespace Detail_engineering
       vec.applyMatrix4(new THREE.Matrix4().makeRotationAxis(right, -rad));
       camera.position.copy(controls.target.clone().add(vec)); controls.update();
     }}
+    
     function zoom(delta) {{
       const dir = camera.getWorldDirection(new THREE.Vector3());
       camera.position.addScaledVector(dir, -delta); controls.update();
     }}
+    
     function pan(dx,dy) {{
       const m = new THREE.Matrix4().extractRotation(camera.matrix);
       const xAxis = new THREE.Vector3(1,0,0).applyMatrix4(m);
