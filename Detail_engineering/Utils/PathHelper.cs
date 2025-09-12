@@ -8,17 +8,15 @@ public static class PathHelper
     // ست کن: مثلا @"\\filesrv01\Projects"
     public static string BaseDir { get; set; } = @"C:\ProjectDocs";
 
-    public static string BuildRelatedPath(DocumentRecord doc)
+    public static string BuildRelatedPath(DocumentRecord doc,bool fm,string rev)
     {
         string disc = SafeSeg(doc?.Dicipline);
         string dtype = SafeSeg(doc?.Document_type);
         string dnum = SafeSeg(doc?.Document_number);
         string dname = SafeSeg(doc?.Document_name);
-        string last = SafeSeg(GetLastRevision(doc));
-
         string combo = string.IsNullOrWhiteSpace(dnum) ? dname : (string.IsNullOrWhiteSpace(dname) ? dnum : $"{dnum}-{dname}");
         combo = SafeSeg(combo);
-
+        string last = (fm) ? SafeSeg(GetLastRevision(doc)) : rev;
         // Path.Combine با UNC هم اوکی است اگر BaseDir با \\ شروع کند
         var parts = new[] { BaseDir, disc, dtype, combo, last }.Where(p => !string.IsNullOrWhiteSpace(p)).ToArray();
         return Path.Combine(parts);

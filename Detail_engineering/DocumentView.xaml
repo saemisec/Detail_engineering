@@ -213,7 +213,7 @@
                 
                 
 
-                <!-- Revisions (count excl. rejected) -->
+                <!-- Revisions (count excl. rejected)
                 <DataGridTextColumn Header="Revisions" Width="120"
                                     Binding="{Binding RevisionsCountExclRejected, Mode=OneWay}">
                                     <DataGridTextColumn.ElementStyle>
@@ -223,7 +223,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                     
-                </DataGridTextColumn>
+                </DataGridTextColumn> -->
 
                 <!-- lastrevision (Hyperlink) -->
                 <DataGridTemplateColumn Header="lastrevision" Width="120">
@@ -240,7 +240,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <!-- rejected -->
+                <!-- rejected 
                 <DataGridTextColumn Header="rejected" Width="110"
                                     Binding="{Binding RejectedCount, Mode=OneWay}">
                     <DataGridTextColumn.ElementStyle>
@@ -249,7 +249,7 @@
                             <Setter Property="TextAlignment" Value="Center"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
+                </DataGridTextColumn>-->
             </DataGrid.Columns>
         </DataGrid>
 

@@ -141,11 +141,12 @@
                                     <!-- آیکن: برای ریشه 📦، برای فرزند بر اساس Document_type -->
                                     <Border Width="18" Height="18" CornerRadius="9" Margin="0,0,8,0"
                                             Background="{Binding Doc.Document_type, Converter={StaticResource DocTypeBadgeBgConverter}}">
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11"
+                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" 
                                                 Text="{Binding ., Converter={StaticResource TreeNodeIconConverter}}"/>
                                     </Border>
 
                                     <TextBlock Text="{Binding Title}"
+                                            ToolTip="{Binding Title}"
                                             Foreground="{StaticResource Text}"
                                             TextTrimming="CharacterEllipsis"/>
                                 </StackPanel>

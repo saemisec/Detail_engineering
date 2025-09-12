@@ -469,7 +469,7 @@ namespace Detail_engineering
       return lastXY;
     }}
 
-    function findRelatedDocs(queryTxt, maxResults=5){{
+    function findRelatedDocs(queryTxt, maxResults=10000){{
       if (!DOCS || DOCS.length===0) return [];
       const qTokens = normalizeForMatch(queryTxt);
 
@@ -646,7 +646,7 @@ namespace Detail_engineering
 
       // ⬅️ بعد از await از x,y ذخیره‌شده استفاده کن، نه event.clientX
       await ensureDocsLoaded();
-      const related = findRelatedDocs(txt, 5);
+      const related = findRelatedDocs(txt, 10000);
       if (related.length > 0){{
         showPathTable(txt, related, x, y);
       }} else {{

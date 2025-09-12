@@ -91,7 +91,7 @@ namespace Detail_engineering
             else if (t.Contains("LAYOUT")) return "🗺";
             else if (t.Contains("DRAWING") || t.Contains("DWG")) return "📐";
             return "📎";
-            
+
         }
         public object ConvertBack(object value, Type t, object p, CultureInfo c) => Binding.DoNothing;
     }
@@ -155,14 +155,17 @@ namespace Detail_engineering
 
         private bool _pdfInit = false;
 
+        private bool from_model = false;
+
 
         public DocumentDetailsWindow(DocumentRecord doc)
         {
             InitializeComponent();
             _doc = doc;
-
-            HeaderTitle = $"{doc.Document_name}  ({doc.Document_number})";
+            this.Loaded += (s, e) => EnsurePdfWebViewReady();
+            HeaderTitle = $"{doc.Document_name}-({doc.Document_number})";
             DataContext = this;
+            from_model = false;
 
             // Build tree: root (document) -> children (revisions)
             var root = new TreeNode
@@ -176,7 +179,9 @@ namespace Detail_engineering
                 root.Children.Add(new TreeNode
                 {
                     Title = r,
-                    IsRevision = true
+                    IsRevision = true,
+                    Doc = doc
+
                 });
             }
             TreeRoots.Add(root);
@@ -191,6 +196,7 @@ namespace Detail_engineering
             HeaderTitle = partTitle;
             DataContext = this;
             this.Loaded += (s, e) => EnsurePdfWebViewReady();
+            from_model = true;
 
 
             // root: عنوان Part
@@ -249,6 +255,8 @@ namespace Detail_engineering
             }
             return null;
         }
+
+        
 
 
 
@@ -386,11 +394,14 @@ namespace Detail_engineering
 
         private void Tree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
+            TreeNode tn = new TreeNode();
+            tn = (TreeNode)e.NewValue;
+            string rev = (from_model) ? "" : tn.Title;
             Files.Clear();
             if (e.NewValue is not TreeNode node || node.Doc == null) return;
 
             // ⬅️ مسیر نهایی پوشه‌ی آخرین ریویژن
-            var lastRevPath = PathHelper.BuildRelatedPath(node.Doc);
+            var lastRevPath = PathHelper.BuildRelatedPath(node.Doc, from_model, rev);
 
 
             if (!Directory.Exists(lastRevPath))
@@ -405,6 +416,8 @@ namespace Detail_engineering
                     FullPath = f
                 });
             }
+
+
         }
     }
 
