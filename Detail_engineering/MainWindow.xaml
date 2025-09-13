@@ -178,11 +178,18 @@
                                 <TextBlock Text="Documents"/>
                             </StackPanel>
                         </Button>
-
+                        
                         <!-- 3D Model (3D-like style) -->
                         <Button Style="{StaticResource ThreeDButton}"
                                 Tag="pack://siteoforigin:,,,/Images/3d.jpg"
                                 Click="ThreeD_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="3D Model"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Style="{StaticResource ThreeDButton}"
+                                Tag="pack://siteoforigin:,,,/Images/3d.jpg"
+                                Command="{Binding OpenSettingsCommand}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="3D Model"/>
                             </StackPanel>

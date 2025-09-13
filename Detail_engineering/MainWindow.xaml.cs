@@ -9,6 +9,8 @@ namespace Detail_engineering
             InitializeComponent();
         }
 
+        
+
         private MainWindowViewModel VM => (MainWindowViewModel)DataContext;
 
         private void ToggleSidebar_Click(object sender, RoutedEventArgs e)
@@ -35,5 +37,7 @@ namespace Detail_engineering
         {
             Application.Current.Shutdown();
         }
+
+        
     }
 }

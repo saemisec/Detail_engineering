@@ -471,7 +471,12 @@ namespace Detail_engineering
 
     function findRelatedDocs(queryTxt, maxResults=10000){{
       if (!DOCS || DOCS.length===0) return [];
-      const qTokens = normalizeForMatch(queryTxt);
+      let qTokens = '';
+      if (queryTxt='Resturant') qTokens= normalizeForMatch('Restaurant'); 
+      else qTokens = normalizeForMatch(queryTxt);
+      
+      
+      
 
       // هر سند را امتیاز بده
       const scored = DOCS.map((d, idx) => {{

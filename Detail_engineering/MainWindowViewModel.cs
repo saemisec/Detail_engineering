@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Detail_engineering
 {
@@ -10,11 +11,29 @@ namespace Detail_engineering
         public event PropertyChangedEventHandler PropertyChanged;
         void Raise([CallerMemberName] string p = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(p));
 
+        public ICommand OpenSettingsCommand { get; }
+
         public MainWindowViewModel()
         {
             // محتوای اولیه: صفحه‌ی خانه
             _currentView = new HomeView();
             SidebarWidth = new GridLength(180);
+            OpenSettingsCommand = new RelayCommand(_ => OpenSettings());
+        }
+
+        private void OpenSettings()
+        {
+            var w = new SettingsWindow
+            {
+                Owner = System.Windows.Application.Current.MainWindow,
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
+            };
+            w.ShowDialog();
+
+            // پس از بستن، اگر نیاز به اعمال اضافی داری:
+            //PathHelper.BaseDir = Properties.Settings.Default.BaseFolder ?? "";
+            // اگر WebView2 داری و JSON را از WPF سرو می‌کنی،
+            // اینجا می‌تونی رفرش/Reload بدهی.
         }
 
         // Collapsible sidebar

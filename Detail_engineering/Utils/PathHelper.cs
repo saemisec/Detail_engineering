@@ -7,8 +7,10 @@ public static class PathHelper
 {
     // ست کن: مثلا @"\\filesrv01\Projects"
     public static string BaseDir { get; set; } = @"C:\ProjectDocs";
+    
+    public static string JsonPath { get; set; } = @"C:\ProjectDocs\database.json";
 
-    public static string BuildRelatedPath(DocumentRecord doc,bool fm,string rev)
+    public static string BuildRelatedPath(DocumentRecord doc, bool fm, string rev)
     {
         string disc = SafeSeg(doc?.Dicipline);
         string dtype = SafeSeg(doc?.Document_type);
