@@ -48,8 +48,9 @@ namespace Detail_engineering
             {
                 var baseDir = AppDomain.CurrentDomain.BaseDirectory;
                 //var path = AppDomain.CurrentDomain.JsonPath;
-                var path = Settings.Default.JsonPath;  
-                //Path.Combine(baseDir, "database.json");
+
+                var path =  Path.Combine(baseDir, "database.json");
+                MessageBox.Show(path);
                 if (!File.Exists(path))
                 {
                     MessageBox.Show($"database.json not found at:\n{path}", "Data", MessageBoxButton.OK, MessageBoxImage.Warning);

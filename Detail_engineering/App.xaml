@@ -1,8 +1,8 @@
 ﻿<Application x:Class="Detail_engineering.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Detail_engineering"
-             StartupUri="MainWindow.xaml">
+             xmlns:local="clr-namespace:Detail_engineering">
+             
     <Application.Resources>
          
     </Application.Resources>

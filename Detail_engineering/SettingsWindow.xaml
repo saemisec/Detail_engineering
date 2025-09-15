@@ -4,16 +4,16 @@
         Title="Settings" Width="520" Height="260"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
         Background="#0F1631" Foreground="#EAF0FF" FontSize="14" >
-    <Grid Margin="20">
+    <Grid Margin="20,20,20,14">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="44"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="44"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="54"/>
         </Grid.RowDefinitions>
 
-        <!-- JSON -->
+        <!-- JSON 
         <TextBlock Text="JSON File Path:" Grid.Row="0" Margin="0,0,0,6"/>
         <DockPanel Grid.Row="1" LastChildFill="True">
             <Button Content="Browse..." Width="90" Margin="0,0,8,0"
@@ -21,7 +21,7 @@
             <TextBox Text="{Binding JsonPath, UpdateSourceTrigger=PropertyChanged}"
                      Background="#1A203D" BorderBrush="#3A4588" BorderThickness="1"
                      Padding="6"/>
-        </DockPanel>
+        </DockPanel>-->
 
         <!-- BaseFolder -->
         <TextBlock Text="Base Folder:" Grid.Row="2" Margin="0,12,0,6"/>
@@ -29,12 +29,13 @@
             <Button Content="Browse..." Width="90" Margin="0,0,8,0"
                     Command="{Binding BrowseBaseCommand}" DockPanel.Dock="Right"/>
             <TextBox Text="{Binding BaseFolder, UpdateSourceTrigger=PropertyChanged}"
-                     Background="#1A203D" BorderBrush="#3A4588" BorderThickness="1"
+                     Background="#1A203D" BorderBrush="#26305E" BorderThickness="1" Foreground = "#EAF0FF"
                      Padding="6"/>
         </DockPanel>
 
         <!-- Actions -->
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">
+            <Button Content="Create Database" Width="150" Command="{Binding CreateDatabaseCommand}"/>
             <Button Content="OK" Width="100" Margin="0,0,10,0" Command="{Binding SaveCommand}"/>
             <Button Content="Cancel" Width="100" Command="{Binding CancelCommand}"/>
         </StackPanel>

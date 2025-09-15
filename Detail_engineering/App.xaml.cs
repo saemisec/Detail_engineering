@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-
+using System.Windows.Threading;
 
 namespace Detail_engineering
 {
@@ -18,17 +18,8 @@ namespace Detail_engineering
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
-            // اینجا Utils.BaseDir.Init() رو صدا بزن
-            //PathHelper.BaseDir = @"\\192.168.94.4\Ardestan Dehshir\1-DCC\4.Detail Engineering";
-
-            PathHelper.BaseDir = Settings.Default.BaseFolder ?? "";
-
-            PathHelper.JsonPath = Settings.Default.JsonPath ?? "";
-
-            // بعد MainWindow رو باز کن
-            var mainWindow = new MainWindow();
-            mainWindow.Show();
+            var login = new LoginWindow();
+            login.Show();
         }
     }
 }

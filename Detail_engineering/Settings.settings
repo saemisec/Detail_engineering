@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Detail_engineering" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="JsonPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="BaseFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

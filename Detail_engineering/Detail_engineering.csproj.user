@@ -19,7 +19,13 @@
     <Compile Update="HomeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="LoginWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="SettingsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="SplashWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ThreeDView.xaml.cs">
@@ -39,10 +45,16 @@
     <Page Update="HomeView.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="SettingsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SplashWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ThreeDView.xaml">

@@ -26,18 +26,6 @@ namespace Detail_engineering {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string JsonPath {
-            get {
-                return ((string)(this["JsonPath"]));
-            }
-            set {
-                this["JsonPath"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string BaseFolder {
             get {
                 return ((string)(this["BaseFolder"]));

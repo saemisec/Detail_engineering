@@ -150,7 +150,7 @@
                                     Converter={x:Static local:AlternationConverter.Instance}}"/> -->
 
                 <!-- Document_name (Hyperlink + trim) -->
-                <DataGridTemplateColumn Header="Document_name" Width="*">
+                <DataGridTemplateColumn Header="Document Name" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock TextTrimming="CharacterEllipsis">
@@ -163,7 +163,7 @@
                 </DataGridTemplateColumn>
 
                 <!-- Document_number -->
-                <DataGridTextColumn Header="Document_number" Width="220"
+                <DataGridTextColumn Header="Document Number" Width="220"
                                     Binding="{Binding Document_number, Mode=OneWay}"/>
 
                 <!-- Dicipline -->
@@ -195,7 +195,7 @@
                     Width="200">
                     <DataGridTextColumn.Header>
                         <Grid>
-                            <TextBlock Text="Document_type" Margin="8,0,28,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Document Type" Margin="8,0,28,0" VerticalAlignment="Center"/>
                             <Button Width="18" Height="18" Padding="0"
                                 HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="6,0,0,2"
                                 ToolTip="Filter" Click="TypeBtn_Click">
@@ -213,7 +213,7 @@
                 
                 
 
-                <!-- Revisions (count excl. rejected)
+                <!-- Revisions (count excl. rejected)-->
                 <DataGridTextColumn Header="Revisions" Width="120"
                                     Binding="{Binding RevisionsCountExclRejected, Mode=OneWay}">
                                     <DataGridTextColumn.ElementStyle>
@@ -223,10 +223,10 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                     
-                </DataGridTextColumn> -->
+                </DataGridTextColumn> 
 
                 <!-- lastrevision (Hyperlink) -->
-                <DataGridTemplateColumn Header="lastrevision" Width="120">
+                <DataGridTemplateColumn Header="Last Revision" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <TextBlock TextTrimming="CharacterEllipsis">
