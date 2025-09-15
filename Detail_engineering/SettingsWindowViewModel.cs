@@ -27,8 +27,7 @@ namespace Detail_engineering
 
     public class SettingsWindowViewModel : INotifyPropertyChanged
     {
-        private string _baseFolder = Settings.Default.BaseFolder ?? "";
-
+        private string _baseFolder = AppRegistry.GetBaseFolder();
         public string BaseFolder
         {
             get => _baseFolder;
@@ -45,10 +44,10 @@ namespace Detail_engineering
 
         public SettingsWindowViewModel()
         {
-            BrowseBaseCommand = new RelayCommand(_ => BrowseBase());
-            SaveCommand = new RelayCommand(_ => Save());
-            CancelCommand = new RelayCommand(_ => CloseRequested?.Invoke(this, EventArgs.Empty));
-            CreateDatabaseCommand = new RelayCommand(_ => CreateDatabase());
+            //BrowseBaseCommand = new RelayCommand(_ => BrowseBase());
+            //SaveCommand = new RelayCommand(_ => Save());
+            //CancelCommand = new RelayCommand(_ => CloseRequested?.Invoke(this, EventArgs.Empty));
+            //CreateDatabaseCommand = new RelayCommand(_ => CreateDatabase());
         }
 
         private void BrowseBase()
@@ -59,13 +58,14 @@ namespace Detail_engineering
 
         private void Save()
         {
-            Settings.Default.BaseFolder = (BaseFolder ?? "").Trim();
-            Settings.Default.Save();
-
-            // اعمال فوری روی برنامه (مثلاً PathHelper)
-            PathHelper.BaseDir = Settings.Default.BaseFolder ?? "";
-
+            var bf = (BaseFolder ?? "").Trim();
+            AppRegistry.SetBaseFolder(bf);
+            // اعمال فوری روی برنامه
+            PathHelper.BaseDir = bf;
             CloseRequested?.Invoke(this, EventArgs.Empty);
+            CreateDatabase();
+            //Settings.Default.BaseFolder = (BaseFolder ?? "").Trim();
+            //Settings.Default.Save();
         }
 
 
@@ -80,7 +80,7 @@ namespace Detail_engineering
             }
             if (string.IsNullOrEmpty(root) || !Directory.Exists(root))
             {
-                System.Windows.MessageBox.Show("Base folder معتبر نیست.", "Create Database", System.Windows.MessageBoxButton.OK,
+                System.Windows.MessageBox.Show("Invalid Base folder ", "Create Database", System.Windows.MessageBoxButton.OK,
                     System.Windows.MessageBoxImage.Warning);
                 return;
             }
@@ -133,7 +133,7 @@ namespace Detail_engineering
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("خطا در ساخت دیتابیس:\n" + ex.Message, "Create Database",
+                System.Windows.MessageBox.Show("Error In Database Create\nPlease Contact System Administrator\n" + ex.Message, "Create Database",
                     System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
             }
         }

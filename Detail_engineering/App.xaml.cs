@@ -18,6 +18,8 @@ namespace Detail_engineering
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+            AppRegistry.Ensure();
+            PathHelper.BaseDir = AppRegistry.GetBaseFolder();
             var login = new LoginWindow();
             login.Show();
         }

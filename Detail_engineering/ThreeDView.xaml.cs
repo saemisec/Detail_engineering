@@ -362,7 +362,9 @@ namespace Detail_engineering
       if (dnum && dname) combo = `${{dnum}}-${{dname}}`;
       else combo = dnum || dname || '';
       combo = safeSegment(combo);
-      const full = winJoin(BASE_DIR, disc, dtype, combo, last);
+      //const full = winJoin(BASE_DIR, disc, dtype, combo, last);
+      const full = winJoin(disc, dtype, combo, last);
+      console.log(full);
       return full;
     }}
 
@@ -414,16 +416,40 @@ namespace Detail_engineering
       return chain.reverse(); // [root,...,leaf]
     }}
 
+    function customFormat(arr) {{
+    if (!Array.isArray(arr) || arr.length < 2) {{
+        return undefined; // اگر آرایه معتبر نبود یا طول کافی نداشت
+    }}
+
+    const secondItem = arr[1]; // عنصر شماره یک (دومین عنصر)
+    const firstItem = arr[0]==='RESTURANT' ? 'RESTAURANT' : arr[0];  // عنصر شماره صفر (اولین عنصر)
+    const thirdItem = arr[2];
+
+    // بررسی اینکه اولین کاراکتر عدد هست یا نه
+    if (/^\d/.test(secondItem)) {{
+        const indexOfUnderscore = thirdItem.indexOf('_');
+        const indexOfdash = secondItem.indexOf('-');
+      const part = indexOfUnderscore !== -1 ? thirdItem.slice(0, indexOfUnderscore) : thirdItem;
+      console.log(part);
+      const main = indexOfdash !== -1 ? secondItem.slice(0, indexOfdash) : secondItem;
+      return `${{ main}} ${{ part}} `;
+    }} else {{
+        return firstItem;
+      }}
+    }}
+
     // گرفتن بخش‌های 3..5 (۱-مبنایی)
     function takeSegments3to5(arr){{
-      const segs = arr.slice(4, 6); // ایندکس‌های 3 و 4 (۰-مبنایی) = عناصر 4 و 5
-      if (segs.length === 2 && /equipment|structure/i.test(segs[1])) {{
-        segs.pop(); // حذف عنصر 5
-      }}
+      const segs = arr.slice(4, 8); // ایندکس‌های 3 و 4 (۰-مبنایی) = عناصر 4 و 5
+      //if (segs.length === 2 && /equipment|structure/i.test(segs[1])) {{
+      //  segs.pop(); // حذف عنصر 5
+      //}}
+      let fin_segs = segs.splice(2,1);
       for (let i = 0; i < segs.length; i++) {{
         segs[i] = segs[i].replace(/\b(AR|FINISH)\b/gi, '').trim();
       }}
-      return segs;
+      //console.log(customFormat(segs));
+      return customFormat(segs);
     }}
 
     // نمایش toast به‌مدت ۵ ثانیه
@@ -471,8 +497,6 @@ namespace Detail_engineering
 
     function findRelatedDocs(queryTxt, maxResults=10000){{
       if (!DOCS || DOCS.length===0) return [];
-      //let qTokens = '';
-      //if (queryTxt='Resturant') qTokens= normalizeForMatch('Restaurant'); 
       const qTokens = normalizeForMatch(queryTxt);
       
       
@@ -488,7 +512,7 @@ namespace Detail_engineering
         const score = Math.max(s1, s2);
         return {{ idx, doc: d, score }};
       }});
-      const TH = 0.5; // اگر می‌خوای سخت‌گیرتر باشی 0.6 کن
+      const TH = 0.7; // اگر می‌خوای سخت‌گیرتر باشی 0.6 کن
       const hits = scored.filter(x => x.score >= TH)
                         .sort((a,b)=> b.score - a.score)
                         .slice(0, maxResults);
@@ -645,14 +669,25 @@ namespace Detail_engineering
       const arr = ancestryArray(obj);
       const segs = takeSegments3to5(arr);
 
+
+      //let chain = []; 
+      //let cur = obj;
+      //while (cur) {{
+        //chain.push(cur.name || '(no name)');
+        //cur = cur.parent;
+      //}}
+      //console.log('RAW name:', obj.name);
+      //console.log('ANCESTRY path:', chain.reverse().join(' / '));
+      //console.log('segs',segs)
+
       // مونتاژ txt و پاک‌سازی‌های قبلی
-      let txt = segs.join(' / ').trim();
-      txt = txt.replace(/^-+\s*/, '').replace(/\s*-+$/, '').trim();
+      //let txt = segs.join(' / ').trim();
+      let txt = segs.replace(/^-+\s*/, '').replace(/\s*-+$/, '').trim();
       if (!txt || txt === '-' || txt === '—') return;
 
       // ⬅️ بعد از await از x,y ذخیره‌شده استفاده کن، نه event.clientX
       await ensureDocsLoaded();
-      const related = findRelatedDocs(txt, 10000);
+      const related = findRelatedDocs(segs, 10000);
       if (related.length > 0){{
         showPathTable(txt, related, x, y);
       }} else {{

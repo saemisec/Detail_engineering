@@ -50,7 +50,7 @@ namespace Detail_engineering
                 //var path = AppDomain.CurrentDomain.JsonPath;
 
                 var path =  Path.Combine(baseDir, "database.json");
-                MessageBox.Show(path);
+                //MessageBox.Show(path);
                 if (!File.Exists(path))
                 {
                     MessageBox.Show($"database.json not found at:\n{path}", "Data", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -285,10 +285,7 @@ namespace Detail_engineering
 
         private void LastRevisionLink_Click(object sender, RoutedEventArgs e)
         {
-            if (GetRowContext(sender) is DocumentRecord d && d.HasLastRevision)
-            {
-                MessageBox.Show($"[lastrevision clicked]\n{d.LastRevisionName}\n(مقصد لینک را بعداً تنظیم می‌کنیم)", "Link");
-            }
+            
         }
 
         private static DocumentRecord GetRowContext(object sender)
