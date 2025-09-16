@@ -364,7 +364,7 @@ namespace Detail_engineering
       combo = safeSegment(combo);
       //const full = winJoin(BASE_DIR, disc, dtype, combo, last);
       const full = winJoin(disc, dtype, combo, last);
-      console.log(full);
+      //console.log(full);
       return full;
     }}
 
@@ -422,7 +422,9 @@ namespace Detail_engineering
     }}
 
     const secondItem = arr[1]; // عنصر شماره یک (دومین عنصر)
-    const firstItem = arr[0]==='RESTURANT' ? 'RESTAURANT' : arr[0];  // عنصر شماره صفر (اولین عنصر)
+    const firstItem = arr[0]==='RESTURANT' ? 'RESTAURANT' : arr[0];
+    const firItem = firstItem.toLowerCase().startsWith('de') ? firstItem.sybstring(2,len(firstItem)-1) : firstItem;
+    console.log(firstItem);
     const thirdItem = arr[2];
 
     // بررسی اینکه اولین کاراکتر عدد هست یا نه

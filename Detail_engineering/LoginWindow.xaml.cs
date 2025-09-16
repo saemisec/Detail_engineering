@@ -6,9 +6,8 @@ namespace Detail_engineering
 {
     public partial class LoginWindow : Window
     {
-        // هاردکد (هرچی خواستی بگذار)
         private const string HardUser = "admin";
-        private const string HardPass = "1234";
+        private const string HardPass = "Ardestan";
 
         private int _attempts = 0;
         private const int MaxAttempts = 3;
@@ -30,16 +29,13 @@ namespace Detail_engineering
 
             if (u == HardUser && p == HardPass)
             {
-                // موفق → اسپلش ۵ ثانیه
                 var splash = new SplashWindow();
                 splash.Owner = this;
                 splash.Show();
 
-                // مخفی کردن لاگین پشت اسپلش
                 this.Hide();
-                await Task.Delay(5000);
+                await Task.Delay(4000);
 
-                // باز کردن Main و بستن بقیه
                 var main = new MainWindow();
                 main.Show();
 
@@ -48,7 +44,6 @@ namespace Detail_engineering
                 return;
             }
 
-            // ناموفق
             _attempts++;
             if (_attempts >= MaxAttempts)
             {

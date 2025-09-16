@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Detail_engineering.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Sign in" Width="420" Height="320"
+        Title="Sign in" Width="420" Height="280"
         WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
         Background="#0F1631" Foreground="#EAF0FF" WindowStyle="None"
         AllowsTransparency="True">
@@ -18,12 +18,20 @@
             </Grid.RowDefinitions>
 
             <!-- Header -->
-            <DockPanel Grid.Row="0">
-                <TextBlock Text="Login" FontSize="18" FontWeight="SemiBold" />
-                <Button Content="✕" Width="30" Height="28" DockPanel.Dock="Right"
-                        Background="#1F2447" BorderBrush="#2A3162" Margin="0,0,0,0"
-                        Click="Close_Click"/>
-            </DockPanel>
+            <Border Grid.Row="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="Login" Foreground = "#EAF0FF"
+                            VerticalAlignment="Center" Margin="4,0" FontWeight="SemiBold"/>
+                    <Button Grid.Column="1" Content="✕" Width="25" Height="20"
+                            Background="#1F2447" 
+                            BorderBrush="#2A3162" Click="Close_Click"/>
+                </Grid>
+            </Border>
 
             <!-- Username -->
             <TextBlock Grid.Row="2" Text="Username" Margin="4,0,0,6" />

@@ -159,7 +159,7 @@
                 <DockPanel LastChildFill="True">
                     <!-- دکمه‌ی جمع/باز -->
                     <Button DockPanel.Dock="Bottom" Style="{StaticResource ThreeDButton}" Content="{Binding SidebarToggleText}"
-                            Click="ToggleSidebar_Click" ToolTip="Collapse/Expand" />
+                            Click="ToggleSidebar_Click" ToolTip="Collapse/Expand" Tag="pack://siteoforigin:,,,/Images/Collapse.png" />
 
                     <!-- لیست دکمه‌ها -->
                     <StackPanel Margin="2" VerticalAlignment="Top" >
@@ -189,7 +189,8 @@
                         </Button>
                         <Button Style="{StaticResource ThreeDButton}"
                                 Tag="pack://siteoforigin:,,,/Images/settings.png"
-                                Command="{Binding OpenSettingsCommand}">
+                                Click="setting_Click"
+                                >
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Setting"/>
                             </StackPanel>

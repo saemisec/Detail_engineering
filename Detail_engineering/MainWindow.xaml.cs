@@ -23,6 +23,19 @@ namespace Detail_engineering
             VM.CurrentView = new DocumentView(); // داخل همان ContentControl نمایش داده می‌شود
         }
 
+        private void setting_Click(object sender, RoutedEventArgs e)
+        {
+            var owner = Window.GetWindow(this);
+            var win = new SettingsWindow()  // ⬅️ پنجره جدید با دیتا
+            {
+                Owner = owner,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+            win.ShowDialog();
+        }
+
+
+
         private void Home_Click(object sender, RoutedEventArgs e)
         {
             VM.CurrentView = new HomeView(); // داخل همان ContentControl نمایش داده می‌شود

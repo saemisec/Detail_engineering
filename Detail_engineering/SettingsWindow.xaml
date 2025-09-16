@@ -1,32 +1,39 @@
 ﻿<Window x:Class="Detail_engineering.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Settings" Width="520" Height="260"
+        Title="Settings" Width="465" Height="175"
         WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
-        Background="#0F1631" Foreground="#EAF0FF" FontSize="14" >
+        Background="#0F1631" Foreground="#EAF0FF" FontSize="14"  WindowStyle="None" >
     <Grid Margin="20,20,20,14">
         <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="44"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="54"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <!-- JSON 
-        <TextBlock Text="JSON File Path:" Grid.Row="0" Margin="0,0,0,6"/>
-        <DockPanel Grid.Row="1" LastChildFill="True">
-            <Button Content="Browse..." Width="90" Margin="0,0,8,0"
-                    Command="{Binding BrowseJsonCommand}" DockPanel.Dock="Right"/>
-            <TextBox Text="{Binding JsonPath, UpdateSourceTrigger=PropertyChanged}"
-                     Background="#1A203D" BorderBrush="#3A4588" BorderThickness="1"
-                     Padding="6"/>
-        </DockPanel>-->
+        <Border Grid.Row="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="{Binding HeaderTitle}" Foreground = "#EAF0FF"
+                            VerticalAlignment="Center" Margin="12,0" FontWeight="SemiBold"/>
+                <Button Grid.Column="1" Content="✕" Width="25" Height="20"
+                            Background="#1F2447" 
+                            BorderBrush="#2A3162" Click="Close_Click"/>
+            </Grid>
+        </Border>
+
+
 
         <!-- BaseFolder -->
-        <TextBlock Text="Base Folder:" Grid.Row="2" Margin="0,12,0,6"/>
+        <TextBlock Text="Base Folder:" Grid.Row="2" Margin="0,0,0,0"/>
         <DockPanel Grid.Row="3" LastChildFill="True">
-            <Button Content="Browse..." Width="90" Margin="0,0,8,0"
+            <Button Content="Browse..." Width="80" Margin="12,0,8,0"
                     Command="{Binding BrowseBaseCommand}" DockPanel.Dock="Right"/>
             <TextBox Text="{Binding BaseFolder, UpdateSourceTrigger=PropertyChanged}"
                      Background="#1A203D" BorderBrush="#26305E" BorderThickness="1" Foreground = "#EAF0FF"
@@ -35,7 +42,7 @@
 
         <!-- Actions -->
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">
-            <Button Content="Create Database" Width="150" Command="{Binding CreateDatabaseCommand}"/>
+            <Button Content="Create Database" Width="150" Margin="0,0,65,0"  Command="{Binding CreateDatabaseCommand}"/>
             <Button Content="OK" Width="100" Margin="0,0,10,0" Command="{Binding SaveCommand}"/>
             <Button Content="Cancel" Width="100" Command="{Binding CancelCommand}"/>
         </StackPanel>

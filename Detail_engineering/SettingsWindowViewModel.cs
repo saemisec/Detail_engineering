@@ -1,10 +1,8 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using System.Windows.Input;
-//using System.Windows.Input;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.IO;
@@ -44,10 +42,10 @@ namespace Detail_engineering
 
         public SettingsWindowViewModel()
         {
-            //BrowseBaseCommand = new RelayCommand(_ => BrowseBase());
-            //SaveCommand = new RelayCommand(_ => Save());
-            //CancelCommand = new RelayCommand(_ => CloseRequested?.Invoke(this, EventArgs.Empty));
-            //CreateDatabaseCommand = new RelayCommand(_ => CreateDatabase());
+            BrowseBaseCommand = new RelayCommand(_ => BrowseBase());
+            SaveCommand = new RelayCommand(_ => Save());
+            CancelCommand = new RelayCommand(_ => CloseRequested?.Invoke(this, EventArgs.Empty));
+            CreateDatabaseCommand = new RelayCommand(_ => CreateDatabase());
         }
 
         private void BrowseBase()
@@ -60,18 +58,13 @@ namespace Detail_engineering
         {
             var bf = (BaseFolder ?? "").Trim();
             AppRegistry.SetBaseFolder(bf);
-            // اعمال فوری روی برنامه
             PathHelper.BaseDir = bf;
             CloseRequested?.Invoke(this, EventArgs.Empty);
-            CreateDatabase();
-            //Settings.Default.BaseFolder = (BaseFolder ?? "").Trim();
-            //Settings.Default.Save();
         }
 
 
         private void CreateDatabase()
         {
-            // 1) مسیر ریشه‌ی داکیومنت‌ها: پیش‌فرض BaseFolder؛ اگر خالی بود از کاربر بگیر
             string root = (BaseFolder ?? "").Trim();
             if (string.IsNullOrEmpty(root) || !Directory.Exists(root))
             {
@@ -85,14 +78,12 @@ namespace Detail_engineering
                 return;
             }
 
-            // 2) خروجی: کنار exe با نام database.json
             string outPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "database.json");
 
             var records = new List<DbRecord>();
 
             try
             {
-                // ساختار: base\Discipline\Document_type\(Document_number + space + Document_name)\Revisions...
                 foreach (var discDir in SafeEnumerateDirectories(root))
                 {
                     string discipline = Path.GetFileName(discDir);
@@ -104,7 +95,7 @@ namespace Detail_engineering
                         foreach (var comboDir in SafeEnumerateDirectories(dtypeDir))
                         {
                             string comboName = Path.GetFileName(comboDir);
-                            //if (!comboName.ToLower().Contains("1389-de"))
+                            //if (comboName.ToLower().Contains("1389-de"))
                             if (comboName.ToLower().Contains("1389-ar"))
                             {
                                 var (docNumber, docName) = SplitNumberAndName(comboName);
@@ -125,7 +116,6 @@ namespace Detail_engineering
                     }
                 }
 
-                // 3) نوشتن JSON خوش‌فرم
                 var opts = new JsonSerializerOptions { WriteIndented = true };
                 File.WriteAllText(outPath, JsonSerializer.Serialize(records, opts));
                 System.Windows.MessageBox.Show($"Database created successfully", "Create Database",
@@ -138,7 +128,6 @@ namespace Detail_engineering
             }
         }
 
-        // مدل خروجی JSON
         private class DbRecord
         {
             public string Document_name { get; set; }
@@ -148,19 +137,14 @@ namespace Detail_engineering
             public List<string> Revisions { get; set; }
         }
 
-        // کمک‌تابع: ایمن در برابر خطا
         private static IEnumerable<string> SafeEnumerateDirectories(string path)
         {
             try { return Directory.EnumerateDirectories(path); }
             catch { return Enumerable.Empty<string>(); }
         }
 
-        // جدا کردن Document_number و Document_name بر اساس الگوی "-000-"
         private static (string number, string name) SplitNumberAndName(string combo)
         {
-            // نمونه: "PL-000- Pump Layout - Area A"
-            //      → number = "PL-000-"
-            //      → name   = "Pump Layout - Area A"
             var m = Regex.Match(combo ?? "", @"^(.*?-\d{3}-)(.*)$", RegexOptions.Singleline);
             if (m.Success)
             {
@@ -170,7 +154,6 @@ namespace Detail_engineering
                 return (num, name);
             }
 
-            // فالبک: اگر الگو پیدا نشد، قبل از اولین فاصله تقسیم کن
             var idx = (combo ?? "").IndexOf(' ');
             if (idx > 0)
             {
@@ -179,7 +162,6 @@ namespace Detail_engineering
                 return (n1, n2);
             }
 
-            // فالبک نهایی: کل نام را Document_name قرار بده
             return ("", (combo ?? "").Trim());
         }
 

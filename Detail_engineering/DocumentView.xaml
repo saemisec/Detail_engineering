@@ -59,10 +59,10 @@
 
         <!-- DataGrid header style -->
         <Style TargetType="DataGridColumnHeader">
-            <Setter Property="Background" Value="{StaticResource HeaderBg}"/>
+            <Setter Property="Background" Value="{StaticResource Bg}"/>
             <Setter Property="Foreground" Value="{StaticResource Text}"/>
             <Setter Property="BorderBrush" Value="{StaticResource HeaderBorder}"/>
-            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderThickness" Value="0,0,0,0"/>
             <Setter Property="FontSize" Value="13.5"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Padding" Value="10,8"/>
@@ -74,7 +74,7 @@
         <Style TargetType="DataGridRow">
             <Setter Property="Background" Value="{StaticResource Row}"/>
             <!--<Setter Property="AlternationIndex" Value="{Binding RelativeSource={RelativeSource Self}, Path=AlternationIndex}"/>-->
-            <Setter Property="BorderBrush" Value="{StaticResource RowBorder}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Text}"/>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
             <Setter Property="Height" Value="34"/>
             <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -92,7 +92,7 @@
 
         <!-- Hyperlink رنگ اکسنت -->
         <Style TargetType="Hyperlink">
-            <Setter Property="Foreground" Value="{StaticResource Accent}"/>
+            <Setter Property="Foreground" Value="{StaticResource Text}"/>
             <Setter Property="TextDecorations" Value="{x:Null}"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
@@ -118,13 +118,14 @@
                      FontSize="13.5"
                      Background="#101826" Foreground="{StaticResource Text}"
                      BorderBrush="#26305E" BorderThickness="1"
-                     CaretBrush="{StaticResource Accent}"
+                     CaretBrush="{StaticResource Text}"
                      TextChanged="SearchBox_TextChanged"/>
         </DockPanel>
 
         <!-- Data Grid -->
         <DataGrid x:Name="GridDocs" Grid.Row="1"
                   AutoGenerateColumns="False"
+                  SelectionMode="Single" SelectionUnit="FullRow"
                   CanUserAddRows="False"
                   IsReadOnly="True"
                   AlternationCount="2"
@@ -141,14 +142,11 @@
                   FontSize="13.5"
                   EnableRowVirtualization="True" EnableColumnVirtualization="True"
                   ScrollViewer.CanContentScroll="True">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent"/>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <!-- Row.No
-                <DataGridTextColumn Header="Row.No" Width="70"
-                  Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow},
-                                    Path=AlternationIndex,
-                                    Mode=OneWay,
-                                    Converter={x:Static local:AlternationConverter.Instance}}"/> -->
-
                 <!-- Document_name (Hyperlink + trim) -->
                 <DataGridTemplateColumn Header="Document Name" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
@@ -229,11 +227,8 @@
                 <DataGridTemplateColumn Header="Last Revision" Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock TextTrimming="CharacterEllipsis">
-                                <Hyperlink Click="LastRevisionLink_Click"
-                                           IsEnabled="{Binding HasLastRevision, Mode=OneWay}">
-                                    <Run Text="{Binding LastRevisionName, Mode=OneWay}"/>
-                                </Hyperlink>
+                            <TextBlock TextTrimming="CharacterEllipsis" Text="{Binding LastRevisionName, Mode=OneWay}" HorizontalAlignment="Center">
+                                
                             </TextBlock>
                         </DataTemplate>
                         
